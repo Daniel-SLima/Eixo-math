@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.21 — assets e áudio especificados  
+**Versão de especificação:** 0.22 — distribuição Android e bootstrap local especificados  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -10929,6 +10929,37 @@ Decisões já fechadas:
 
 ---
 
+## 39.9 DISTRIBUIÇÃO ANDROID E ATUALIZAÇÕES
+
+Antes do primeiro APK persistente, o projeto deverá fixar:
+
+- applicationId estável;
+- keystore persistente;
+- alias;
+- segredos fora do Git;
+- versionCode crescente;
+- versionName legível.
+
+Objetivo:
+
+um novo APK interno assinado corretamente deve poder atualizar a versão anterior no Android sem desinstalar o app e sem apagar dados locais.
+
+Documento detalhado:
+
+`docs/architecture/ANDROID_DISTRIBUTION_SIGNING.md`
+
+O P0 deverá testar explicitamente:
+
+```
+APK A
+→ criar dados locais
+→ APK B com versionCode maior e mesma assinatura
+→ instalar como atualização
+→ verificar preservação dos dados
+```
+
+---
+
 # 39.A MÓDULO FUTURO DE IA — ESPECIFICADO, FORA DO MVP
 
 ## 39.A1 DECISÃO DE PRODUTO
@@ -11451,7 +11482,8 @@ Documentos de apoio atuais:
 - `docs/architecture/SECURITY_PRIVACY_TELEMETRY.md`;
 - `docs/quality/TEST_STRATEGY.md`;
 - `docs/implementation/ROADMAP.md`;
-- `docs/implementation/CODEX_HANDOFF.md`.
+- `docs/implementation/CODEX_HANDOFF.md`;
+- `docs/implementation/INITIAL_CODEX_WORKSPACE_PROMPT.md`.
 
 O handoff para implementação existe, mas está bloqueado.
 
@@ -11469,6 +11501,7 @@ Documentos adicionais de fechamento:
 - `docs/pedagogy/MVP_MASTERY_CRITERIA.md`;
 - `docs/design/DESIGN_SYSTEM.md`;
 - `docs/architecture/DATA_MODEL_V1.md`;
+- `docs/architecture/ANDROID_DISTRIBUTION_SIGNING.md`;
 - `docs/SPEC_REVIEW_CHECKLIST.md`;
 - `docs/SPEC_AUDIT_REPORT.md`.
 
