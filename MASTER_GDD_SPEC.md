@@ -5545,20 +5545,153 @@ Esse será o fundamento para escalar o conteúdo sem sacrificar qualidade matem�
 
 ---
 
-# 29. FONTES DE CONTEÚDO E DIREITOS AUTORAIS
+# 29. FONTES DE CONTEÚDO, PROVENIÊNCIA E DIREITOS AUTORAIS
 
-Há grande quantidade de material matemático existente, mas o projeto não deve copiar indiscriminadamente questões de livros comerciais protegidos por direitos autorais.
+O Eixo deverá aproveitar o grande volume de material matemático existente, mas **gratuito para ler não significa livre para incorporar, adaptar ou redistribuir**.
 
-Priorizar:
+Todo conteúdo externo deverá possuir proveniência e licença verificadas antes de entrar no banco público.
+
+## 29.1 HIERARQUIA DE PREFERÊNCIA
+
+Prioridade inicial:
+
+1. conteúdo autoral do Eixo;
+2. domínio público;
+3. CC0;
+4. licenças abertas que permitam adaptação e o modelo de distribuição do produto;
+5. recursos externos usados apenas como referência pedagógica, sem cópia.
+
+## 29.2 LICENÇAS MAIS SIMPLES PARA O BANCO PÚBLICO
+
+Para reduzir risco e complexidade, priorizar:
 
 - domínio público;
-- recursos educacionais abertos;
-- licenças permissivas;
-- bancos próprios;
-- exercícios próprios/adaptados;
-- referências pedagógicas sem reprodução literal protegida.
+- CC0;
+- CC BY, respeitando atribuição.
 
-Futuramente poderá existir importação de listas próprias de professores/usuários, sujeita a requisitos técnicos e legais.
+CC BY-SA poderá ser utilizado somente após avaliar corretamente as obrigações de compartilhamento da adaptação.
+
+Materiais com cláusula NC exigem análise específica caso o produto possua qualquer uso comercial.
+
+Materiais ND não deverão ser adaptados.
+
+A política final deverá receber revisão jurídica antes de publicação comercial.
+
+## 29.3 “USAR COMO REFERÊNCIA” É DIFERENTE DE COPIAR
+
+Livros comerciais, cursos e listas protegidas poderão ser utilizados para:
+
+- entender sequência curricular;
+- identificar tipos de exercício;
+- comparar abordagens pedagógicas;
+- encontrar lacunas no currículo.
+
+Não deverão ser copiados em massa para o banco.
+
+O Eixo poderá criar exercício original sobre o mesmo conceito matemático sem reproduzir expressão criativa protegida do material de origem.
+
+## 29.4 REGISTRO DE PROVENIÊNCIA
+
+Conteúdo externo deverá guardar:
+
+```
+source_id
+source_title
+source_author
+source_organization
+source_url
+license
+license_url
+retrieved_at
+original_item_reference
+adaptation_notes
+attribution_text
+review_status
+```
+
+## 29.5 LICENÇA POR ITEM
+
+Não assumir que todos os materiais de uma plataforma possuem exatamente a mesma licença.
+
+A licença deve ser verificada:
+
+- no livro;
+- na página;
+- no item;
+- ou no conjunto explicitamente licenciado.
+
+## 29.6 RECURSOS OER CANDIDATOS
+
+Plataformas de Recursos Educacionais Abertos poderão ser avaliadas como fonte de referência e, quando a licença específica permitir, de adaptação.
+
+Exemplo candidato já identificado:
+
+### LibreTexts
+
+A plataforma se apresenta como infraestrutura de OER e informa possuir livros, materiais interativos e um banco ADAPT com grande volume de elementos abertamente licenciados.
+
+Antes da incorporação, cada recurso selecionado deverá ter sua licença individual confirmada.
+
+Outras fontes deverão passar pelo mesmo processo de verificação antes de serem registradas como aprovadas.
+
+## 29.7 CATÁLOGO DE FONTES APROVADAS
+
+Deverá existir futuramente um arquivo/registro separado com status:
+
+```
+APPROVED
+APPROVED_WITH_ATTRIBUTION
+REVIEW_REQUIRED
+REFERENCE_ONLY
+BLOCKED
+```
+
+por fonte e, quando necessário, por coleção/item.
+
+## 29.8 CONTEÚDO GERADO A PARTIR DE MATERIAL ABERTO
+
+Mesmo quando a licença permitir adaptação:
+
+- manter atribuição quando exigida;
+- registrar modificação;
+- preservar avisos de licença necessários;
+- não remover autoria;
+- não misturar licenças incompatíveis sem análise.
+
+## 29.9 QUESTÕES IMPORTADAS PELO USUÁRIO
+
+Conteúdo privado importado futuramente não será automaticamente adicionado ao banco público.
+
+Separação obrigatória:
+
+```
+Coleção privada do usuário
+≠
+Banco público do Eixo
+```
+
+## 29.10 FONTES CURRICULARES
+
+Também poderão existir fontes usadas apenas para validar cobertura curricular.
+
+Essas fontes ajudam a responder:
+
+> “Estamos ensinando tudo que normalmente é necessário antes de Cálculo I?”
+
+Elas não precisam fornecer questões copiáveis.
+
+## 29.11 AUDITORIA
+
+Antes de lançamento público, deverá ser possível responder para qualquer conteúdo externo:
+
+- de onde veio?
+- qual é a licença?
+- podemos adaptar?
+- precisamos atribuir?
+- o que foi alterado?
+- qual versão está publicada?
+
+Se isso não puder ser respondido, o conteúdo não deverá ser publicado.
 
 ---
 
