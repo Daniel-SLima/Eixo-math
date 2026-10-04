@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.3 em construção  
+**Versão de especificação:** 0.4 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -897,6 +897,737 @@ Conhecimentos mais avançados também poderão ser reconhecidos como matematicam
 Em atividades de **aplicação**, **desafio**, **revisão mista** ou **prova cumulativa**, o aluno deverá possuir liberdade muito maior para escolher qualquer estratégia válida.
 
 Assim, a rigidez pedagógica depende do tipo de atividade.
+
+---
+
+## 16.5 ARQUITETURA CONCEITUAL DO MOTOR MATEMÁTICO E PEDAGÓGICO
+
+O motor deverá funcionar como uma cadeia de análise, e não como uma comparação simples entre a resposta do aluno e uma solução cadastrada.
+
+Fluxo conceitual:
+
+```
+Entrada do aluno
+      ↓
+Parser matemático
+      ↓
+Representação estruturada (AST)
+      ↓
+Contexto matemático e hipóteses
+      ↓
+Validador matemático
+      ↓
+Detector de transformação
+      ↓
+Analisador de estratégia
+      ↓
+Validador pedagógico
+      ↓
+Classificador de erro
+      ↓
+Gerador de feedback
+      ↓
+Atualização de domínio
+```
+
+Cada camada deverá possuir responsabilidade separada.
+
+## 16.6 CORREÇÃO MATEMÁTICA DETERMINÍSTICA
+
+O veredito de correção matemática não deverá depender de um modelo de linguagem gerar uma opinião sobre a resolução.
+
+O núcleo deverá usar regras matemáticas verificáveis, álgebra simbólica e validação determinística sempre que o conteúdo estiver dentro do escopo suportado.
+
+Modelos de linguagem poderão futuramente auxiliar em:
+
+- reformulação de explicações;
+- feedback em linguagem natural;
+- interpretação de anotações textuais;
+- sugestões pedagógicas;
+- classificação auxiliar quando houver evidência estruturada.
+
+Entretanto, um modelo de linguagem não deverá ser a autoridade final para declarar uma transformação matemática correta ou incorreta.
+
+Quando o motor determinístico não conseguir provar nem refutar uma etapa, o sistema deverá assumir **incerteza**, e não marcar automaticamente como erro.
+
+## 16.7 RESULTADO DE VALIDAÇÃO DE UMA ETAPA
+
+Cada transição entre duas linhas deverá retornar internamente algo conceitualmente semelhante a:
+
+```
+statusMatematico:
+  VALIDO
+  INVALIDO
+  NAO_COMPROVADO
+
+transformacaoDetectada:
+  ...
+
+condicoes:
+  ...
+
+conceitosUsados:
+  [...]
+
+errosDetectados:
+  [...]
+
+confianca:
+  ...
+```
+
+O estado `NAO_COMPROVADO` é obrigatório.
+
+Ele evita que uma limitação do motor seja confundida com erro do aluno.
+
+## 16.8 O QUE FAZER QUANDO O MOTOR NÃO CONSEGUIR VERIFICAR
+
+Se uma etapa estiver sintaticamente válida, mas o motor não conseguir comprovar sua relação com a etapa anterior, o sistema poderá:
+
+1. tentar estratégias alternativas de equivalência;
+2. verificar numericamente pontos seguros como evidência auxiliar, nunca como prova única quando uma prova simbólica for necessária;
+3. pedir ao aluno uma etapa intermediária;
+4. permitir que o aluno continue e revisar a cadeia posteriormente;
+5. em modos avançados, marcar a etapa como “não verificada”.
+
+Mensagem possível:
+
+> Não consegui verificar automaticamente esta transformação. Tente mostrar uma etapa intermediária.
+
+O sistema não deverá dizer “errado” sem evidência suficiente.
+
+## 16.9 CONTEXTO MATEMÁTICO DA ATIVIDADE
+
+Toda validação deverá considerar contexto.
+
+Exemplos de informações contextuais:
+
+- conjunto numérico atual: naturais, inteiros, racionais, reais;
+- domínio das variáveis;
+- hipóteses declaradas;
+- restrições do enunciado;
+- intervalos;
+- unidades;
+- variável independente;
+- variável dependente;
+- tolerância numérica, quando aplicável.
+
+A expressão isolada não é suficiente para determinar validade em todos os casos.
+
+## 16.10 TIPOS DE EQUIVALÊNCIA
+
+O motor não deverá possuir somente uma função genérica de “são iguais?”.
+
+Ele deverá distinguir pelo menos:
+
+### Equivalência de expressões
+
+Exemplo:
+
+`2(x+3)`
+
+e
+
+`2x+6`
+
+representam a mesma expressão no domínio aplicável.
+
+### Equivalência de equações por conjunto-solução
+
+Exemplo:
+
+`2x+4=10`
+
+e
+
+`x=3`
+
+possuem o mesmo conjunto de soluções.
+
+### Implicação sem equivalência
+
+Exemplo:
+
+`x=2`
+
+implica:
+
+`x²=4`
+
+mas o caminho inverso não preserva todas as soluções.
+
+### Igualdade aproximada
+
+Exemplo:
+
+`√2 ≈ 1,4142`
+
+deve usar política explícita de precisão/tolerância.
+
+### Igualdade de conjuntos
+
+Exemplo:
+
+`{2,3}`
+
+e
+
+`{3,2}`
+
+são o mesmo conjunto.
+
+### Igualdade de funções
+
+Deve considerar expressão e domínio.
+
+Duas fórmulas que produzem os mesmos valores em parte do domínio não são necessariamente a mesma função se os domínios diferirem.
+
+## 16.11 PRESERVAÇÃO DO CONJUNTO DE SOLUÇÕES
+
+Em resolução de equações e inequações, o motor deverá acompanhar se cada transformação:
+
+- preserva exatamente o conjunto de soluções;
+- amplia o conjunto de possíveis soluções;
+- restringe o conjunto;
+- exige condição adicional.
+
+Exemplo:
+
+```
+x² = 4
+x = 2
+```
+
+não pode ser aceito como transformação equivalente porque perdeu `x=-2`.
+
+Já:
+
+```
+x² = 4
+|x| = 2
+x = ±2
+```
+
+preserva as soluções.
+
+## 16.12 OPERAÇÕES QUE EXIGEM CONDIÇÕES
+
+O motor deverá reconhecer operações potencialmente perigosas.
+
+### Divisão por uma expressão
+
+De:
+
+`x(x-2)=0`
+
+para:
+
+`x-2=0`
+
+ao dividir por `x`, a solução `x=0` é perdida.
+
+O sistema deve detectar isso.
+
+### Multiplicação por expressão potencialmente zero
+
+Pode alterar a equivalência dependendo do contexto.
+
+### Elevar ambos os lados a uma potência
+
+Pode introduzir soluções extranhas.
+
+Exemplo:
+
+`√x = -2`
+
+ao elevar ao quadrado produz `x=4`, mas `x=4` não satisfaz a equação original.
+
+### Aplicar raiz
+
+Pode exigir consideração de sinais e domínio.
+
+### Logaritmos
+
+Exigem argumento positivo no contexto real.
+
+### Frações
+
+Denominadores precisam ser diferentes de zero.
+
+Essas condições devem fazer parte da análise e, quando pedagogicamente adequado, aparecer ao aluno.
+
+## 16.13 VALIDAÇÃO DE INEQUAÇÕES
+
+O motor deverá reconhecer regras específicas de inequações.
+
+Exemplo:
+
+`-2x < 6`
+
+ao dividir por `-2`:
+
+`x > -3`
+
+O sinal precisa ser invertido.
+
+Se o aluno escrever:
+
+`x < -3`
+
+o sistema deverá classificar o erro especificamente como falha ao inverter a desigualdade após multiplicação/divisão por número negativo.
+
+## 16.14 RECONHECIMENTO DE TRANSFORMAÇÕES
+
+O motor deverá tentar identificar qual operação ou estratégia explica a passagem entre duas linhas.
+
+Categorias iniciais incluem:
+
+### Aritmética
+
+- somar;
+- subtrair;
+- multiplicar;
+- dividir;
+- calcular potência;
+- calcular raiz;
+- simplificar valor numérico.
+
+### Álgebra
+
+- aplicar distributiva;
+- coletar termos semelhantes;
+- mover/reorganizar termos;
+- adicionar mesma quantidade aos dois lados;
+- subtrair mesma quantidade dos dois lados;
+- multiplicar/dividir ambos os lados;
+- fatorar fator comum;
+- diferença de quadrados;
+- fatorar trinômio;
+- completar quadrado;
+- substituir variável;
+- expandir produto;
+- simplificar fração algébrica.
+
+### Funções
+
+- avaliar função;
+- compor funções;
+- obter/inverter relação;
+- aplicar transformação de gráfico.
+
+### Exponenciais e logaritmos
+
+- aplicar propriedades de potências;
+- aplicar propriedade de logaritmos;
+- mudança de base;
+- exponenciar;
+- aplicar logaritmo a ambos os lados.
+
+### Trigonometria
+
+- aplicar identidade;
+- substituir valor notável;
+- reorganizar identidade;
+- resolver equação trigonométrica.
+
+### Limites
+
+- substituição direta;
+- fatoração para remover indeterminação;
+- racionalização;
+- uso de limite notável;
+- análise lateral;
+- comparação de crescimento, quando dentro do currículo.
+
+### Derivadas
+
+- regra da constante;
+- potência;
+- soma;
+- produto;
+- quociente;
+- cadeia;
+- derivação implícita.
+
+### Integrais
+
+- reconhecimento de antiderivada;
+- linearidade;
+- substituição, quando fizer parte do escopo;
+- aplicação do Teorema Fundamental do Cálculo.
+
+A taxonomia deverá crescer junto com o currículo.
+
+## 16.15 UMA TRANSIÇÃO PODE CONTER MAIS DE UMA TRANSFORMAÇÃO
+
+O aluno não deverá ser obrigado a executar apenas uma micro-operação por linha.
+
+Exemplo:
+
+```
+3(x+2)=18
+x=4
+```
+
+é uma passagem matematicamente correta, embora omita várias etapas.
+
+A aceitação depende de `nivelDeDetalhamento`.
+
+### Livre
+
+Pode aceitar saltos grandes se o motor conseguir comprovar a relação.
+
+### Moderado
+
+Pode exigir etapas conceitualmente relevantes.
+
+### Didático
+
+Pode exigir a transformação que está sendo ensinada de forma explícita.
+
+### Demonstrativo
+
+Pode exigir justificativas.
+
+Assim, “pular etapas” não é intrinsecamente errado.
+
+## 16.16 DETECÇÃO DE CONCEITOS USADOS
+
+Além de validar, o motor deverá produzir evidências de quais habilidades aparecem na resolução.
+
+Exemplo:
+
+```
+3(x+2)=18
+3x+6=18
+3x=12
+x=4
+```
+
+poderá gerar evidências para:
+
+- propriedade distributiva;
+- subtração nos dois membros;
+- divisão nos dois membros;
+- resolução de equação linear.
+
+Essas evidências alimentarão o sistema de domínio.
+
+## 16.17 CONCEITO-ALVO NÃO PRECISA APARECER EM TODA LINHA
+
+Se a aula é sobre distributiva, não é necessário que todas as linhas sejam classificadas como distributiva.
+
+É suficiente que a resolução demonstre a habilidade-alvo em ponto relevante e correto.
+
+O avaliador pedagógico observa a resolução completa.
+
+## 16.18 ESTRATÉGIA GLOBAL DA RESOLUÇÃO
+
+O motor deverá tentar reconhecer não apenas operações locais, mas também a estratégia global.
+
+Exemplo para equação quadrática:
+
+- fatoração;
+- fórmula quadrática;
+- completar quadrados.
+
+Exemplo para limite:
+
+- substituição direta;
+- fatoração;
+- racionalização;
+- análise gráfica/numérica quando permitida.
+
+Exemplo para derivada:
+
+- expansão antes de derivar;
+- aplicação direta da regra do produto;
+- simplificação anterior.
+
+Isso permite aceitar diferentes caminhos e ainda identificar o método efetivamente utilizado.
+
+## 16.19 EXEMPLO — MESMO RESULTADO, DOMÍNIO DIFERENTE
+
+Considere:
+
+`f(x) = (x²-1)/(x-1)`
+
+e:
+
+`g(x)=x+1`.
+
+As expressões coincidem para `x ≠ 1`, mas a primeira não está definida em `x=1`.
+
+Portanto o motor não deverá tratar automaticamente as duas funções como idênticas sem considerar domínio.
+
+Esse tipo de distinção será especialmente importante em Pré-Cálculo e limites.
+
+## 16.20 EXEMPLO — SOLUÇÃO EXTRANHA
+
+Questão:
+
+`√(x+1)=x-1`
+
+Se o aluno elevar ambos os lados ao quadrado, o procedimento pode produzir candidatos que precisam ser verificados na equação original.
+
+O motor deverá reconhecer:
+
+- a etapa de quadratura como uma implicação potencialmente não reversível;
+- a necessidade de conferir soluções finais;
+- soluções extranhas, caso apareçam.
+
+## 16.21 VALIDAÇÃO NUMÉRICA COMO APOIO, NÃO AUTORIDADE UNIVERSAL
+
+Testar valores numéricos pode ajudar a:
+
+- encontrar contraexemplos;
+- detectar rapidamente expressões provavelmente diferentes;
+- apoiar equivalência em contextos específicos;
+- depurar o motor.
+
+Entretanto, testar alguns pontos não prova identidade matemática em geral.
+
+Portanto validação numérica isolada não poderá ser utilizada como prova universal de equivalência simbólica.
+
+## 16.22 TOLERÂNCIA E APROXIMAÇÕES
+
+Atividades que aceitam resultado decimal deverão declarar:
+
+- precisão esperada;
+- casas decimais;
+- erro absoluto/relativo permitido;
+- se fração exata é preferível;
+- se forma exata é obrigatória.
+
+Exemplo:
+
+`√2`
+
+Pode ser aceito como:
+
+- `√2`, se forma exata for solicitada;
+- `1,414`, se aproximação a três casas for solicitada.
+
+O motor não deverá converter indiscriminadamente respostas exatas em decimais.
+
+## 16.23 UNIDADES
+
+Problemas aplicados deverão poder associar unidades aos valores.
+
+Exemplo:
+
+`v = 20 m/s`
+
+Uma resposta numericamente correta com unidade incorreta não deverá ser considerada completamente correta quando a unidade fizer parte do objetivo.
+
+O motor deverá futuramente suportar:
+
+- compatibilidade dimensional básica;
+- conversões permitidas;
+- equivalência de unidades.
+
+## 16.24 AVALIAÇÃO DA RESPOSTA FINAL
+
+Além dos passos, o motor deverá validar se a conclusão responde exatamente ao que foi perguntado.
+
+Exemplos:
+
+- encontrar `x`;
+- encontrar todas as soluções;
+- indicar intervalo;
+- fornecer ponto `(x,y)`;
+- informar unidade;
+- fornecer função;
+- identificar máximo/mínimo;
+- calcular derivada;
+- calcular valor de uma integral.
+
+Uma resolução pode possuir passos válidos e ainda estar incompleta.
+
+## 16.25 ERROS PARCIAIS E PROPAGAÇÃO DE ERRO
+
+Se o aluno cometer um erro e depois operar corretamente sobre o resultado errado, o sistema deverá distinguir:
+
+1. o primeiro ponto em que a matemática ficou inválida;
+2. passos posteriores que são coerentes com a linha errada.
+
+Exemplo:
+
+```
+2x + 4 = 10
+2x = 14       ← primeiro erro
+x = 7         ← divisão está coerente com 2x=14
+```
+
+O feedback principal deve apontar para a primeira quebra de validade, e não marcar todas as linhas posteriores como erros independentes.
+
+Isso é importante pedagogicamente.
+
+## 16.26 ERRO LOCAL VS. ERRO CONCEITUAL RECORRENTE
+
+Um erro isolado pode ser acidente.
+
+O sistema só deverá inferir uma lacuna de conhecimento após acumular evidência suficiente.
+
+Exemplo:
+
+errar um sinal uma vez não significa que o aluno não domina números negativos.
+
+Mas repetir o mesmo padrão em diferentes contextos pode gerar evidência de dificuldade.
+
+## 16.27 EXPLICAÇÃO GERADA A PARTIR DE CÓDIGOS DE ERRO
+
+O motor matemático deverá produzir códigos/estruturas de erro, por exemplo:
+
+```
+ERRO_DISTRIBUTIVA_PARCIAL
+ERRO_SINAL
+ERRO_DIVISAO_POR_EXPRESSAO_ZERO
+ERRO_INVERTER_INEQUACAO
+ERRO_REGRA_CADEIA_INCOMPLETA
+```
+
+A camada pedagógica transforma esses códigos em feedback adequado ao nível do aluno.
+
+Assim, lógica matemática e texto pedagógico permanecem separados.
+
+## 16.28 PROFUNDIDADE DO FEEDBACK
+
+O mesmo erro poderá gerar respostas diferentes dependendo do modo e do histórico.
+
+### Primeira ajuda
+
+> Observe novamente como o 3 atua sobre os termos dentro dos parênteses.
+
+### Segunda ajuda
+
+> O 3 precisa multiplicar cada termo dentro dos parênteses.
+
+### Demonstração
+
+`3(x+2)=3x+6`
+
+A profundidade é controlada pelo sistema de dicas.
+
+## 16.29 EXPLICAÇÃO DO PRÓPRIO ALUNO
+
+Linhas de justificativa em linguagem natural poderão ser usadas como evidência pedagógica complementar, mas não substituirão a validação matemática.
+
+Futuramente um modelo de linguagem poderá analisar frases como:
+
+> Dividi os dois lados por 2 para manter a igualdade.
+
+e comparar com a transformação realizada.
+
+Porém a correção da operação continua sendo determinada pelo motor matemático.
+
+## 16.30 REAVALIAÇÃO APÓS EDIÇÃO
+
+Ao editar uma linha antiga:
+
+1. invalidar avaliações derivadas daquele ponto;
+2. reprocessar as transições posteriores;
+3. recalcular estratégia global;
+4. recalcular conceitos demonstrados;
+5. preservar histórico de edição apenas quando necessário para UX/diagnóstico.
+
+O usuário deverá perceber a atualização sem demora excessiva.
+
+## 16.31 DESEMPENHO DE INTERAÇÃO
+
+A validação das operações comuns deverá parecer imediata.
+
+O objetivo de UX é que digitar uma nova linha e receber o estado de validação não pareça uma chamada lenta a um tutor remoto.
+
+Isso influencia posteriormente a escolha de arquitetura e o que deve funcionar localmente/offline.
+
+## 16.32 ESCOPO PROGRESSIVO DO MOTOR
+
+O motor não precisa compreender toda a matemática existente no primeiro lançamento.
+
+Ele deverá crescer de forma alinhada ao currículo.
+
+Prioridade de suporte:
+
+1. aritmética;
+2. frações;
+3. álgebra elementar;
+4. equações e inequações;
+5. funções;
+6. exponenciais/logaritmos;
+7. trigonometria;
+8. limites;
+9. derivadas;
+10. integrais do escopo de Cálculo I.
+
+Cada tópico curricular só poderá entrar no produto quando o motor possuir validação suficiente para as atividades planejadas naquele tópico.
+
+## 16.33 MATRIZ DE CAPACIDADE DO MOTOR
+
+Deverá existir futuramente uma matriz rastreável ligando:
+
+```
+conteúdo curricular
+      ↕
+notações necessárias
+      ↕
+transformações reconhecidas
+      ↕
+erros reconhecidos
+      ↕
+tipos de atividade suportados
+      ↕
+casos de teste
+```
+
+Isso impedirá que um módulo educacional seja publicado sem suporte real do motor.
+
+## 16.34 TESTES DO MOTOR COMO REQUISITO CENTRAL
+
+Cada transformação deverá possuir testes positivos e negativos.
+
+Exemplo para distributiva:
+
+Aceitar:
+
+```
+3(x+2) → 3x+6
+-2(x-4) → -2x+8
+```
+
+Rejeitar/classificar:
+
+```
+3(x+2) → 3x+2
+3(x+2) → 3x+5
+```
+
+Também deverão existir testes para:
+
+- caminhos alternativos válidos;
+- saltos de etapas;
+- domínios;
+- soluções extranhas;
+- inequações;
+- aproximações;
+- casos-limite.
+
+O motor matemático será uma das áreas de maior cobertura automatizada do projeto.
+
+## 16.35 PRINCÍPIO DE SEGURANÇA PEDAGÓGICA
+
+Quando houver conflito entre:
+
+- marcar rapidamente;
+- e marcar corretamente,
+
+o sistema deverá preferir **não afirmar** algo que não consegue comprovar.
+
+É pedagogicamente melhor dizer:
+
+> “Não consegui verificar esta etapa.”
+
+do que ensinar ao aluno que uma transformação válida está errada.
 
 ---
 
