@@ -488,6 +488,57 @@ Módulo futuro permanece documentado e desabilitado.
 
 ---
 
+
+# 40.A SONS E ASSETS DE MÍDIA
+
+## Sons
+
+O MVP poderá utilizar pequenos efeitos sonoros discretos.
+
+Direção:
+
+- sutis;
+- opcionais;
+- sem voz;
+- sem estética infantil;
+- sem fanfarra frequente;
+- sem substituir feedback visual.
+
+Sons previstos:
+
+- toque leve;
+- passo válido;
+- passo inválido;
+- atenção;
+- não comprovado;
+- desbloqueio de ferramenta;
+- conclusão de aula;
+- conclusão de Desafio-Marco.
+
+O usuário deverá conseguir desativar efeitos sonoros.
+
+## Imagens
+
+Assets gerados por IA poderão ser usados para:
+
+- branding conceitual;
+- onboarding;
+- banners;
+- desafios;
+- empty states;
+- decoração.
+
+Não utilizar imagens geradas para matemática exata ou controles funcionais.
+
+Documentação:
+
+- `docs/assets/ASSET_PIPELINE.md`
+- `docs/assets/IMAGE_ASSET_PROMPTS.md`
+- `docs/assets/SFX_ASSET_PROMPTS.md`
+- `docs/assets/ASSET_MANIFEST.csv`
+- `docs/assets/CODEX_ASSET_GENERATION_PROMPT.md`
+- `docs/assets/ASSET_GENERATION_RUNBOOK.md`
+
 # 41. DECISÕES QUE NÃO BLOQUEIAM P0
 
 Podem permanecer para depois do spike técnico:
