@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.13 em construção  
+**Versão de especificação:** 0.14 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -10826,22 +10826,60 @@ Antes de construir o produto completo, a implementação deverá validar em um p
 
 Se a experiência do editor não atingir o nível esperado, a stack deverá ser reavaliada antes de escalar o desenvolvimento.
 
-## 39.5 DECISÕES AINDA ABERTAS
+## 39.5 PERSISTÊNCIA E SINCRONIZAÇÃO
+
+Direção selecionada:
+
+- arquitetura local-first;
+- SQLite nativo em Android/iOS;
+- IndexedDB/Dexie na versão web;
+- sincronização por outbox;
+- operações idempotentes;
+- evidências de aprendizagem preferencialmente imutáveis/append-only;
+- domínio como projeção recalculável;
+- conflitos de Caderno nunca podem apagar trabalho silenciosamente;
+- content packs versionados e instalados atomicamente;
+- modo visitante capaz de estudar sem conta;
+- login recomendado para backup/sincronização, não para permitir matemática.
+
+Documento detalhado:
+
+`docs/architecture/DATA_SYNC_OFFLINE.md`
+
+## 39.6 PRINCÍPIO OFFLINE
+
+Após o conteúdo necessário estar no aparelho, o usuário deverá conseguir em modo avião:
+
+```
+abrir aula
+→ resolver
+→ usar Caderno/Rascunho
+→ fechar
+→ reabrir
+→ continuar
+→ concluir
+→ atualizar progresso local
+```
+
+A nuvem sincroniza posteriormente.
+
+## 39.7 DECISÕES AINDA ABERTAS
 
 Ainda serão detalhados:
 
-- schema completo de persistência;
-- algoritmo de sincronização/conflitos;
-- login obrigatório ou opcional;
+- schema SQL final;
+- políticas exatas de retenção;
 - telemetria;
 - E2E mobile;
 - hosting definitivo;
 - monetização;
 - notificações.
 
-Decisão já fechada:
+Decisões já fechadas:
 
-**o MVP será completo sem IA em runtime.**
+- MVP completo sem IA em runtime;
+- login não é necessário para começar a estudar;
+- o núcleo educacional não depende de conexão.
 
 ---
 
@@ -11236,16 +11274,16 @@ Blocos estruturais já definidos em nível inicial:
 - gamificação matemática, Desafios-Marco e progressão lúdica;
 - desafios sociais entre amigos registrados como pós-MVP;
 - perfil, progresso, histórico e Livro Matemático;
-- arquitetura técnica e stack inicial selecionadas.
+- arquitetura técnica e stack inicial selecionadas;
+- persistência local-first, sincronização e funcionamento offline definidos.
 
 Prioridade atual:
 
-1. persistência, sincronização e funcionamento offline/online;
-2. segurança, privacidade e telemetria pedagógica;
-3. definição formal do MVP;
-4. critérios de aceite e estratégia de testes;
-5. roadmap;
-6. instruções finais para Codex/agentes e início da implementação.
+1. segurança, privacidade e telemetria pedagógica;
+2. definição formal do MVP;
+3. critérios de aceite e estratégia de testes;
+4. roadmap;
+5. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
