@@ -7804,22 +7804,23 @@ Blocos estruturais já definidos em nível inicial:
 - árvore curricular Matemática Básica → Pré-Cálculo → Cálculo I;
 - Sistema de Domínio e Aprendizagem Adaptativa;
 - UX matemática mobile e editor 2D estruturado;
-- rascunho espacial e navegação entre Quadros.
+- catálogo universal de templates/notação matemática;
+- rascunho espacial e navegação entre Quadros;
+- estrutura de módulos, aulas e mapa de conhecimento;
+- fluxo inicial de navegação do aplicativo (onboarding, início, aula, atividade, conclusão e continuidade).
 
 Prioridade atual:
 
-1. estrutura de módulos, aulas e mapa de conhecimento;
-2. fluxo completo de navegação do aplicativo (onboarding, início, sessão e conclusão);
-3. sistema de banco/importação/seleção de questões;
-4. gamificação e camada lúdica integrada à matemática;
-5. perfil, progresso, histórico e Livro Matemático;
-6. arquitetura técnica e escolha de tecnologias;
-7. persistência, sincronização e funcionamento offline/online;
-8. segurança, privacidade e telemetria pedagógica;
-9. definição formal do MVP;
-10. critérios de aceite e estratégia de testes;
-11. roadmap;
-12. instruções finais para Codex/agentes e início da implementação.
+1. sistema de banco/importação/seleção de questões;
+2. gamificação e camada lúdica integrada à matemática;
+3. perfil, progresso, histórico e Livro Matemático;
+4. arquitetura técnica e escolha de tecnologias;
+5. persistência, sincronização e funcionamento offline/online;
+6. segurança, privacidade e telemetria pedagógica;
+7. definição formal do MVP;
+8. critérios de aceite e estratégia de testes;
+9. roadmap;
+10. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
