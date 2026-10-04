@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.11 em construção  
+**Versão de especificação:** 0.12 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -1782,50 +1782,997 @@ previsão → observação → comparação
 
 ---
 
-# 23. GAMIFICAÇÃO
+# 23. GAMIFICAÇÃO E CAMADA LÚDICA
+
+A gamificação do Eixo deverá reforçar aprendizagem, curiosidade, progresso e aplicação.
+
+Princípio central:
+
+> **O jogador não resolve matemática para ganhar o direito de jogar. Resolver matemática é o que faz o mundo funcionar.**
 
 Evitar:
 
-> Acerte 10 contas para causar dano a um monstro.
+> resolva 10 contas para causar dano.
 
 Preferir:
 
-> Resolva a matemática necessária para operar, construir, otimizar ou prever algo no mundo.
-
-Exemplo de otimização:
-
-O estudante precisa projetar uma estrutura usando quantidade mínima de material.
-
-Para isso:
-
-1. interpreta o cenário;
-2. define variáveis;
-3. cria a função;
-4. identifica restrições;
-5. deriva;
-6. encontra pontos críticos;
-7. compara soluções;
-8. aplica o resultado.
-
-A matemática é a mecânica.
+> determine a inclinação necessária para construir a passagem.
 
 ---
 
-# 24. RECOMPENSAS
+## 23.1 DIREÇÃO TEMÁTICA ATUAL
+
+A direção provisória será uma **jornada de construção, descoberta e domínio de sistemas**.
+
+O aluno progride por um mundo/ambiente que inicialmente possui:
+
+- áreas incompletas;
+- estruturas sem conexão;
+- mecanismos que precisam ser compreendidos;
+- fenômenos que precisam ser previstos;
+- problemas que exigem modelagem.
+
+Aprender matemática permite compreender e transformar esse ambiente.
+
+A narrativa exata, personagens e direção artística ainda não estão fechados.
+
+---
+
+## 23.2 O MAPA CURRICULAR E O MUNDO PODEM SER A MESMA COISA
+
+O Mapa de Conhecimento poderá receber uma representação lúdica.
+
+Exemplo conceitual:
+
+```
+Distrito dos Números
+        ↓
+Oficina das Frações
+        ↓
+Ponte da Álgebra
+        ↓
+Plano das Funções
+        ↓
+Observatório dos Limites
+        ↓
+Mecânica das Derivadas
+        ↓
+Vale da Acumulação
+```
+
+Os nomes finais deverão evitar infantilizar conteúdos avançados.
+
+Uma opção é oferecer:
+
+- nome matemático claro como principal;
+- tratamento visual/lúdico como ambientação secundária.
+
+---
+
+## 23.3 CLAREZA EDUCACIONAL SEMPRE VENCE TEMATIZAÇÃO
+
+Mesmo em uma área temática, o usuário precisa saber:
+
+> estou estudando funções quadráticas.
+
+Nunca esconder currículo atrás de nomes fantasiosos.
+
+Exemplo:
+
+```
+Região: Estruturas e Movimento
+Módulo: Funções Quadráticas
+```
+
+---
+
+## 23.4 PROGRESSO VISUAL DO MUNDO
+
+A evolução do aluno poderá produzir mudanças persistentes:
+
+- caminhos conectados;
+- estruturas restauradas;
+- laboratório ampliado;
+- novas ferramentas disponíveis;
+- novas representações matemáticas;
+- objetos visuais desbloqueados.
+
+Essas mudanças são consequência do progresso curricular.
+
+---
+
+## 23.5 MATEMÁTICA COMO CONTROLE DE SISTEMAS
+
+Tipos de mecânica:
+
+### Geometria
+
+Dimensionar objetos, áreas, distâncias e ângulos.
+
+### Funções lineares
+
+Definir trajetórias, taxas, inclinações ou relações entre grandezas.
+
+### Quadráticas
+
+Trabalhar com arcos, trajetórias, máximos e mínimos.
+
+### Trigonometria
+
+Orientação, ondas, ciclos, triangulação e direção.
+
+### Exponenciais
+
+Crescimento, decaimento, propagação e escalas.
+
+### Logaritmos
+
+Descobrir expoentes, escalas e tempo de crescimento.
+
+### Limites
+
+Analisar aproximação, comportamento próximo de pontos críticos e descontinuidades.
+
+### Derivadas
+
+Controlar velocidade, inclinação, otimização e mudança instantânea.
+
+### Integrais
+
+Acumular quantidade, medir área, distância, energia ou recursos ao longo de uma variável.
+
+---
+
+## 23.6 EXEMPLO — INCLINAÇÃO
+
+Situação:
+
+uma conexão precisa unir dois pontos.
+
+O aluno recebe coordenadas:
+
+```
+A(2,3)
+B(6,11)
+```
+
+Precisa calcular:
+
+```
+m = (11-3)/(6-2)
+m = 8/4
+m = 2
+```
+
+Ao concluir, a estrutura visual assume inclinação correspondente.
+
+A animação confirma o significado de `m`.
+
+---
+
+## 23.7 EXEMPLO — FUNÇÃO LINEAR
+
+O aluno precisa calibrar um mecanismo cujo custo possui:
+
+- taxa inicial;
+- custo por unidade.
+
+Ele constrói:
+
+```
+C(x)=ax+b
+```
+
+A visualização responde aos parâmetros.
+
+O objetivo não é escolher entre quatro funções.
+
+É modelar.
+
+---
+
+## 23.8 EXEMPLO — QUADRÁTICA
+
+Uma trajetória precisa passar por determinada altura ou maximizar alcance.
+
+O aluno trabalha com:
+
+```
+h(t)=-5t²+20t+2
+```
+
+Pode precisar:
+
+- encontrar vértice;
+- interpretar zeros;
+- comparar trajetórias.
+
+O mundo mostra a trajetória somente após previsão/cálculo quando pedagogicamente apropriado.
+
+---
+
+## 23.9 EXEMPLO — TRIGONOMETRIA
+
+Uma torre precisa determinar a distância de um ponto inacessível.
+
+O aluno conhece:
+
+- ângulo;
+- uma medida;
+- relação trigonométrica apropriada.
+
+Ao calcular, a visualização completa a triangulação.
+
+---
+
+## 23.10 EXEMPLO — LIMITES
+
+Um mecanismo possui comportamento instável em um ponto.
+
+Função:
+
+```
+(x²-1)/(x-1)
+```
+
+O mundo mostra aproximação ao redor de `x=1`.
+
+O aluno precisa investigar:
+
+- esquerda;
+- direita;
+- valor da função;
+- limite.
+
+O “problema” é entender o comportamento, não matar um inimigo.
+
+---
+
+## 23.11 EXEMPLO — DERIVADA
+
+Movimento:
+
+```
+s(t)=t³-6t²+9t
+```
+
+Missão:
+
+> descubra quando o objeto para momentaneamente.
+
+O aluno deriva:
+
+```
+v(t)=3t²-12t+9
+```
+
+e resolve `v(t)=0`.
+
+A animação do movimento confirma os instantes.
+
+---
+
+## 23.12 EXEMPLO — OTIMIZAÇÃO
+
+Construir uma estrutura com restrição de material.
+
+O aluno precisa:
+
+1. definir variáveis;
+2. construir função objetivo;
+3. impor restrição;
+4. determinar domínio;
+5. derivar;
+6. encontrar candidatos;
+7. comparar;
+8. interpretar.
+
+Esse tipo de desafio poderá funcionar como “boss” conceitual sem combate.
+
+---
+
+## 23.13 EXEMPLO — INTEGRAL
+
+Um sistema registra taxa de consumo/energia ao longo do tempo.
+
+O aluno observa:
+
+```
+P(t)
+```
+
+e precisa determinar consumo acumulado.
+
+Antes da integral formal:
+
+- retângulos;
+- aproximações;
+- soma.
+
+Depois:
+
+```
+∫ P(t) dt
+```
+
+A representação visual preenche a área/acumulação.
+
+---
+
+## 23.14 DESAFIOS-MARCO
+
+Em vez de chefes tradicionais, teremos **Desafios-Marco**.
+
+Características:
+
+- combinam várias habilidades;
+- possuem contexto significativo;
+- não informam imediatamente qual método usar;
+- permitem múltiplos caminhos quando possível;
+- produzem mudança visual relevante no mundo.
+
+Exemplo:
+
+> reconstruir uma ponte.
+
+Pode exigir:
+
+- proporção;
+- geometria;
+- função;
+- otimização.
+
+---
+
+## 23.15 DESAFIOS NÃO DEVEM INTRODUZIR MATEMÁTICA NÃO ENSINADA
+
+O desafio combina conhecimentos existentes.
+
+Não deverá surpreender o aluno com fórmula inédita necessária para vencer.
+
+---
+
+## 23.16 FALHAR NÃO DESTRÓI PROGRESSO
+
+Erro é parte da aprendizagem.
+
+Evitar:
+
+- perder vidas permanentes;
+- perder recursos importantes;
+- perder sequência inteira;
+- penalidades que desencorajam experimentação.
+
+Falha pode gerar:
+
+- nova tentativa;
+- análise;
+- dica;
+- revisão de pré-requisito.
+
+---
+
+## 23.17 SEM SISTEMA DE “CORAÇÕES” PARA IMPEDIR ESTUDO
+
+O Eixo não deverá bloquear o aluno de aprender porque errou muitas vezes.
+
+Se houver recurso semelhante a energia, não poderá impedir estudo essencial.
+
+A preferência é não utilizar esse padrão.
+
+---
+
+## 23.18 PROGRESSÃO NÃO DEVE PREMIAR APENAS FREQUÊNCIA
+
+Evitar que streak diário se torne mais importante do que aprender.
+
+Pode existir registro de consistência, mas:
+
+- perder um dia não destrói progresso;
+- não criar ansiedade;
+- não forçar estudo inadequado só para manter sequência.
+
+---
+
+## 23.19 EXPERIÊNCIA / XP
+
+Se existir XP, ele deverá representar atividade significativa.
+
+Pode considerar:
+
+- habilidade nova;
+- consolidação;
+- desafio;
+- revisão necessária;
+- transferência.
+
+Não recompensar infinitamente questão trivial repetida.
+
+---
+
+## 23.20 NÍVEL GLOBAL
+
+Pode existir nível geral de perfil, mas ele não substitui domínio curricular.
+
+Um usuário nível alto ainda pode ter lacuna específica.
+
+A progressão acadêmica continua baseada no grafo de habilidades.
+
+---
+
+## 23.21 RECOMPENSAS COSMÉTICAS
 
 Podem incluir:
 
-- novas ferramentas;
-- novas áreas;
-- desafios;
-- personalização;
-- conquistas;
-- novas visualizações;
-- registros de domínio.
+- tema do Caderno;
+- capas;
+- estilos de mapa;
+- elementos de ambiente;
+- avatares;
+- ícones;
+- decoração do laboratório.
 
-A principal recompensa deve continuar sendo a percepção:
+Nunca devem afetar a correção matemática.
 
-> “Agora consigo resolver algo que antes não conseguia.”
+---
+
+## 23.22 FERRAMENTAS MATEMÁTICAS COMO DESBLOQUEIOS REAIS
+
+Um dos sistemas de progressão mais coerentes já existe:
+
+> **Caixa de Ferramentas Matemáticas**
+
+Exemplo:
+
+```
+✓ fração
+✓ potência
+✓ raiz
+○ função
+🔒 logaritmo
+🔒 limite
+🔒 integral
+```
+
+O desbloqueio representa conhecimento real adquirido.
+
+Esse sistema poderá ser uma das recompensas centrais.
+
+---
+
+## 23.23 O LABORATÓRIO TAMBÉM EVOLUI
+
+Conforme o currículo avança, o Laboratório recebe novas capacidades.
+
+Exemplo:
+
+### Inicial
+
+- reta numérica;
+- frações;
+- formas.
+
+### Funções
+
+- plano cartesiano;
+- gráfico.
+
+### Trigonometria
+
+- círculo trigonométrico;
+- ondas.
+
+### Cálculo
+
+- tangente;
+- limite;
+- Riemann;
+- integral.
+
+A evolução visual corresponde à evolução conceitual.
+
+---
+
+## 23.24 LIVRO MATEMÁTICO COMO COLEÇÃO
+
+O Livro Matemático Pessoal poderá funcionar também como sistema de coleção.
+
+Mas ele reúne conhecimento real:
+
+- conceitos aprendidos;
+- exemplos resolvidos;
+- gráficos;
+- métodos;
+- observações.
+
+Não cartas aleatórias desconectadas.
+
+---
+
+## 23.25 CONQUISTAS
+
+Conquistas devem representar marcos significativos.
+
+Exemplos:
+
+- Primeira equação resolvida;
+- Primeira função construída;
+- Dominou frações;
+- Identificou e corrigiu o próprio erro;
+- Resolveu um desafio por método alternativo;
+- Primeira derivada;
+- Primeiro problema de otimização;
+- Primeiro integral definido.
+
+Evitar centenas de conquistas irrelevantes.
+
+---
+
+## 23.26 CONQUISTAS POR COMPORTAMENTO DE APRENDIZAGEM
+
+Exemplos positivos:
+
+- revisar voluntariamente uma lacuna;
+- explicar uma solução;
+- usar duas representações;
+- retornar e consolidar habilidade antiga.
+
+Cuidado para não manipular o aluno a executar comportamentos artificiais apenas pelo badge.
+
+---
+
+## 23.27 CAMINHOS ALTERNATIVOS PODEM SER CELEBRADOS
+
+Se o aluno encontra método diferente e válido:
+
+> “Outro caminho válido.”
+
+Isso pode ser valorizado como exploração matemática.
+
+Mas sem atribuir domínio da habilidade que ele evitou, conforme regras já definidas.
+
+---
+
+## 23.28 DESCOBERTAS
+
+Algumas interações poderão produzir “descobertas” conceituais.
+
+Exemplo:
+
+O aluno manipula `y=ax²` e percebe que:
+
+- `a>0` abre para cima;
+- aumentar `|a|` estreita a parábola.
+
+Depois o curso formaliza.
+
+A descoberta poderá ser registrada no Livro Matemático.
+
+---
+
+## 23.29 PREVISÃO ANTES DE ANIMAÇÃO
+
+Para evitar que o visual entregue a resposta:
+
+```
+prever
+↓
+calcular/justificar
+↓
+executar
+↓
+observar
+```
+
+Esse padrão será central nas mecânicas do mundo.
+
+---
+
+## 23.30 O MUNDO NÃO DEVE SER NECESSÁRIO PARA TODA MICROATIVIDADE
+
+Nem toda conta precisa virar animação.
+
+Isso seria:
+
+- cansativo;
+- lento;
+- caro de produzir;
+- pedagogicamente artificial.
+
+Atividades diretas continuam existindo no Caderno.
+
+A camada lúdica entra onde melhora significado ou motivação.
+
+---
+
+## 23.31 TRÊS CAMADAS DE EXPERIÊNCIA
+
+### Camada 1 — Estudo direto
+
+Aula, Caderno, prática.
+
+### Camada 2 — Aplicação visual
+
+Gráficos, laboratório, manipulações.
+
+### Camada 3 — Missão/Desafio
+
+Problema contextualizado integrado ao mundo.
+
+O conteúdo poderá alternar as três.
+
+---
+
+## 23.32 MISSÕES
+
+Uma missão deverá ter:
+
+```
+objetivo narrativo
+objetivo matemático
+habilidades
+estado visual inicial
+modelo matemático
+ações permitidas
+condição de sucesso
+feedback visual
+```
+
+Exemplo:
+
+```
+Objetivo narrativo:
+reconectar duas áreas
+
+Matemática:
+reta entre dois pontos
+
+Habilidades:
+inclinação
+equação da reta
+
+Condição de sucesso:
+modelo válido que passa pelos pontos
+```
+
+---
+
+## 23.33 A MATEMÁTICA ALTERA O ESTADO
+
+Quando o aluno muda um parâmetro matemático, o mundo responde.
+
+Exemplo:
+
+```
+y = ax+b
+
+a ↑
+→ inclinação visual aumenta
+
+b ↑
+→ reta sobe
+```
+
+Isso cria ligação direta entre símbolo e consequência.
+
+---
+
+## 23.34 NÃO USAR RESPOSTA CORRETA COMO BOTÃO DISFARÇADO
+
+Evitar mecânicas como:
+
+```
+[2] [4] [6] [8]
+```
+
+em que o “jogo” é somente clicar na resposta.
+
+Quando o objetivo permitir, o aluno deve construir a matemática no Caderno ou em controles significativos.
+
+---
+
+## 23.35 CONTROLES VISUAIS TÊM OBJETIVO PEDAGÓGICO
+
+Sliders, arrasto e manipulação podem ser usados para explorar.
+
+Mas domínio formal requer em algum momento:
+
+- calcular;
+- representar;
+- explicar;
+- aplicar.
+
+Arrastar até “parecer certo” não substitui matemática.
+
+---
+
+## 23.36 DIFICULDADE DO JOGO NÃO PODE SER HABILIDADE MOTORA
+
+O Eixo não deve exigir reflexo rápido, precisão de toque ou controles complexos para provar conhecimento matemático.
+
+A dificuldade deve estar no raciocínio.
+
+---
+
+## 23.37 SEM PAY-TO-WIN PEDAGÓGICO
+
+Se monetização existir futuramente:
+
+- não vender respostas;
+- não vender domínio;
+- não bloquear ferramentas matemáticas essenciais atrás de compra;
+- não tornar aprendizado pior de propósito para vender solução.
+
+Modelo de negócio será definido separadamente.
+
+---
+
+## 23.38 PERSONALIZAÇÃO DO MUNDO
+
+O aluno poderá, futuramente, escolher aparência de:
+
+- espaço de estudo;
+- laboratório;
+- mapa;
+- avatar;
+- caderno.
+
+Isso cria vínculo sem interferir na pedagogia.
+
+---
+
+## 23.39 NARRATIVA LEVE E OPCIONAL
+
+O Eixo deverá funcionar para quem gosta da camada de jogo e para quem quer apenas estudar.
+
+A narrativa não poderá bloquear acesso ao conteúdo.
+
+Possível configuração:
+
+```
+Experiência:
+[Equilibrada]
+[Mais direta]
+```
+
+Não precisa existir no MVP se aumentar o escopo, mas a arquitetura não deve obrigar narrativa constante.
+
+---
+
+## 23.40 IDADE E TOM
+
+Como o produto pretende chegar até Cálculo I, a camada lúdica não pode parecer exclusivamente infantil.
+
+Direção:
+
+- limpa;
+- curiosa;
+- tecnológica ou abstrata;
+- acolhedora;
+- sem mascotes excessivamente infantis como requisito.
+
+A identidade visual será definida posteriormente.
+
+---
+
+## 23.41 CELEBRAÇÃO DE MARCOS
+
+Celebrações maiores são adequadas para:
+
+- concluir uma unidade;
+- desbloquear nova área;
+- dominar habilidade crítica;
+- resolver Desafio-Marco;
+- entrar em Cálculo;
+- primeira derivada;
+- Teorema Fundamental do Cálculo.
+
+Esses momentos merecem peso.
+
+---
+
+## 23.42 FEEDBACK VISUAL IMEDIATO
+
+Ao aplicar matemática em missão:
+
+- estrutura pode se mover;
+- gráfico mudar;
+- objeto alcançar posição;
+- área preencher;
+- trajetória atualizar.
+
+A animação é feedback da matemática.
+
+---
+
+## 23.43 MODO REDUZIR MOVIMENTO
+
+Toda animação lúdica deverá respeitar acessibilidade.
+
+Pode substituir movimento por:
+
+- transição curta;
+- mudança de estado;
+- destaque estático.
+
+---
+
+## 23.44 ECONOMIA VIRTUAL
+
+Uma economia complexa não é requisito.
+
+Se houver moeda:
+
+- função principalmente cosmética;
+- obtenção ligada a progresso significativo;
+- sem pressão para grind.
+
+Para MVP, moeda pode ser omitida.
+
+---
+
+## 23.45 MISSÃO NÃO PRECISA SER “REALISTA”
+
+Contextos podem ser:
+
+- reais;
+- abstratos;
+- ficcionais;
+- tecnológicos.
+
+Mas a matemática precisa ser internamente coerente.
+
+Um mundo estilizado pode ser mais flexível que tentar justificar toda equação com cenário real.
+
+---
+
+## 23.46 GAMIFICAÇÃO ADAPTATIVA
+
+O sistema de domínio poderá influenciar missões.
+
+Se aluno domina rapidamente:
+
+- menos prática repetitiva;
+- desafio mais aberto.
+
+Se apresenta lacuna:
+
+- missão pode inserir suporte/revisão.
+
+Sem alterar arbitrariamente regras do mundo.
+
+---
+
+## 23.47 DESAFIO COM MÚLTIPLOS CAMINHOS
+
+Um bom Desafio-Marco deverá, quando possível, permitir estratégias diferentes.
+
+O motor registra:
+
+- caminho escolhido;
+- conceitos usados;
+- validade;
+- aderência aos objetivos.
+
+Isso combina diretamente com a filosofia geral do Eixo.
+
+---
+
+## 23.48 REPLAY
+
+Desafios concluídos poderão ser refeitos:
+
+- por outro método;
+- com parâmetros diferentes;
+- em dificuldade maior.
+
+Isso permite explorar matemática sem criar conteúdo totalmente novo.
+
+---
+
+## 23.49 MODO DESAFIO
+
+Pode retirar parte das orientações:
+
+- sem método sugerido;
+- menos dicas;
+- contexto mais aberto.
+
+Mas não deve esconder informações matemáticas necessárias.
+
+---
+
+## 23.50 BOSS CONCEITUAL — DEFINIÇÃO
+
+O termo interno “boss” poderá representar:
+
+> uma atividade longa de síntese que exige modelar, calcular, interpretar e decidir.
+
+Não precisa existir um inimigo visual.
+
+O nome exibido poderá ser:
+
+**Desafio-Marco**, **Projeto**, **Missão de Síntese** ou equivalente.
+
+---
+
+# 24. RECOMPENSAS E PROGRESSÃO
+
+## 24.1 RECOMPENSA PRIMÁRIA
+
+A recompensa principal é:
+
+> conseguir fazer algo matemático que antes parecia inacessível.
+
+Os sistemas lúdicos devem amplificar essa sensação.
+
+---
+
+## 24.2 DESBLOQUEIOS
+
+Podem incluir:
+
+- ferramenta matemática;
+- área do mapa;
+- Laboratório;
+- visualização;
+- desafio;
+- conteúdo;
+- personalização.
+
+---
+
+## 24.3 DESBLOQUEIO NÃO DEVE ESCONDER CONTEÚDO JÁ DOMINADO
+
+Se diagnóstico mostra domínio prévio:
+
+o aluno pode receber desbloqueios correspondentes sem refazer toda a trilha.
+
+---
+
+## 24.4 RECOMPENSA POR REVISÃO
+
+Revisar uma lacuna é progresso real e poderá ser reconhecido.
+
+Isso evita transmitir:
+
+> “voltar é fracassar”.
+
+---
+
+## 24.5 SEM PENALIDADE POR DICA
+
+Dicas podem reduzir evidência de independência, mas não devem retirar recompensas já conquistadas.
+
+---
+
+## 24.6 CONQUISTAS NÃO ALTERAM DOMÍNIO
+
+Badge não libera conteúdo acadêmico se os pré-requisitos não foram demonstrados.
+
+Gamificação e modelo pedagógico são conectados, mas não intercambiáveis.
+
+---
+
+## 24.7 PERFIL VISUAL
+
+Conquistas e personalização poderão aparecer em perfil.
+
+Evitar ocupar a tela principal com contadores e moedas quando há estudo para continuar.
+
+---
+
+## 24.8 PRINCÍPIO FINAL DE GAMIFICAÇÃO
+
+Antes de adicionar qualquer mecânica, perguntar:
+
+1. reforça significado matemático?
+2. reforça progresso real?
+3. cria curiosidade saudável?
+4. distrai do raciocínio?
+5. incentiva comportamento artificial?
+
+Se a mecânica existe apenas para aumentar tempo de tela, ela não pertence ao Eixo.
 
 ---
 
