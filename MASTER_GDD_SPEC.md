@@ -10556,19 +10556,20 @@ Blocos estruturais já definidos em nível inicial:
 - estrutura de módulos, aulas e mapa de conhecimento;
 - fluxo inicial de navegação do aplicativo (onboarding, início, aula, atividade, conclusão e continuidade);
 - banco de questões, blueprints paramétricos e seleção adaptativa;
-- política de proveniência, licenças e conteúdo externo.
+- política de proveniência, licenças e conteúdo externo;
+- módulo futuro de IA totalmente especificado e fora do MVP;
+- gamificação matemática, Desafios-Marco e progressão lúdica.
 
 Prioridade atual:
 
-1. gamificação e camada lúdica integrada à matemática;
-2. perfil, progresso, histórico e Livro Matemático;
-3. arquitetura técnica e escolha de tecnologias;
-4. persistência, sincronização e funcionamento offline/online;
-5. segurança, privacidade e telemetria pedagógica;
-6. definição formal do MVP;
-7. critérios de aceite e estratégia de testes;
-8. roadmap;
-9. instruções finais para Codex/agentes e início da implementação.
+1. perfil, progresso, histórico e Livro Matemático;
+2. arquitetura técnica e escolha de tecnologias;
+3. persistência, sincronização e funcionamento offline/online;
+4. segurança, privacidade e telemetria pedagógica;
+5. definição formal do MVP;
+6. critérios de aceite e estratégia de testes;
+7. roadmap;
+8. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
