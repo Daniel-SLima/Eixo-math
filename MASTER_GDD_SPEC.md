@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.18 em construção  
+**Versão de especificação:** 0.19 — pronta para revisão  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -11367,12 +11367,18 @@ Blocos estruturais já definidos em nível inicial:
 - escopo formal do MVP definido;
 - critérios de aceite e estratégia de testes definidos;
 - roadmap de implementação por fases definido;
-- handoff para Codex/agentes preparado, porém bloqueado até autorização explícita da especificação.
+- handoff para Codex/agentes preparado, porém bloqueado até autorização explícita da especificação;
+- decisões-base de produto fechadas;
+- design system base definido;
+- modelo de dados v1 definido;
+- currículo detalhado do MVP definido;
+- critérios de domínio do MVP definidos;
+- checklist de fechamento criado.
 
 Prioridade atual:
 
-1. fechamento das últimas decisões de produto;
-2. revisão de consistência entre documentos;
+1. revisão final pelo proprietário do projeto;
+2. ajustes decorrentes dessa revisão;
 3. somente então alterar SPEC_STATUS para READY_FOR_IMPLEMENTATION.
 
 ---
@@ -11428,8 +11434,24 @@ O handoff para implementação existe, mas está bloqueado.
 Estado atual:
 
 ```
-SPEC_STATUS=IN_PROGRESS
+SPEC_STATUS=REVIEW_READY
 IMPLEMENTATION_AUTHORIZED=false
+```
+
+Documentos adicionais de fechamento:
+
+- `docs/product/PRODUCT_DECISIONS.md`;
+- `docs/content/MVP_CURRICULUM_DETAIL.md`;
+- `docs/pedagogy/MVP_MASTERY_CRITERIA.md`;
+- `docs/design/DESIGN_SYSTEM.md`;
+- `docs/architecture/DATA_MODEL_V1.md`;
+- `docs/SPEC_REVIEW_CHECKLIST.md`.
+
+A implementação continua proibida até aprovação explícita e mudança para:
+
+```
+SPEC_STATUS=READY_FOR_IMPLEMENTATION
+IMPLEMENTATION_AUTHORIZED=true
 ```
 
 Toda decisão relevante tomada durante o planejamento deverá ser incorporada aqui ou referenciada por este documento antes do início da implementação.
