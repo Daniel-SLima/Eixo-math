@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.17 em construção  
+**Versão de especificação:** 0.18 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -11365,13 +11365,15 @@ Blocos estruturais já definidos em nível inicial:
 - persistência local-first, sincronização e funcionamento offline definidos;
 - segurança, privacidade e telemetria pedagógica definidas;
 - escopo formal do MVP definido;
-- critérios de aceite e estratégia de testes definidos.
+- critérios de aceite e estratégia de testes definidos;
+- roadmap de implementação por fases definido;
+- handoff para Codex/agentes preparado, porém bloqueado até autorização explícita da especificação.
 
 Prioridade atual:
 
-1. roadmap de implementação;
-2. instruções finais para Codex/agentes;
-3. fechamento das últimas decisões de produto antes de autorizar implementação.
+1. fechamento das últimas decisões de produto;
+2. revisão de consistência entre documentos;
+3. somente então alterar SPEC_STATUS para READY_FOR_IMPLEMENTATION.
 
 ---
 
@@ -11410,5 +11412,24 @@ O MVP somente poderá ser aceito quando o usuário conseguir completar o fluxo c
 # 43. STATUS
 
 Este documento é a **fonte principal de verdade do projeto Eixo**.
+
+Documentos de apoio atuais:
+
+- `docs/product/MVP_SCOPE.md`;
+- `docs/architecture/TECH_STACK.md`;
+- `docs/architecture/DATA_SYNC_OFFLINE.md`;
+- `docs/architecture/SECURITY_PRIVACY_TELEMETRY.md`;
+- `docs/quality/TEST_STRATEGY.md`;
+- `docs/implementation/ROADMAP.md`;
+- `docs/implementation/CODEX_HANDOFF.md`.
+
+O handoff para implementação existe, mas está bloqueado.
+
+Estado atual:
+
+```
+SPEC_STATUS=IN_PROGRESS
+IMPLEMENTATION_AUTHORIZED=false
+```
 
 Toda decisão relevante tomada durante o planejamento deverá ser incorporada aqui ou referenciada por este documento antes do início da implementação.
