@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.2 em construção  
+**Versão de especificação:** 0.3 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -565,6 +565,183 @@ Nada do rascunho entra automaticamente na resposta final.
 
 ---
 
+## 14.4 SISTEMA DE QUADROS DE TRABALHO
+
+O ambiente de resolução não deverá ser limitado a uma única página longa.
+
+Cada atividade poderá possuir múltiplos **Quadros de Trabalho**, equivalentes a folhas/páginas de um caderno.
+
+O objetivo é permitir que o aluno separe raciocínios sem perder contexto.
+
+Exemplos de uso:
+
+- Quadro 1: resolução principal;
+- Quadro 2: cálculo auxiliar;
+- Quadro 3: tentativa alternativa;
+- Quadro 4: análise de um gráfico ou tabela;
+- Quadro 5: revisão de um cálculo anterior.
+
+## 14.5 QUADRO PRINCIPAL E QUADROS AUXILIARES
+
+Toda atividade começa com um **Quadro Principal**.
+
+O usuário poderá criar quadros adicionais conforme precisar.
+
+Cada quadro deverá possuir:
+
+- identificador;
+- posição;
+- nome opcional;
+- tipo;
+- conteúdo;
+- data/ordem de criação;
+- última posição do cursor;
+- histórico local de desfazer/refazer.
+
+Tipos iniciais:
+
+- **Resolução**;
+- **Rascunho**;
+- **Anotação**;
+- futuramente **Gráfico/Laboratório**, quando fizer sentido.
+
+A resolução oficial poderá usar um ou mais quadros de tipo Resolução, preservando uma ordem lógica entre eles.
+
+## 14.6 NAVEGAÇÃO RÁPIDA ENTRE QUADROS
+
+Quando houver poucos quadros, a navegação deverá ser praticamente instantânea.
+
+Exemplo conceitual:
+
+```
+        Quadro 2 de 4
+     ●  ●  ○  ○
+
+[‹]                 [›]
+
+        conteúdo
+```
+
+O usuário poderá avançar ou voltar usando controles explícitos e uma transição horizontal suave que transmita a sensação de mudar de página.
+
+A navegação não deverá depender somente de gesto de deslizar, pois fórmulas grandes também podem exigir rolagem horizontal.
+
+Gestos poderão existir como atalho, mas sempre deverá existir uma alternativa visível.
+
+## 14.7 SELETOR DE QUADROS
+
+Quando o aluno criar muitos quadros, os indicadores simples deixam de ser suficientes.
+
+Deverá existir um botão como:
+
+**Todos os quadros**
+
+que abre um seletor visual.
+
+Exemplo:
+
+```
+┌──────────────────────────────┐
+│ QUADROS                      │
+│                              │
+│ 1. Resolução principal      │
+│ 2. Conta auxiliar           │
+│ 3. Tentativa por fatoração  │
+│ 4. Conferência              │
+│ 5. Rascunho                 │
+│                              │
+│ [+ Novo quadro]             │
+└──────────────────────────────┘
+```
+
+O seletor poderá usar lista ou miniaturas dependendo do tamanho da tela.
+
+O aluno poderá tocar em qualquer quadro e ir diretamente até ele.
+
+## 14.8 NOMES AUTOMÁTICOS E PERSONALIZADOS
+
+Ao criar um quadro, o sistema poderá usar nomes automáticos:
+
+- Quadro 1;
+- Quadro 2;
+- Rascunho 1.
+
+O aluno poderá renomear:
+
+- “Bhaskara”;
+- “Conta da raiz”;
+- “Tentativa 2”;
+- “Gráfico”.
+
+Renomear é opcional e nunca deve interromper o fluxo de resolução.
+
+## 14.9 CRIAÇÃO RÁPIDA
+
+O botão de novo quadro deverá permitir:
+
+- novo quadro de resolução;
+- novo rascunho;
+- nova anotação.
+
+Também poderá existir:
+
+**Duplicar quadro**
+
+para testar uma estratégia alternativa sem destruir o raciocínio anterior.
+
+## 14.10 PRESERVAÇÃO DE CONTEXTO
+
+Ao alternar entre quadros, o aplicativo deverá lembrar:
+
+- posição de rolagem;
+- linha selecionada;
+- cursor;
+- zoom, quando aplicável;
+- estado do teclado;
+- seleção matemática atual, quando possível.
+
+O aluno deve poder ir ao Quadro 3, conferir um cálculo e voltar ao Quadro 1 exatamente onde estava.
+
+## 14.11 TRANSIÇÕES
+
+A troca entre quadros deverá utilizar animação curta e fluida, preferencialmente com sensação de deslocamento lateral entre páginas.
+
+A animação deverá:
+
+- reforçar orientação espacial;
+- não atrasar a interação;
+- respeitar a opção de redução de movimento da acessibilidade.
+
+## 14.12 QUADROS E AVALIAÇÃO
+
+O motor pedagógico deverá distinguir:
+
+- conteúdo da resolução oficial;
+- conteúdo auxiliar;
+- tentativas alternativas;
+- rascunhos.
+
+Somente quadros marcados como parte da resolução final deverão ser usados para avaliar a cadeia oficial de passos.
+
+Entretanto, quadros auxiliares poderão ser usados futuramente para compreender estratégias de estudo, desde que isso respeite as regras de privacidade e não penalize tentativas ou erros de rascunho.
+
+## 14.13 VISÃO GERAL DA ATIVIDADE
+
+Em atividades extensas, poderá existir uma visão geral:
+
+```
+Problema
+   │
+   ├── Quadro 1 — Modelagem
+   ├── Quadro 2 — Desenvolvimento
+   ├── Quadro 3 — Cálculo auxiliar
+   └── Quadro 4 — Conclusão
+```
+
+O objetivo não é obrigar o aluno a organizar dessa forma, mas oferecer estrutura quando ele desejar.
+
+---
+
 # 15. CALCULADORA
 
 É diferente do Teclado Matemático.
@@ -610,6 +787,116 @@ Exemplo inválido:
 O sistema deve reconhecer que a transformação perdeu equivalência.
 
 A validação deverá considerar contexto e domínio, não apenas igualdade textual.
+
+---
+
+## 16.1 VALIDADE MATEMÁTICA VS. OBJETIVO PEDAGÓGICO
+
+O motor deverá avaliar uma resolução em duas dimensões independentes:
+
+1. **Validade matemática:** o caminho utilizado é matematicamente correto e chega a uma resposta válida?
+2. **Aderência pedagógica:** a resolução demonstra o conceito que está sendo ensinado ou avaliado naquela atividade?
+
+Isso permite aceitar diferentes caminhos sem perder o objetivo da aula.
+
+### Exemplo — aula de fatoração
+
+Questão:
+
+`x² - 5x + 6 = 0`
+
+O aluno resolve por fórmula quadrática e encontra:
+
+`x = 2` e `x = 3`.
+
+A solução é matematicamente correta.
+
+Entretanto, se a atividade possui como conceito-alvo **fatoração de trinômios**, o sistema deverá responder de forma semelhante a:
+
+> Sua resposta está correta, mas esta atividade quer verificar sua prática de fatoração. Tente resolver novamente usando fatoração.
+
+O aluno não deverá receber “resposta errada”, pois o resultado é válido.
+
+Porém essa tentativa não deverá conceder domínio de fatoração.
+
+### Exemplo — caminho alternativo dentro do mesmo conceito
+
+Se a atividade ensina resolução de equações lineares:
+
+```
+2x + 4 = 10
+```
+
+São aceitáveis, por exemplo:
+
+```
+2x = 6
+x = 3
+```
+
+ou:
+
+```
+2x + 4 - 4 = 10 - 4
+2x = 6
+2x/2 = 6/2
+x = 3
+```
+
+ou outra sequência matematicamente válida que demonstre a habilidade-alvo.
+
+O sistema não deverá impor uma solução-modelo única.
+
+## 16.2 CONTRATO PEDAGÓGICO DA ATIVIDADE
+
+Cada atividade deverá possuir metadados que indiquem o que ela pretende avaliar.
+
+Campos conceituais previstos:
+
+- `conceitosAlvo`;
+- `conceitosPermitidos`;
+- `conceitosObrigatorios`, quando aplicável;
+- `estrategiasAceitas`;
+- `estrategiasQueNaoComprovamDominio`;
+- `nivelDeDetalhamento`;
+- `politicaDeCalculadora`;
+- `preRequisitos`.
+
+O motor deverá avaliar a resolução completa e identificar quais conceitos realmente foram usados.
+
+## 16.3 TRÊS RESULTADOS POSSÍVEIS PARA UMA RESOLUÇÃO
+
+Uma resolução poderá ser classificada como:
+
+### Correta e alinhada
+
+A matemática está correta e o aluno demonstrou o assunto-alvo.
+
+Conta normalmente para domínio.
+
+### Correta, mas fora do objetivo
+
+A matemática está correta, porém o aluno contornou a habilidade que a atividade pretendia praticar.
+
+O resultado deve ser reconhecido como correto, mas a atividade pode solicitar uma nova resolução usando o assunto atual.
+
+Não deve contar como evidência suficiente de domínio do conceito-alvo.
+
+### Matematicamente incorreta
+
+Existe uma transformação inválida, erro de cálculo ou conclusão incorreta.
+
+O sistema aplica o fluxo normal de diagnóstico e feedback.
+
+## 16.4 USO DE CONHECIMENTOS ANTERIORES E MAIS AVANÇADOS
+
+Conhecimentos anteriores podem e devem ser usados livremente quando necessários.
+
+Conhecimentos mais avançados também poderão ser reconhecidos como matematicamente válidos, mas não poderão substituir automaticamente o conceito-alvo quando a atividade existe para praticá-lo.
+
+Em atividades de **aplicação**, **desafio**, **revisão mista** ou **prova cumulativa**, o aluno deverá possuir liberdade muito maior para escolher qualquer estratégia válida.
+
+Assim, a rigidez pedagógica depende do tipo de atividade.
 
 ---
 
