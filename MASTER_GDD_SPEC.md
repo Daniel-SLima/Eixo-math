@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.20 — auditoria concluída  
+**Versão de especificação:** 0.21 — assets e áudio especificados  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -2811,6 +2811,30 @@ A arquitetura deve evitar bloquear sua inclusão futura, mas nenhum requisito do
 - matchmaking;
 - presença online;
 - ranking social.
+
+---
+
+## 23.59 POLÍTICA DE FEEDBACK SONORO
+
+O Eixo poderá utilizar pequenos efeitos sonoros para reforçar estados da interface e progressão.
+
+Regras:
+
+- sons discretos;
+- sem voz;
+- sem feedback punitivo/agressivo;
+- não tocar som em cada tecla matemática;
+- usuário pode desativar efeitos;
+- nenhum som substitui feedback visual;
+- sons frequentes precisam ser testados contra fadiga.
+
+Catálogo detalhado:
+
+`docs/assets/SFX_ASSET_PROMPTS.md`
+
+Pipeline geral:
+
+`docs/assets/ASSET_PIPELINE.md`
 
 ---
 
