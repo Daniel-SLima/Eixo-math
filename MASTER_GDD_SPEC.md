@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.6 em construção  
+**Versão de especificação:** 0.7 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -4255,26 +4255,1275 @@ Planejados inicialmente:
 
 ---
 
-# 32. UX MOBILE
+# 32. UX MOBILE E ESCRITA MATEMÁTICA 2D
 
-Mobile é prioridade inicial.
+Mobile é prioridade inicial, mas a experiência não poderá tratar matemática como se fosse texto comum.
 
-Requisitos:
+No papel, o aluno utiliza posição espacial para comunicar estrutura:
 
-- alvos de toque confortáveis;
-- fórmulas longas com rolagem adequada;
-- teclado sem esconder toda a resolução;
-- enunciado recolhível;
-- rascunho de acesso rápido;
-- manutenção do cursor/contexto ao alternar áreas.
+- numerador fica acima do denominador;
+- expoente fica acima e à direita;
+- índice de raiz possui posição própria;
+- equações podem ser alinhadas pelo sinal de igualdade;
+- cálculos auxiliares podem ficar ao lado;
+- setas e anotações ocupam posições diferentes;
+- o estudante pode voltar visualmente a qualquer parte da folha.
 
-## Paisagem
+Se o Eixo reduzir tudo a uma única linha textual como:
 
-Pode exibir simultaneamente enunciado, resolução e rascunho.
+`(x^2+1)/(x-3)`
 
-## Tablet
+a interface poderá se tornar mais difícil do que a própria matemática.
 
-Pode exibir simultaneamente enunciado, resolução, rascunho e gráfico.
+Portanto o princípio de UX será:
+
+> **preservar a estrutura espacial da notação matemática sempre que ela transmitir significado.**
+
+---
+
+## 32.1 DOIS ESPAÇOS COM LIBERDADES DIFERENTES
+
+O Eixo terá dois comportamentos principais.
+
+### Caderno Matemático — estrutura controlada
+
+A resolução oficial utiliza linhas e blocos matemáticos estruturados.
+
+O aluno possui liberdade matemática, mas o sistema mantém organização suficiente para:
+
+- interpretar;
+- validar;
+- navegar;
+- alinhar;
+- selecionar.
+
+### Rascunho — liberdade espacial maior
+
+O rascunho poderá funcionar como uma folha digital em que pequenos blocos podem ser posicionados com maior liberdade.
+
+Isso permitirá:
+
+- conta auxiliar à direita;
+- anotação no canto;
+- duas tentativas lado a lado;
+- setas;
+- pequenos blocos independentes.
+
+O rascunho não deverá exigir a mesma rigidez visual da resolução oficial.
+
+---
+
+## 32.2 NÃO USAR UM CAMPO DE TEXTO COMUM
+
+A entrada principal não poderá ser um `TextField` ou equivalente no qual toda matemática aparece em uma linha.
+
+O editor deverá renderizar matemática bidimensional.
+
+Exemplo:
+
+Em vez de:
+
+```
+(x+1)/(x-2)
+```
+
+mostrar:
+
+```
+ x + 1
+───────
+ x - 2
+```
+
+Em vez de:
+
+```
+x^(2+3)
+```
+
+mostrar visualmente:
+
+```
+   2+3
+ x
+```
+
+Em vez de:
+
+```
+sqrt(x+1)
+```
+
+mostrar:
+
+```
+√(x + 1)
+```
+
+com o conteúdo realmente dentro da estrutura visual da raiz.
+
+---
+
+## 32.3 ESTRUTURA POR BLOCOS MATEMÁTICOS
+
+Cada expressão deverá ser composta por blocos estruturais.
+
+Exemplos:
+
+- número;
+- variável;
+- operador;
+- grupo;
+- fração;
+- potência;
+- raiz;
+- função;
+- igualdade;
+- inequação;
+- limite;
+- derivada;
+- integral.
+
+O estudante não precisa conhecer a palavra “bloco”.
+
+Para ele, a experiência deve parecer apenas escrita matemática normal.
+
+---
+
+## 32.4 ÂNCORAS DE INSERÇÃO
+
+Um dos maiores problemas de matemática em tela touch é:
+
+> “onde exatamente o próximo número vai entrar?”
+
+O editor deverá mostrar **âncoras visuais discretas** quando uma estrutura estiver selecionada.
+
+Exemplo ao criar uma fração:
+
+```
+┌───────────┐
+│     □     │
+│  ───────  │
+│     □     │
+└───────────┘
+```
+
+O numerador pode receber um contorno/realce suave.
+
+Depois de preenchido:
+
+```
+   x + 1
+──────────
+    □
+```
+
+o foco passa ao denominador quando o usuário:
+
+- toca nele;
+- usa botão “próximo”;
+- conclui a região atual.
+
+Os espaços vazios deverão ser visualmente identificáveis sem parecer formulário.
+
+---
+
+## 32.5 CURSOR ESTRUTURAL
+
+O cursor matemático deverá indicar não apenas uma posição entre caracteres, mas **em qual região matemática o aluno está**.
+
+Exemplo:
+
+```
+  x + 1
+────────
+  x | 2
+```
+
+O cursor pode estar no denominador.
+
+Ao tocar no expoente:
+
+```
+  2|
+ x
+```
+
+o teclado passa a editar o expoente.
+
+A mudança deverá ser visualmente clara.
+
+---
+
+## 32.6 NAVEGAÇÃO POR REGIÕES
+
+Além de tocar diretamente, o teclado poderá possuir controles de navegação estrutural:
+
+```
+[←] [→] [↑] [↓] [Próximo]
+```
+
+Esses controles não precisam estar sempre visíveis.
+
+Poderão aparecer quando existe uma expressão 2D complexa.
+
+Exemplo:
+
+em uma fração:
+
+- ↑ vai ao numerador;
+- ↓ vai ao denominador.
+
+Em uma potência:
+
+- ↑ pode levar ao expoente;
+- → pode sair da potência.
+
+O comportamento deverá ser previsível e consistente.
+
+---
+
+## 32.7 BOTÃO “SAIR DA ESTRUTURA”
+
+Expressões aninhadas podem confundir.
+
+Exemplo:
+
+```
+       2
+√(x + ─)
+       3
+```
+
+O aluno precisa compreender quando está:
+
+- dentro da fração;
+- dentro da raiz;
+- fora da raiz.
+
+Portanto poderá existir uma ação contextual:
+
+**Sair**
+
+ou:
+
+**Próximo bloco**
+
+que move o cursor para fora da estrutura atual.
+
+O sistema deve ensinar esse comportamento durante os primeiros usos.
+
+---
+
+## 32.8 REALCE DO BLOCO ATIVO
+
+A região atual poderá receber:
+
+- contorno discreto;
+- fundo suave;
+- cursor;
+- pequena animação de foco.
+
+Exemplo conceitual:
+
+```
+√( x + [  □  ] )
+```
+
+O realce nunca deverá alterar a leitura matemática.
+
+---
+
+## 32.9 VISUALIZAÇÃO TEMPORÁRIA DA ESTRUTURA
+
+Para iniciantes, o Eixo poderá oferecer um modo chamado provisoriamente:
+
+**Mostrar estrutura**
+
+Ao ativar, aparecem contornos discretos indicando:
+
+```
+[ 3 × [ ( x + 2 ) ] ] = [ 18 ]
+```
+
+ou em uma fração:
+
+```
+┌ numerador ┐
+│   x + 1   │
+├───────────┤
+│   x - 2   │
+└ denominador
+```
+
+Isso ajuda o aluno a entender onde cada parte está.
+
+O recurso deve poder desaparecer conforme ele ganha familiaridade.
+
+---
+
+## 32.10 INTRODUÇÃO PROGRESSIVA À ESCRITA DIGITAL
+
+O Eixo não deverá apresentar o editor completo no primeiro minuto.
+
+A adaptação à escrita matemática digital fará parte do onboarding pedagógico.
+
+### Primeiro contato
+
+Apenas:
+
+```
+2 + 3 = 5
+```
+
+O aluno aprende:
+
+- tocar em uma linha;
+- inserir número;
+- apagar;
+- criar nova linha.
+
+### Depois
+
+Parênteses:
+
+```
+2(3 + 4)
+```
+
+### Depois
+
+Frações.
+
+### Depois
+
+Potências.
+
+### Depois
+
+Raízes.
+
+E assim por diante.
+
+Cada nova dimensão espacial da notação deverá ser introduzida quando necessária.
+
+---
+
+## 32.11 TUTORIAL DE FRAÇÃO COMO INTERAÇÃO
+
+Não basta explicar o conceito de fração.
+
+O tutorial do editor deverá mostrar fisicamente:
+
+1. toque no botão de fração;
+2. surgem dois espaços;
+3. numerador fica ativo;
+4. escreva `x+1`;
+5. toque ou avance para o denominador;
+6. escreva `x-2`;
+7. use “sair” para continuar depois da fração.
+
+Exemplo final:
+
+```
+ x + 1
+─────── + 3
+ x - 2
+```
+
+O objetivo inicial é aprender **a escrever a notação**, não resolver uma questão.
+
+---
+
+## 32.12 TUTORIAL DE POTÊNCIA
+
+Ao pressionar potência após `x`:
+
+```
+x □
+```
+
+o espaço de expoente aparece elevado.
+
+O aluno escreve:
+
+```
+  2
+ x
+```
+
+Depois usa “sair da estrutura” e continua:
+
+```
+x² + 3
+```
+
+O aplicativo deve mostrar claramente que digitar `+3` dentro do expoente é diferente de digitar fora dele.
+
+---
+
+## 32.13 PREVENÇÃO DE ERRO DE POSIÇÃO
+
+Se o usuário está no expoente:
+
+```
+  2 |
+ x
+```
+
+e digita `+3`, o resultado será:
+
+```
+  2+3
+ x
+```
+
+Isso é válido e não deve ser automaticamente “corrigido”.
+
+Porém o realce visual deverá deixar extremamente claro que ele ainda está dentro do expoente.
+
+A UX deve prevenir erros sem adivinhar a intenção do aluno.
+
+---
+
+## 32.14 DESFAZER É ESSENCIAL
+
+Erros de posição serão inevitáveis enquanto o usuário aprende.
+
+Portanto:
+
+**Desfazer** deverá ser fácil e sempre acessível.
+
+O aluno nunca deverá ter medo de experimentar a interface.
+
+---
+
+## 32.15 EQUAÇÕES ALINHADAS PELO SINAL DE IGUALDADE
+
+Quando apropriado, o Caderno poderá alinhar automaticamente equações sucessivas:
+
+```
+3(x + 2) = 18
+  3x + 6 = 18
+      3x = 12
+       x = 4
+```
+
+O objetivo não é alterar a expressão, mas melhorar legibilidade.
+
+O alinhamento deverá ser opcional/automático conforme o tipo da atividade.
+
+---
+
+## 32.16 NÃO FORÇAR ALINHAMENTO QUANDO NÃO FIZER SENTIDO
+
+Nem toda resolução possui um único sinal de igualdade central.
+
+Exemplo:
+
+```
+u = x²
+v = sin(x)
+
+u' = 2x
+v' = cos(x)
+```
+
+ou:
+
+```
+x = 2 ou x = 3
+```
+
+O layout deverá se adaptar ao tipo de conteúdo.
+
+---
+
+## 32.17 LINHAS PODEM TER ALTURA VARIÁVEL
+
+Uma “linha” do Caderno não significa altura fixa.
+
+Exemplo:
+
+```
+        x² - 1
+lim    ───────
+x→1     x - 1
+```
+
+pode ocupar verticalmente muito mais espaço do que:
+
+`x=2`.
+
+Cada bloco de resolução deve crescer conforme a notação.
+
+---
+
+## 32.18 QUEBRA DE EXPRESSÕES LONGAS
+
+Expressões grandes não deverão simplesmente diminuir até ficarem ilegíveis.
+
+Possíveis estratégias:
+
+1. rolagem horizontal controlada;
+2. quebra em pontos matematicamente seguros;
+3. continuação indentada;
+4. modo paisagem;
+5. zoom temporário.
+
+O sistema nunca deverá quebrar uma expressão em posição que altere ou confunda seu significado.
+
+---
+
+## 32.19 QUEBRA SEMÂNTICA
+
+Se for necessária uma quebra visual:
+
+```
+f(x) = x⁴ + 3x³ - 7x²
+       + 10x - 8
+```
+
+é preferível a uma quebra arbitrária no meio de um termo.
+
+O renderer matemático deverá conhecer pontos válidos de quebra.
+
+---
+
+## 32.20 ZOOM DE EXPRESSÃO
+
+O usuário poderá tocar duas vezes ou usar uma ação de foco para abrir temporariamente uma expressão grande em uma área ampliada.
+
+Ao concluir:
+
+retorna ao quadro mantendo a posição.
+
+Especialmente útil para:
+
+- integrais;
+- limites;
+- frações aninhadas;
+- expressões trigonométricas longas.
+
+---
+
+## 32.21 PAINEL DE EDIÇÃO FOCADO
+
+No celular, quando uma linha estiver sendo editada, o aplicativo poderá aumentar sua área útil.
+
+Exemplo:
+
+### Estado normal
+
+enunciado + várias linhas + controles.
+
+### Estado de edição
+
+- enunciado recolhido;
+- linha ativa ampliada;
+- contexto anterior ainda visível;
+- teclado matemático ocupando parte inferior.
+
+Ao sair da edição, a visão completa retorna.
+
+---
+
+## 32.22 NÃO ESCONDER TODO O CONTEXTO
+
+Mesmo no modo focado, o aluno deverá conseguir ver pelo menos:
+
+- a linha anterior;
+- a linha atual;
+- idealmente a próxima região disponível.
+
+Isso é importante porque matemática passo a passo depende de comparação visual.
+
+---
+
+## 32.23 DUPLICAR LINHA COMO MECÂNICA PRINCIPAL
+
+Em papel, o aluno frequentemente reescreve quase toda a expressão e muda uma parte.
+
+No celular isso seria cansativo.
+
+Portanto **Duplicar linha anterior** deverá ser uma ação de primeira classe.
+
+Exemplo:
+
+```
+2x + 4 = 10
+```
+
+duplicar:
+
+```
+2x + 4 = 10
+```
+
+e editar para:
+
+```
+2x = 6
+```
+
+Isso reduz digitação sem resolver matemática pelo aluno.
+
+---
+
+## 32.24 EDIÇÃO POR SELEÇÃO ESTRUTURAL
+
+Depois de duplicar:
+
+```
+2x + 4 = 10
+```
+
+o aluno poderá tocar no bloco `+4`.
+
+A seleção deve tratar `+4` como uma unidade quando apropriado.
+
+Ações possíveis:
+
+- apagar;
+- substituir;
+- mover para rascunho;
+- copiar.
+
+Evitar oferecer transformações matemáticas automáticas.
+
+---
+
+## 32.25 ÁREA LIVRE NO RASCUNHO
+
+O Rascunho poderá utilizar uma área maior que a tela, com:
+
+- pan;
+- zoom;
+- blocos arrastáveis;
+- texto;
+- expressões matemáticas;
+- setas simples.
+
+Exemplo:
+
+```
+┌─────────────────────────────────────┐
+│  Δ = b² - 4ac          25 - 24 = 1 │
+│                                     │
+│  a = 1                              │
+│  b = -5               → Δ = 1      │
+│  c = 6                              │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+Isso se aproxima mais da liberdade do papel.
+
+---
+
+## 32.26 BLOCOS ARRASTÁVEIS NO RASCUNHO
+
+Cada cálculo auxiliar poderá ser um pequeno bloco.
+
+O aluno pode:
+
+- arrastar;
+- agrupar visualmente;
+- duplicar;
+- apagar;
+- enviar ao Caderno.
+
+O posicionamento não deverá alterar o significado matemático interno do bloco.
+
+---
+
+## 32.27 SNAP OPCIONAL
+
+Para evitar um rascunho completamente caótico, poderá existir encaixe suave em:
+
+- grade;
+- linhas;
+- outros blocos.
+
+Mas isso deverá ser opcional/discreto.
+
+A sensação deve continuar sendo de folha livre.
+
+---
+
+## 32.28 RASCUNHO NÃO É DOCUMENTO FINAL
+
+O sistema não deverá exigir que o rascunho fique bonito.
+
+Sua função é permitir pensamento.
+
+Por isso:
+
+- blocos podem ficar desalinhados;
+- tentativas podem permanecer;
+- erros podem ser riscados/apagados;
+- organização é responsabilidade opcional do aluno.
+
+---
+
+## 32.29 ENVIO VISUAL ENTRE RASCUNHO E CADERNO
+
+Ao selecionar um bloco no rascunho:
+
+**Adicionar à resolução**
+
+poderá produzir uma pequena animação de transição mostrando o bloco sendo incorporado ao quadro de resolução.
+
+Isso reforça mentalmente:
+
+> “esta conta auxiliar agora faz parte do raciocínio oficial”.
+
+A animação deve ser breve e opcional em redução de movimento.
+
+---
+
+## 32.30 POSICIONAMENTO LIVRE NÃO DEVE EXISTIR NA RESOLUÇÃO OFICIAL DO MVP
+
+Apesar de o papel permitir escrever em qualquer lugar, permitir coordenadas totalmente livres no Caderno oficial criaria problemas de:
+
+- ordem de leitura;
+- validação;
+- acessibilidade;
+- navegação por teclado/leitor de tela;
+- interpretação da sequência;
+- telas pequenas.
+
+Portanto, no MVP:
+
+- **Caderno oficial:** sequência estruturada de blocos/linhas;
+- **Rascunho:** liberdade espacial.
+
+Essa divisão busca equilibrar naturalidade e verificabilidade.
+
+---
+
+## 32.31 MODO “COMO NO PAPEL”
+
+O objetivo visual da notação deverá ser aproximar-se do que o aluno veria escrito corretamente em um livro ou caderno.
+
+Exemplos:
+
+### Fração
+
+Preferir:
+
+```
+a + b
+─────
+  c
+```
+
+a:
+
+`(a+b)/c`
+
+### Potência
+
+Preferir expoente visual.
+
+### Integral
+
+Preferir:
+
+```
+∫ f(x) dx
+```
+
+com limites superior/inferior visualmente posicionados quando existirem.
+
+### Limite
+
+Preferir `x→a` visualmente associado ao operador `lim`.
+
+---
+
+## 32.32 MODO LINEAR COMO ALTERNATIVA TÉCNICA, NÃO PADRÃO PEDAGÓGICO
+
+Pode existir internamente uma representação linear:
+
+```
+(x+1)/(x-2)
+```
+
+para:
+
+- serialização;
+- exportação;
+- depuração;
+- compatibilidade;
+- acessibilidade específica.
+
+Mas o aluno deverá ver por padrão notação matemática renderizada.
+
+---
+
+## 32.33 PREVIEW ANTES DE INSERIR ESTRUTURAS NOVAS
+
+Nos primeiros usos, tocar em uma ferramenta poderá mostrar um preview curto.
+
+Exemplo:
+
+Botão:
+
+`a/b`
+
+Preview:
+
+```
+numerador
+─────────
+denominador
+```
+
+Depois:
+
+**Inserir**
+
+Com o tempo, essa etapa desaparece automaticamente ou pode ser desativada.
+
+---
+
+## 32.34 EXEMPLO COMPLETO DE APRENDIZAGEM DA INTERFACE
+
+Primeira vez usando fração.
+
+### Tela 1
+
+> Hoje vamos começar a escrever frações no Eixo.
+
+### Tela 2
+
+Botão de fração é destacado.
+
+> Toque aqui.
+
+### Tela 3
+
+A estrutura aparece:
+
+```
+ □
+───
+ □
+```
+
+> A parte de cima está selecionada.
+
+### Tela 4
+
+> Digite 3.
+
+```
+ 3
+───
+ □
+```
+
+### Tela 5
+
+> Agora toque na parte de baixo ou use “Próximo”.
+
+### Tela 6
+
+```
+ 3
+───
+ 4
+```
+
+### Tela 7
+
+> Pronto. Você escreveu três quartos.
+
+Só depois começa uma atividade sobre o conteúdo matemático.
+
+---
+
+## 32.35 EXEMPLO COMPLETO — POTÊNCIA E SAÍDA DA ESTRUTURA
+
+Objetivo:
+
+escrever `x² + 4`.
+
+Passos:
+
+1. inserir `x`;
+2. tocar em potência;
+3. escrever `2`;
+4. região do expoente permanece destacada;
+5. tocar em **Sair** ou **Próximo**;
+6. escrever `+4`.
+
+O tutorial deverá mostrar explicitamente a diferença entre:
+
+`x^(2+4)`
+
+e
+
+`x²+4`.
+
+---
+
+## 32.36 EXEMPLO COMPLETO — FRAÇÃO DENTRO DE RAIZ
+
+Quando o aluno já conhece ambas as ferramentas:
+
+```
+   x+1
+√ ─────
+   x-2
+```
+
+A interface deverá mostrar claramente os níveis:
+
+1. raiz;
+2. fração dentro da raiz;
+3. numerador/denominador dentro da fração.
+
+O foco visual deverá indicar a profundidade sem poluir a tela.
+
+---
+
+## 32.37 BREADCRUMB ESTRUTURAL OPCIONAL
+
+Em expressões muito aninhadas, poderá existir uma indicação pequena como:
+
+```
+Raiz > Fração > Denominador
+```
+
+Aparece somente durante edição complexa.
+
+Pode ser escondida para usuários experientes.
+
+---
+
+## 32.38 TOQUE PRECISO SEM EXIGIR PRECISÃO CIRÚRGICA
+
+Elementos matemáticos podem ser pequenos, especialmente expoentes.
+
+O sistema deverá aumentar invisivelmente a área de toque de regiões pequenas.
+
+O usuário não pode precisar acertar exatamente um expoente de poucos pixels.
+
+---
+
+## 32.39 LUPA DE SELEÇÃO
+
+Ao pressionar uma região muito pequena, poderá aparecer ampliação temporária.
+
+Isso é particularmente útil para:
+
+- expoentes;
+- índices;
+- limites de integral;
+- limites de somatório futuramente.
+
+---
+
+## 32.40 TECLADO CONTEXTUAL
+
+O teclado poderá adaptar algumas teclas ao bloco selecionado.
+
+Exemplo:
+
+ao editar uma função trigonométrica, atalhos relevantes podem ficar próximos.
+
+Ao editar limite:
+
+- `→`;
+- `∞`;
+- laterais `+`/`-` quando ensinadas.
+
+Mas nunca ocultar ferramentas necessárias de modo imprevisível.
+
+A adaptação deve reduzir esforço, não criar um teclado que muda completamente a cada toque.
+
+---
+
+## 32.41 BARRA FIXA DE NAVEGAÇÃO MATEMÁTICA
+
+Mesmo que o conteúdo do teclado mude, uma pequena área de navegação deverá permanecer consistente:
+
+- apagar;
+- desfazer;
+- refazer;
+- mover cursor;
+- próximo bloco;
+- sair de estrutura;
+- nova linha.
+
+A memória muscular do aluno é importante.
+
+---
+
+## 32.42 ONBOARDING DO EDITOR COMO HABILIDADE
+
+O sistema deverá manter separadamente um pequeno estado de familiaridade com a interface.
+
+Exemplos:
+
+- sabe criar fração;
+- sabe entrar/sair de expoente;
+- sabe editar raiz;
+- sabe navegar entre regiões;
+- sabe duplicar linha;
+- sabe utilizar quadros.
+
+Isso **não é domínio matemático**.
+
+É competência de uso do aplicativo.
+
+Se um aluno com bom conhecimento matemático demonstrar dificuldade apenas na interface, o Eixo deverá ajudá-lo na interface e não rebaixar sua avaliação matemática.
+
+---
+
+## 32.43 AJUDA CONTEXTUAL DA INTERFACE
+
+Se o aluno ficar vários segundos tentando tocar fora de um expoente ou repetidamente inserir elementos no local errado, o aplicativo poderá sugerir:
+
+> Quer sair do expoente? Use este botão.
+
+Esse tipo de ajuda não deverá contar como dica matemática.
+
+---
+
+## 32.44 ERRO DE INTERFACE NÃO É ERRO MATEMÁTICO
+
+O sistema deverá distinguir sempre que possível:
+
+- expressão matematicamente errada;
+- expressão incompleta;
+- erro de edição;
+- estrutura ainda aberta;
+- símbolo colocado em região inesperada.
+
+Enquanto a expressão estiver claramente incompleta, evitar feedback matemático prematuro.
+
+Exemplo:
+
+```
+ x + 1
+──────
+   □
+```
+
+não deve receber:
+
+> “Resposta incorreta.”
+
+O aluno ainda está escrevendo.
+
+---
+
+## 32.45 ESTADO “EM EDIÇÃO”
+
+Uma linha deverá possuir estado intermediário.
+
+Enquanto ativa:
+
+```
+EDITANDO
+```
+
+Somente após pausa curta, saída da linha ou ação de concluir, o sistema realiza validação pedagógica completa.
+
+Isso evita feedback piscando a cada caractere.
+
+---
+
+## 32.46 VALIDAÇÃO SUAVE DURANTE DIGITAÇÃO
+
+Podem existir validações de sintaxe discretas durante edição:
+
+- parêntese incompleto;
+- denominador vazio;
+- operador sem operando.
+
+Mas feedback conceitual deverá esperar a expressão estar suficientemente completa.
+
+---
+
+## 32.47 ORIENTAÇÃO ESPACIAL ENTRE QUADROS
+
+A animação entre Quadros de Trabalho deverá preservar a sensação de páginas vizinhas.
+
+Se o usuário vai de Quadro 1 para 2:
+
+a página 1 desliza para a esquerda e a 2 entra pela direita.
+
+Ao voltar:
+
+movimento inverso.
+
+Isso ajuda a construir memória espacial.
+
+---
+
+## 32.48 MINI-MAPA DE QUADROS
+
+Ao segurar ou tocar no indicador de quadro, poderá abrir:
+
+```
+[1 Resolução] [2 Conta] [3 Gráfico] [4 Rascunho]
+```
+
+Em muitos quadros:
+
+lista/grade completa.
+
+Isso reduz a sensação de “me perdi entre páginas”.
+
+---
+
+## 32.49 FLUXO DE UMA ATIVIDADE NO CELULAR
+
+Fluxo base:
+
+```
+Enunciado
+   ↓
+compreender objetivo
+   ↓
+abrir Quadro principal
+   ↓
+escrever primeira etapa
+   ↓
+usar Rascunho/novo Quadro quando necessário
+   ↓
+retornar à resolução
+   ↓
+concluir
+   ↓
+feedback
+   ↓
+explicação/revisão se necessária
+```
+
+O aluno não deverá navegar por várias telas completamente diferentes para fazer uma única conta.
+
+---
+
+## 32.50 MODO PAISAGEM
+
+Em aparelhos com espaço suficiente, o modo paisagem poderá exibir:
+
+```
+┌──────────────────┬─────────────────────┐
+│ Enunciado        │ Quadro/Rascunho     │
+│                  │                     │
+├──────────────────┴─────────────────────┤
+│ Resolução                              │
+├────────────────────────────────────────┤
+│ Teclado Matemático                     │
+└────────────────────────────────────────┘
+```
+
+ou variações conforme a atividade.
+
+---
+
+## 32.51 TABLETS
+
+Em tablets, a experiência poderá aproximar-se ainda mais de um caderno.
+
+Possível composição:
+
+```
+┌───────────────┬────────────────────────┐
+│ Enunciado     │ Rascunho / Gráfico     │
+│               │                        │
+│               │                        │
+├───────────────┼────────────────────────┤
+│ Resolução                              │
+│                                        │
+├────────────────────────────────────────┤
+│ Teclado                                │
+└────────────────────────────────────────┘
+```
+
+Também poderá permitir caneta/stylus futuramente, sem tornar isso requisito do MVP.
+
+---
+
+## 32.52 TESTES DE USABILIDADE OBRIGATÓRIOS
+
+O editor matemático deverá ser validado com usuários antes de expandir todo o currículo.
+
+Cenários mínimos de teste:
+
+1. escrever `2x+4=10`;
+2. escrever uma fração;
+3. editar numerador;
+4. editar denominador;
+5. escrever `x²+3`;
+6. sair corretamente do expoente;
+7. escrever uma raiz;
+8. duplicar uma linha;
+9. criar novo quadro;
+10. fazer conta no rascunho e voltar;
+11. escrever expressão aninhada;
+12. corrigir erro de posição.
+
+Métricas qualitativas importantes:
+
+- usuário entende onde está o cursor?
+- sabe para onde o próximo símbolo irá?
+- consegue sair de uma estrutura?
+- encontra o rascunho?
+- perde contexto ao trocar de quadro?
+- sente que está escrevendo matemática ou preenchendo formulário?
+
+---
+
+## 32.53 CRITÉRIO CENTRAL DE UX MATEMÁTICA
+
+Antes de qualquer implementação completa, o protótipo do editor deverá provar que um usuário consegue escrever, sem instrução constante:
+
+```
+       x² - 4
+lim    ──────
+x→2     x - 2
+```
+
+e também:
+
+```
+         2x + 1
+f'(x) = ───────
+         x² + 3
+```
+
+confortavelmente em uma tela de celular.
+
+Se isso for desconfortável, o projeto ainda não está pronto para escalar o currículo.
+
+---
+
+## 32.54 PRINCÍPIO FINAL DE UX
+
+O Eixo deverá ensinar duas coisas separadamente:
+
+> **como pensar matemática**
+
+e
+
+> **como escrever matemática no Eixo**.
+
+A segunda deve desaparecer da consciência do usuário com o tempo.
+
+O objetivo é que, após adaptação, ele pare de pensar:
+
+> “como eu coloco esse número aqui?”
+
+e volte a pensar apenas:
+
+> “qual é o próximo passo matemático?”
 
 ---
 
