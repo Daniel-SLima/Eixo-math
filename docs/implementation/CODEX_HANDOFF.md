@@ -30,6 +30,36 @@ Não assumir requisitos ausentes.
 
 ---
 
+
+# 1.A PERFIL DE MODELO DO CODEX
+
+Configuração padrão escolhida para desenvolvimento:
+
+```
+model: GPT-6 Sol
+reasoning_effort: medium
+```
+
+Usar essa configuração como padrão para:
+
+- P0 técnico;
+- arquitetura;
+- Math Core;
+- editor;
+- persistência/sync;
+- refactors;
+- implementação das fases principais.
+
+Restrição de orçamento do projeto:
+
+> **não selecionar automaticamente modelo ou nível de raciocínio acima de GPT-6 Sol / médio.**
+
+Para tarefas mecânicas, repetitivas ou de baixo risco, o proprietário poderá escolher manualmente um modelo mais econômico, como Luna, se desejar.
+
+Qualquer mudança de modelo é decisão do proprietário e não deve ocorrer silenciosamente pelo agente.
+
+---
+
 # 2. PRINCÍPIOS INEGOCIÁVEIS
 
 - matemática é a mecânica;
