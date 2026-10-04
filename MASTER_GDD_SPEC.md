@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.5 em construção  
+**Versão de especificação:** 0.6 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -1829,19 +1829,1017 @@ A principal recompensa deve continuar sendo a percepção:
 
 ---
 
-# 25. SISTEMA DE DOMÍNIO
+# 25. SISTEMA DE DOMÍNIO E APRENDIZAGEM ADAPTATIVA
 
-Não medir apenas quantidade de acertos.
+O Eixo não deverá representar aprendizagem apenas como quantidade de exercícios certos.
 
-Dimensões possíveis:
+O sistema deverá manter um **modelo de domínio por habilidade curricular**, atualizado a partir de múltiplas evidências.
 
-- cálculo;
-- interpretação;
-- representação;
-- aplicação;
+O objetivo é responder perguntas como:
+
+- o aluno consegue executar o procedimento?
+- entende o que está fazendo?
+- reconhece o conceito em outras representações?
+- consegue decidir quando utilizá-lo?
+- consegue aplicar sem ajuda?
+- ainda lembra depois de algum tempo?
+- a dificuldade atual vem desta habilidade ou de um pré-requisito?
+
+---
+
+## 25.1 DOMÍNIO É MULTIDIMENSIONAL
+
+Cada habilidade poderá possuir, inicialmente, cinco dimensões principais:
+
+### Cálculo / Procedimento
+
+Consegue executar corretamente operações e transformações.
+
+### Interpretação
+
+Entende o significado matemático do que está fazendo.
+
+### Representação
+
+Consegue relacionar formas diferentes:
+
+- expressão;
+- gráfico;
+- tabela;
+- desenho;
+- descrição verbal.
+
+### Aplicação
+
+Consegue usar a habilidade em problemas contextualizados.
+
+### Transferência
+
+Consegue reconhecer e utilizar o conhecimento em situações diferentes daquelas usadas no ensino inicial.
+
+Uma habilidade não deverá ser considerada plenamente dominada apenas porque o aluno repete corretamente um algoritmo.
+
+---
+
+## 25.2 PERFIL DE DOMÍNIO
+
+Internamente, uma habilidade poderá possuir algo conceitualmente semelhante a:
+
+```
+habilidade: PC-FUN-10
+
+calculo:        0.82
+interpretacao:  0.67
+representacao:  0.74
+aplicacao:      0.51
+transferencia:  0.38
+
+confiancaDaEstimativa: 0.71
+ultimaEvidencia: ...
+estado: EM_CONSOLIDACAO
+```
+
+Os valores acima são conceituais.
+
+A fórmula exata de estimativa deverá ser definida e testada durante a arquitetura pedagógica/técnica.
+
+A interface não precisa mostrar números decimais ao aluno.
+
+---
+
+## 25.3 ESTADOS PEDAGÓGICOS DA HABILIDADE
+
+Uma habilidade poderá passar por estados como:
+
+### Não apresentada
+
+O aluno ainda não estudou formalmente o conceito.
+
+### Em descoberta
+
+Está recebendo introdução e exemplos.
+
+### Em aprendizagem
+
+Consegue executar com apoio.
+
+### Em prática
+
+Já resolve atividades independentes simples.
+
+### Em consolidação
+
+Resolve variações e começa a aplicar em contextos diferentes.
+
+### Dominada
+
+Há evidências suficientes em múltiplas dimensões e contextos.
+
+### Revisão recomendada
+
+O domínio existia, mas evidências recentes sugerem perda ou fragilidade.
+
+### Lacuna detectada
+
+A habilidade está interferindo em conteúdos posteriores.
+
+Esses estados não devem ser tratados como rótulos permanentes.
+
+---
+
+## 25.4 EVIDÊNCIA, NÃO CONTAGEM BRUTA
+
+Cada atividade produz **evidências de aprendizagem**.
+
+Uma evidência deverá considerar fatores como:
+
+- habilidade avaliada;
+- dimensão de domínio;
+- dificuldade;
+- complexidade;
+- quantidade de ajuda;
+- tipo de atividade;
+- independência;
+- estratégia utilizada;
+- erros cometidos;
+- correções realizadas;
+- tempo desde a última exposição;
+- variedade do contexto;
+- se a atividade era nova ou muito semelhante a uma anterior.
+
+Assim:
+
+> acertar cinco questões praticamente iguais
+
+não deverá valer o mesmo que:
+
+> acertar três questões estruturalmente diferentes que exigem reconhecer e aplicar o mesmo conceito.
+
+---
+
+## 25.5 ACERTO COM AJUDA NÃO É IGUAL A ACERTO INDEPENDENTE
+
+O uso de dicas não deverá punir o aluno, mas deverá alterar a força da evidência.
+
+Exemplo:
+
+### Resolveu sem ajuda
+
+Evidência forte de independência.
+
+### Usou dica conceitual leve
+
+Evidência positiva, porém menor.
+
+### Precisou de dica operacional
+
+Mostra compreensão parcial.
+
+### Precisou de demonstração quase completa
+
+Conta principalmente como exposição/aprendizagem, não como domínio independente.
+
+Isso permite ajudar sem transformar ajuda em “fracasso”.
+
+---
+
+## 25.6 ACERTO NA PRIMEIRA TENTATIVA VS. CORREÇÃO
+
+O sistema deverá diferenciar:
+
+- resposta correta diretamente;
+- erro identificado e corrigido pelo próprio aluno;
+- erro corrigido após dica;
+- resposta mostrada pelo sistema.
+
+Corrigir o próprio erro é uma evidência pedagógica positiva e não deverá ser tratado como equivalente a simplesmente falhar.
+
+Exemplo:
+
+```
+2x + 4 = 10
+2x = 14   ← aluno percebe
+2x = 6    ← corrige sozinho
+x = 3
+```
+
+O sistema pode registrar:
+
+- ocorreu erro aritmético/operacional;
+- houve autocorreção;
+- resolução final válida;
+- necessidade de observar recorrência antes de inferir lacuna.
+
+---
+
+## 25.7 EVITAR DOMÍNIO POR SORTE
+
+Questões de múltipla escolha, verdadeiro/falso ou respostas muito restritas deverão possuir peso menor quando utilizadas isoladamente.
+
+Para declarar domínio, o sistema deverá preferir evidências em que o aluno:
+
+- produz a resposta;
+- desenvolve passos;
+- modela o problema;
+- explica;
+- escolhe o método;
+- transfere conhecimento.
+
+Um único acerto nunca deverá ser suficiente para declarar domínio de uma habilidade relevante.
+
+---
+
+## 25.8 VARIEDADE OBRIGATÓRIA
+
+O Eixo deverá evitar declarar domínio após uma sequência excessivamente homogênea.
+
+Exemplo para distributiva:
+
+Não basta resolver apenas:
+
+`2(x+3)`
+
+`3(x+4)`
+
+`5(x+2)`
+
+Também é necessário variar:
+
+- sinais;
+- coeficientes;
+- ordem;
+- termos algébricos;
+- contexto em equações;
+- identificação de erro;
+- uso dentro de outro conteúdo.
+
+A habilidade precisa sobreviver à mudança de aparência.
+
+---
+
+## 25.9 INTERCALAÇÃO DE CONTEÚDOS
+
+Após a fase inicial de aprendizagem, o sistema deverá misturar habilidades.
+
+Em vez de mostrar sempre:
+
+> agora faça 20 exercícios de fatoração,
+
+poderá apresentar uma sequência contendo:
+
+- simplificação;
+- distributiva;
+- fatoração;
+- equação;
+- função.
+
+Assim o aluno precisa primeiro reconhecer **qual ferramenta matemática utilizar**.
+
+Essa capacidade é central para transferência.
+
+---
+
+## 25.10 PRÁTICA BLOQUEADA E PRÁTICA INTERCALADA
+
+O Eixo poderá utilizar duas fases.
+
+### Prática bloqueada
+
+Vários exemplos próximos do mesmo conceito durante o aprendizado inicial.
+
+Objetivo:
+
+- compreender a técnica;
+- ganhar fluência.
+
+### Prática intercalada
+
+Misturar conceitos depois que a técnica básica está estabilizada.
+
+Objetivo:
+
+- decidir qual método usar;
+- fortalecer discriminação;
+- desenvolver transferência.
+
+---
+
+## 25.11 RETENÇÃO AO LONGO DO TEMPO
+
+Domínio não deverá ser considerado eterno.
+
+Uma habilidade dominada poderá receber revisões futuras.
+
+O sistema deverá utilizar princípios de revisão espaçada sem transformar o aplicativo em uma agenda rígida.
+
+Uma habilidade que continua aparecendo naturalmente em conteúdos posteriores pode receber evidência de retenção sem exigir uma sessão específica de revisão.
+
+---
+
+## 25.12 REVISÃO ORGÂNICA
+
+Sempre que possível, revisar habilidades antigas dentro de problemas novos.
+
+Exemplo:
+
+Ao estudar derivadas, o aluno naturalmente utiliza:
+
+- frações;
+- potências;
+- fatoração;
+- funções;
+- trigonometria.
+
+Essas utilizações poderão gerar evidência de manutenção dos pré-requisitos.
+
+Assim evitamos pedir:
+
+> “volte e faça dez contas de fração”
+
+quando o aluno já demonstrou frações corretamente em atividades mais avançadas.
+
+---
+
+## 25.13 REVISÃO EXPLÍCITA
+
+Será usada quando:
+
+- a habilidade não aparece há muito tempo;
+- surgem erros recorrentes;
+- a habilidade é pré-requisito crítico do próximo módulo;
+- existe baixa confiança na estimativa;
+- o aluno solicita revisão.
+
+A revisão explícita deverá ser curta e focada.
+
+---
+
+## 25.14 DECAIMENTO DE CONFIANÇA, NÃO DE CONHECIMENTO AUTOMÁTICO
+
+O sistema não deverá assumir:
+
+> “passaram 30 dias, então o aluno esqueceu”.
+
+O que poderá diminuir com o tempo é a **confiança da estimativa**.
+
+Exemplo:
+
+```
+Domínio estimado alto
++
+nenhuma evidência recente
+=
+revisão curta para confirmar
+```
+
+Se o aluno resolver facilmente, a confiança retorna rapidamente.
+
+---
+
+## 25.15 DIFICULDADE ADAPTATIVA
+
+Cada habilidade deverá possuir atividades em diferentes níveis de complexidade.
+
+Exemplo conceitual:
+
+### Nível A — reconhecimento
+
+Identificar a propriedade correta.
+
+### Nível B — execução direta
+
+Aplicar o conceito de maneira explícita.
+
+### Nível C — combinação
+
+Usar junto com outras habilidades.
+
+### Nível D — aplicação
+
+Resolver problema contextualizado.
+
+### Nível E — transferência
+
+Reconhecer o conceito em situação nova.
+
+O sistema deverá escolher atividades de modo que o aluno permaneça em desafio produtivo sem cair em repetição trivial ou frustração contínua.
+
+---
+
+## 25.16 NÃO AUMENTAR DIFICULDADE APENAS COM NÚMEROS MAIORES
+
+Uma questão não se torna pedagogicamente mais profunda somente porque utiliza números grandes.
+
+A dificuldade poderá crescer por:
+
+- mais etapas;
+- maior abstração;
+- escolha de estratégia;
+- mistura de conhecimentos;
+- mudança de representação;
+- condições adicionais;
+- domínio/restrições;
+- necessidade de modelagem;
+- menor suporte;
 - transferência.
 
-Um conteúdo só deve ser considerado realmente dominado após diferentes formas de uso.
+---
+
+## 25.17 PERFIL DE ERROS
+
+Além do domínio, o sistema poderá manter um perfil de padrões recorrentes.
+
+Exemplo:
+
+```
+habilidade: inequações
+padrão observado:
+ERRO_INVERTER_INEQUACAO
+
+ocorrências relevantes: 3
+contextos diferentes: 2
+recência: alta
+```
+
+Somente após evidências suficientes o sistema deverá concluir que existe uma provável lacuna.
+
+---
+
+## 25.18 DIAGNÓSTICO DE CAUSA RAIZ
+
+Quando o aluno tiver dificuldade em uma habilidade avançada, o sistema deverá consultar o grafo de pré-requisitos.
+
+Exemplo:
+
+Aluno erra:
+
+```
+lim x→2 (x²-4)/(x-2)
+```
+
+Possíveis causas:
+
+- não entende limite;
+- não reconhece indeterminação;
+- não domina diferença de quadrados;
+- cancela fatores incorretamente;
+- não entende restrição de domínio.
+
+O sistema deverá usar as evidências da resolução para localizar a causa mais provável.
+
+Não deverá automaticamente atribuir todo erro ao conteúdo atual.
+
+---
+
+## 25.19 REVISÃO EM CAMADAS
+
+Quando uma lacuna de pré-requisito for detectada, o Eixo poderá oferecer:
+
+### Lembrete
+
+Uma explicação de poucos segundos.
+
+### Microprática
+
+1–3 atividades focadas.
+
+### Revisão curta
+
+Pequeno conjunto variado.
+
+### Retorno ao módulo
+
+Quando a lacuna for realmente estrutural.
+
+O sistema deverá escolher a intervenção mínima suficiente.
+
+---
+
+## 25.20 NÃO BLOQUEAR DESNECESSARIAMENTE
+
+O objetivo da adaptação é ajudar o aluno a avançar, não criar portões excessivos.
+
+Se uma lacuna é pequena e não impede o conteúdo atual:
+
+> revisão recomendada.
+
+Se impede diretamente a compreensão:
+
+> revisão necessária antes de continuar.
+
+A decisão deve considerar o grafo curricular e evidências reais.
+
+---
+
+## 25.21 LIBERDADE DO ALUNO
+
+O aluno poderá abrir a tela de uma habilidade e escolher:
+
+- continuar;
+- praticar;
+- revisar;
+- fazer desafio;
+- rever teoria;
+- rever ferramentas;
+- visualizar exemplos anteriores.
+
+O sistema recomenda, mas não deverá transformar todo o aprendizado em uma sequência opaca controlada pelo algoritmo.
+
+Em situações não críticas, o aluno poderá optar por seguir mesmo com revisão recomendada.
+
+---
+
+## 25.22 TESTE DE NIVELAMENTO INICIAL
+
+O Eixo poderá oferecer um diagnóstico inicial opcional.
+
+Objetivo:
+
+- evitar obrigar quem já conhece a base a começar do zero;
+- localizar lacunas;
+- construir uma estimativa inicial.
+
+O teste deverá ser adaptativo e relativamente curto.
+
+Ele não deverá tentar certificar domínio definitivo.
+
+O resultado inicial possui confiança limitada e será refinado pelo uso real.
+
+---
+
+## 25.23 NÃO USAR APENAS PROVA INICIAL
+
+Mesmo que o aluno tenha excelente desempenho no nivelamento, conteúdos críticos poderão ser confirmados naturalmente posteriormente.
+
+Da mesma forma, um desempenho ruim no primeiro dia não deverá condenar o perfil do aluno por meses.
+
+O modelo precisa ser continuamente atualizado.
+
+---
+
+## 25.24 EVIDÊNCIA POSITIVA E NEGATIVA
+
+Acertos e erros possuem valor diferente dependendo do contexto.
+
+Exemplo:
+
+Um erro em questão de transferência difícil não deverá destruir um histórico forte de domínio procedimental.
+
+Da mesma forma, dez acertos básicos não compensam necessariamente incapacidade constante de aplicar o conceito.
+
+O sistema deverá atualizar a dimensão realmente avaliada.
+
+---
+
+## 25.25 DOMÍNIO POR DIMENSÃO
+
+Exemplo:
+
+Um aluno pode possuir:
+
+```
+Derivada — Regra da potência
+
+Cálculo:         Forte
+Interpretação:   Forte
+Representação:   Em consolidação
+Aplicação:       Em consolidação
+Transferência:   Fraca
+```
+
+Nesse caso, o Eixo não precisa repetir vinte derivadas mecânicas.
+
+Deve oferecer atividades de aplicação e transferência.
+
+---
+
+## 25.26 CONTEÚDO DOMINADO NÃO SOME DA TRILHA
+
+Mesmo após dominar uma habilidade:
+
+- ela continua acessível;
+- pode ser revisada;
+- pode receber desafios;
+- pode aparecer como pré-requisito;
+- pode gerar evidência de retenção.
+
+“Concluído” não significa “arquivado para sempre”.
+
+---
+
+## 25.27 FLUÊNCIA VS. COMPREENSÃO
+
+Algumas habilidades exigem fluência operacional.
+
+Exemplo:
+
+- sinais;
+- frações;
+- manipulação algébrica básica.
+
+Outras exigem principalmente interpretação.
+
+Exemplo:
+
+- limite;
+- continuidade;
+- significado de derivada.
+
+Os critérios de domínio deverão mudar conforme a natureza da habilidade.
+
+Não usar a mesma fórmula rígida para tudo.
+
+---
+
+## 25.28 TEMPO DE RESPOSTA
+
+Tempo poderá ser usado como sinal secundário de fluência, nunca como critério principal universal.
+
+Resolver lentamente não significa não compreender.
+
+O sistema não deverá pressionar velocidade em conteúdos conceituais sem necessidade.
+
+Atividades cronometradas deverão ser exceção e ter propósito pedagógico explícito.
+
+---
+
+## 25.29 USO DE CALCULADORA E DOMÍNIO
+
+Se uma habilidade está avaliando cálculo manual, o uso de calculadora pode reduzir ou invalidar a evidência daquela dimensão.
+
+Se a habilidade está avaliando modelagem ou derivada e a calculadora é permitida para aritmética, seu uso não deverá reduzir domínio do conceito-alvo.
+
+O contrato pedagógico da atividade define isso.
+
+---
+
+## 25.30 CAMINHO ALTERNATIVO E DOMÍNIO
+
+Como definido no motor:
+
+uma resposta pode ser matematicamente correta e ainda não fornecer evidência do conceito-alvo.
+
+Exemplo:
+
+atividade de fatoração resolvida por fórmula quadrática.
+
+Resultado:
+
+- matemática: correta;
+- domínio de resolução de quadrática: pode gerar evidência;
+- domínio de fatoração: não comprovado.
+
+O sistema deverá aproveitar evidências válidas sem atribuir habilidade não demonstrada.
+
+---
+
+## 25.31 DESAFIOS DE DOMÍNIO
+
+Antes de promover uma habilidade para “Dominada”, o sistema poderá incluir uma pequena atividade de consolidação contendo:
+
+- problema não idêntico aos exemplos;
+- pouca ou nenhuma dica;
+- mistura controlada com pré-requisitos;
+- ao menos uma representação ou contexto diferente quando apropriado.
+
+Isso funciona como confirmação, não como “prova final” punitiva.
+
+---
+
+## 25.32 DOMÍNIO NÃO PRECISA SER 100%
+
+Matemática real não exige perfeição absoluta para continuar aprendendo.
+
+O sistema deverá tolerar erros ocasionais.
+
+O critério precisa buscar evidência suficiente de competência, não ausência total de falhas.
+
+---
+
+## 25.33 GATE DE PRÉ-REQUISITO
+
+Para habilidades críticas, poderá existir uma condição de prontidão.
+
+Exemplo:
+
+antes de regra da cadeia, é necessário possuir evidência suficiente em:
+
+- composição de funções;
+- regras básicas de derivação;
+- notação funcional.
+
+Se um deles estiver frágil:
+
+- revisão recomendada ou necessária;
+- dependendo da gravidade.
+
+---
+
+## 25.34 RECOMENDAÇÃO DE PRÓXIMA ATIVIDADE
+
+O sistema adaptativo poderá considerar:
+
+1. objetivo atual do aluno;
+2. trilha curricular;
+3. pré-requisitos;
+4. habilidades frágeis;
+5. revisões necessárias;
+6. variedade recente;
+7. fadiga/repetição;
+8. dificuldade adequada.
+
+A recomendação não deverá depender apenas de:
+
+> “faça o próximo ID da lista”.
+
+---
+
+## 25.35 SESSÕES CURTAS E SESSÕES LONGAS
+
+O Eixo deverá funcionar tanto para:
+
+- 5 minutos de revisão;
+- 20–30 minutos de estudo;
+- sessões mais longas.
+
+Ao iniciar uma sessão, poderá sugerir algo como:
+
+```
+Continuar conteúdo atual
++ 1 revisão antiga
++ 1 aplicação
+```
+
+sem obrigar o aluno a completar uma quantidade fixa de exercícios.
+
+---
+
+## 25.36 EVITAR REPETIÇÃO EXCESSIVA
+
+Quando há evidência forte de domínio:
+
+- reduzir exercícios mecânicos;
+- aumentar intervalo até próxima revisão;
+- priorizar aplicação;
+- permitir avanço.
+
+Isso é essencial para evitar que alunos mais rápidos abandonem o aplicativo por tédio.
+
+---
+
+## 25.37 EVITAR FRUSTRAÇÃO CONTÍNUA
+
+Quando o aluno acumular erros:
+
+o sistema não deverá simplesmente continuar aumentando o número de exercícios do mesmo tipo.
+
+Deverá verificar:
+
+- pré-requisitos;
+- complexidade;
+- necessidade de exemplo;
+- ferramenta de interface;
+- notação;
+- possível erro conceitual específico.
+
+A intervenção deve mudar, não apenas repetir.
+
+---
+
+## 25.38 INDICADORES VISUAIS PARA O ALUNO
+
+A interface poderá representar o estado de uma habilidade de maneira simples.
+
+Exemplo:
+
+```
+Frações              Dominada
+Equações lineares    Em consolidação
+Fatoração            Praticando
+Funções              Aprendendo
+```
+
+Evitar apresentar uma falsa precisão como:
+
+> “Você sabe exatamente 83,7% de fatoração.”
+
+Valores numéricos detalhados poderão existir internamente para o modelo adaptativo.
+
+---
+
+## 25.39 MAPA DE CONHECIMENTO
+
+O aluno poderá visualizar um mapa simplificado:
+
+```
+Frações ✓
+   ↓
+Álgebra ✓
+   ↓
+Fatoração ◐
+   ↓
+Funções racionais ○
+   ↓
+Limites 🔒
+```
+
+O objetivo é mostrar:
+
+- de onde ele veio;
+- o que está aprendendo;
+- por que determinado assunto importa;
+- o que será desbloqueado depois.
+
+---
+
+## 25.40 EXPLICAR RECOMENDAÇÕES
+
+Sempre que o Eixo recomendar uma revisão importante, deverá conseguir explicar por quê.
+
+Exemplo:
+
+> Recomendo revisar diferença de quadrados porque você encontrou dificuldade nesse passo em 3 atividades recentes de limites.
+
+Evitar:
+
+> “Nosso algoritmo recomenda esta revisão.”
+
+A adaptação precisa ser compreensível.
+
+---
+
+## 25.41 CONTROLE DO ALUNO SOBRE REVISÕES
+
+Em revisões não críticas, oferecer:
+
+- revisar agora;
+- continuar e revisar depois.
+
+Se a habilidade for realmente impeditiva, explicar:
+
+> Este conteúdo usa fatoração em quase todos os próximos exercícios. Uma revisão curta provavelmente evitará que você fique preso.
+
+---
+
+## 25.42 DOMÍNIO E GAMIFICAÇÃO
+
+Recompensas não deverão incentivar o aluno a escolher questões fáceis apenas para acumular XP.
+
+O sistema de progressão deverá valorizar:
+
+- avanço real;
+- domínio;
+- revisão de lacunas;
+- desafios;
+- transferência.
+
+Evitar recompensar somente volume bruto de respostas.
+
+---
+
+## 25.43 SEQUÊNCIA ADAPTATIVA DE EXEMPLO
+
+Considere `PC-ALG-05 — diferença de quadrados`.
+
+### Exposição
+
+`x² - 9 = (x-3)(x+3)`
+
+### Prática guiada
+
+`x² - 16`
+
+### Prática independente
+
+`4x² - 25`
+
+### Variação
+
+`49 - y²`
+
+### Uso em equação
+
+`x² - 16 = 0`
+
+### Uso em função racional
+
+`(x²-16)/(x-4)`
+
+### Uso posterior em limite
+
+`lim x→4 (x²-16)/(x-4)`
+
+A mesma habilidade reaparece em níveis diferentes, produzindo evidência de retenção e transferência.
+
+---
+
+## 25.44 MODELO DE EVIDÊNCIA CONCEITUAL
+
+Uma evidência poderá possuir estrutura semelhante a:
+
+```
+evidence_id
+student_id
+skill_id
+activity_id
+timestamp
+
+dimension:
+  CALCULO | INTERPRETACAO | REPRESENTACAO |
+  APLICACAO | TRANSFERENCIA
+
+result:
+  SUCESSO | PARCIAL | FALHA
+
+independence:
+  SEM_AJUDA | DICA_LEVE | DICA_FORTE | DEMONSTRACAO
+
+difficulty
+context_novelty
+strategy_used
+error_codes
+self_corrected
+calculator_policy
+calculator_used
+```
+
+A estrutura final dependerá da arquitetura escolhida, mas o conceito de evidência deverá permanecer.
+
+---
+
+## 25.45 NÃO ARMAZENAR MAIS DADOS DO QUE O NECESSÁRIO
+
+O sistema de aprendizagem adaptativa deverá utilizar apenas dados necessários para:
+
+- progresso;
+- feedback;
+- diagnóstico;
+- personalização educacional.
+
+Detalhes de privacidade, retenção e telemetria serão definidos na seção específica de segurança/privacidade.
+
+---
+
+## 25.46 TESTES DO SISTEMA ADAPTATIVO
+
+O sistema deverá possuir cenários de teste como:
+
+### Aluno domina rapidamente
+
+Espera-se:
+
+- menos repetição;
+- avanço mais rápido;
+- desafio maior.
+
+### Aluno acerta somente com dicas
+
+Espera-se:
+
+- progresso;
+- mas sem domínio independente prematuro.
+
+### Aluno erra por pré-requisito
+
+Espera-se:
+
+- revisão do pré-requisito;
+- não repetição infinita do conteúdo atual.
+
+### Aluno volta após muito tempo
+
+Espera-se:
+
+- pequena confirmação;
+- recuperação rápida se ainda dominar.
+
+### Aluno usa método alternativo
+
+Espera-se:
+
+- reconhecer matemática correta;
+- registrar habilidades realmente usadas;
+- não conceder domínio da habilidade-alvo não demonstrada.
+
+### Aluno comete erro e se autocorrige
+
+Espera-se:
+
+- registrar erro;
+- registrar autocorreção;
+- não tratar como falha completa.
+
+---
+
+## 25.47 PRINCÍPIO DO SISTEMA ADAPTATIVO
+
+A adaptação deverá tentar responder:
+
+> “Qual é a menor próxima intervenção capaz de fazer este aluno aprender ou consolidar esta habilidade?”
+
+e não:
+
+> “Quantos exercícios ainda faltam nesta lista?”
 
 ---
 
