@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.14 em construção  
+**Versão de especificação:** 0.15 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -10863,23 +10863,45 @@ abrir aula
 
 A nuvem sincroniza posteriormente.
 
-## 39.7 DECISÕES AINDA ABERTAS
+## 39.7 SEGURANÇA, PRIVACIDADE E TELEMETRIA
+
+Princípios já definidos:
+
+- minimização de dados;
+- progresso privado por padrão;
+- analytics separado do registro acadêmico;
+- nada de telemetria de cada tecla;
+- Rascunho não enviado para analytics por padrão;
+- RLS nas tabelas privadas;
+- secrets apenas no backend/secure storage;
+- content packs são dados declarativos, não código remoto;
+- sanitização/CSP para conteúdo;
+- nenhum `eval` de matemática/conteúdo;
+- dados sociais futuros separados;
+- módulo de IA futuro com minimização específica.
+
+Documento detalhado:
+
+`docs/architecture/SECURITY_PRIVACY_TELEMETRY.md`
+
+## 39.8 DECISÕES AINDA ABERTAS
 
 Ainda serão detalhados:
 
 - schema SQL final;
-- políticas exatas de retenção;
-- telemetria;
+- prazos jurídicos finais de retenção;
 - E2E mobile;
 - hosting definitivo;
 - monetização;
-- notificações.
+- notificações;
+- faixa etária formal/fluxos legais associados antes de lançamento.
 
 Decisões já fechadas:
 
 - MVP completo sem IA em runtime;
 - login não é necessário para começar a estudar;
-- o núcleo educacional não depende de conexão.
+- o núcleo educacional não depende de conexão;
+- dados educacionais não serão usados como commodity publicitária.
 
 ---
 
@@ -11275,15 +11297,15 @@ Blocos estruturais já definidos em nível inicial:
 - desafios sociais entre amigos registrados como pós-MVP;
 - perfil, progresso, histórico e Livro Matemático;
 - arquitetura técnica e stack inicial selecionadas;
-- persistência local-first, sincronização e funcionamento offline definidos.
+- persistência local-first, sincronização e funcionamento offline definidos;
+- segurança, privacidade e telemetria pedagógica definidas.
 
 Prioridade atual:
 
-1. segurança, privacidade e telemetria pedagógica;
-2. definição formal do MVP;
-3. critérios de aceite e estratégia de testes;
-4. roadmap;
-5. instruções finais para Codex/agentes e início da implementação.
+1. definição formal do MVP;
+2. critérios de aceite e estratégia de testes;
+3. roadmap;
+4. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
