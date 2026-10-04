@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.15 em construção  
+**Versão de especificação:** 0.16 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -11248,6 +11248,71 @@ Se implementado:
 
 ---
 
+# 40.A DEFINIÇÃO FORMAL DO MVP
+
+O MVP do Eixo será uma versão **completa no fluxo de produto**, mas não tentará entregar todo o currículo final de Matemática Básica → Pré-Cálculo → Cálculo I antes de validar o núcleo.
+
+Documento detalhado:
+
+`docs/product/MVP_SCOPE.md`
+
+## 40.A1 OBJETIVO
+
+Provar que o usuário consegue:
+
+- aprender a interface;
+- estudar;
+- escrever matemática 2D;
+- resolver passo a passo;
+- usar caminhos alternativos;
+- receber feedback determinístico;
+- usar Rascunho/Quadros;
+- avançar adaptativamente;
+- visualizar matemática;
+- acompanhar progresso;
+- estudar offline.
+
+## 40.A2 CURRÍCULO DO MVP
+
+Rota pública coerente cobrindo:
+
+- fundamentos;
+- frações;
+- potências/raízes;
+- álgebra;
+- equações lineares;
+- plano cartesiano;
+- funções lineares;
+- fatoração básica;
+- função racional;
+- introdução a limites.
+
+Derivadas, integrais, logaritmos e demais notações avançadas deverão existir em fixtures/provas técnicas do editor, mas o currículo completo vem depois do MVP.
+
+## 40.A3 FORA DO MVP
+
+Entre outros:
+
+- IA em runtime;
+- multiplayer/Bluetooth;
+- escrita manual/OCR;
+- importação de listas;
+- currículo completo de Pré-Cálculo;
+- currículo completo de Cálculo I;
+- ranking social.
+
+## 40.A4 META APÓS MVP
+
+Expandir conteúdo mantendo a arquitetura validada até alcançar a versão curricular 1.0:
+
+```
+Matemática Básica
+→ Pré-Cálculo
+→ Cálculo I
+```
+
+---
+
 # 41. REGRA PARA IMPLEMENTAÇÃO
 
 **Não iniciar implementação do aplicativo enquanto este documento ainda estiver em fase de definição estrutural.**
@@ -11298,14 +11363,14 @@ Blocos estruturais já definidos em nível inicial:
 - perfil, progresso, histórico e Livro Matemático;
 - arquitetura técnica e stack inicial selecionadas;
 - persistência local-first, sincronização e funcionamento offline definidos;
-- segurança, privacidade e telemetria pedagógica definidas.
+- segurança, privacidade e telemetria pedagógica definidas;
+- escopo formal do MVP definido.
 
 Prioridade atual:
 
-1. definição formal do MVP;
-2. critérios de aceite e estratégia de testes;
-3. roadmap;
-4. instruções finais para Codex/agentes e início da implementação.
+1. critérios de aceite e estratégia de testes;
+2. roadmap;
+3. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
