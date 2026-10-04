@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.7 em construção  
+**Versão de especificação:** 0.8 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -5526,6 +5526,1067 @@ e volte a pensar apenas:
 > “qual é o próximo passo matemático?”
 
 ---
+
+# 32.A CATÁLOGO DE NOTAÇÃO MATEMÁTICA E TEMPLATES VISUAIS
+
+O editor deverá possuir um **catálogo explícito de estruturas matemáticas** cobrindo toda notação necessária ao currículo publicado.
+
+Nenhum novo assunto poderá depender de uma notação que o editor ainda não saiba representar, navegar e ensinar.
+
+Cada estrutura deverá definir:
+
+- aparência matemática;
+- regiões editáveis;
+- ordem padrão de foco;
+- formas alternativas equivalentes;
+- comportamento ao tocar;
+- comportamento de teclado;
+- ação para entrar;
+- ação para sair;
+- regras de quebra visual;
+- representação interna;
+- forma acessível/linear;
+- tutorial de interface quando necessário.
+
+---
+
+## 32.A1 REGRA DOS SLOTS
+
+Estruturas complexas deverão ser modeladas como templates contendo **slots**.
+
+Exemplo conceitual de logaritmo:
+
+```
+       argumento
+log
+   base
+```
+
+Na notação convencional:
+
+`log₂(8)`
+
+existem pelo menos:
+
+- operador `log`;
+- slot de base em subscrito;
+- slot de argumento.
+
+Ao inserir o template, o sistema deve destacar claramente qual slot está ativo.
+
+---
+
+## 32.A2 LOGARITMOS
+
+Representação principal:
+
+```
+log₂(8)
+```
+
+e genericamente:
+
+```
+logₐ(x)
+```
+
+O índice/base deverá aparecer abaixo e à direita de `log`, como na notação matemática convencional.
+
+Percurso de foco sugerido:
+
+1. base;
+2. argumento;
+3. sair da função.
+
+Exemplo de criação:
+
+```
+log□(□)
+```
+
+Depois:
+
+```
+log₂(□)
+```
+
+Depois:
+
+```
+log₂(8)
+```
+
+O aluno também poderá inserir primeiro o argumento e editar a base posteriormente.
+
+`ln(x)` não necessita de slot de base porque sua base é `e`.
+
+`log(x)` sem base explícita deverá respeitar a convenção definida pelo conteúdo e não presumir silenciosamente uma base quando isso for pedagogicamente ambíguo.
+
+---
+
+## 32.A3 SUPERSCRITOS E SUBSCRITOS GENÉRICOS
+
+O editor deverá suportar regiões superior e inferior associadas a símbolos quando a notação exigir.
+
+Exemplos:
+
+```
+x²
+aₙ
+xᵢ
+f⁻¹(x)
+```
+
+Internamente, sobrescrito e subscrito são slots distintos.
+
+Isso será reutilizado por várias notações.
+
+---
+
+## 32.A4 RAIZ N-ÉSIMA
+
+Raiz quadrada:
+
+```
+√x
+```
+
+Raiz genérica:
+
+```
+ⁿ√x
+```
+
+Slots:
+
+- índice da raiz, opcional;
+- radicando.
+
+Exemplo:
+
+```
+³√8
+```
+
+O índice deve possuir área de toque ampliada invisivelmente.
+
+---
+
+## 32.A5 POTÊNCIAS COMPLEXAS
+
+Deverá ser possível escrever:
+
+```
+    x+1
+  2
+```
+
+ou visualmente `2^(x+1)`, sem transformar o expoente em texto linear.
+
+O expoente poderá conter qualquer expressão suportada:
+
+- soma;
+- fração;
+- função;
+- raiz;
+- outro expoente, dentro de limites razoáveis de legibilidade.
+
+---
+
+## 32.A6 FRAÇÕES ANINHADAS
+
+Deverá ser possível escrever estruturas como:
+
+```
+   1
+ ─────
+ x + 1
+───────
+   2
+```
+
+ou outras frações dentro de numerador/denominador.
+
+O editor deverá:
+
+- aumentar altura automaticamente;
+- preservar tamanho mínimo legível;
+- permitir zoom/foco;
+- exibir breadcrumb estrutural se necessário.
+
+---
+
+## 32.A7 VALOR ABSOLUTO
+
+Template:
+
+```
+| □ |
+```
+
+As barras devem crescer visualmente conforme o conteúdo.
+
+Exemplo:
+
+```
+|x - 3|
+```
+
+O sistema precisa diferenciar as barras de valor absoluto de símbolos de divisão ou texto comum.
+
+---
+
+## 32.A8 PARÊNTESES, COLCHETES E CHAVES
+
+Agrupadores deverão redimensionar automaticamente.
+
+Exemplo:
+
+```
+⎛ x + 1 ⎞
+⎜ ───── ⎟
+⎝ x - 2 ⎠
+```
+
+O usuário não deverá precisar escolher manualmente o tamanho dos parênteses.
+
+---
+
+## 32.A9 EQUAÇÕES E INEQUAÇÕES ENCADEADAS
+
+Suportar:
+
+```
+a = b = c
+```
+
+e:
+
+```
+-2 < x ≤ 5
+```
+
+A estrutura precisa reconhecer relações encadeadas, não uma simples sequência de caracteres.
+
+---
+
+## 32.A10 INTERVALOS
+
+Suportar visualmente:
+
+```
+(2, 5]
+[-3, ∞)
+```
+
+e união:
+
+```
+(-∞, 1) ∪ (3, ∞)
+```
+
+O teclado deverá introduzir símbolos como `∞` e `∪` somente quando o currículo chegar a esse tipo de notação.
+
+---
+
+## 32.A11 CONJUNTOS E SOLUÇÕES
+
+Suportar:
+
+```
+{2, 3}
+```
+
+e, quando necessário:
+
+```
+{x ∈ ℝ | x > 2}
+```
+
+A notação de conjuntos mais avançada poderá ser introduzida progressivamente.
+
+---
+
+## 32.A12 FUNÇÕES
+
+Templates:
+
+```
+f(x)
+g(t)
+P(n)
+```
+
+O usuário deverá conseguir editar:
+
+- nome da função;
+- variável/argumento;
+- expressão associada.
+
+Exemplo:
+
+```
+f(x) = 2x + 3
+```
+
+---
+
+## 32.A13 COMPOSIÇÃO
+
+Suportar:
+
+```
+(f ∘ g)(x)
+```
+
+e:
+
+```
+f(g(x))
+```
+
+O sistema deverá entender ambas quando matematicamente apropriadas.
+
+---
+
+## 32.A14 FUNÇÃO INVERSA
+
+Representação:
+
+```
+f⁻¹(x)
+```
+
+O editor deverá diferenciar visual e semanticamente:
+
+`f⁻¹(x)`
+
+de:
+
+`1/f(x)`.
+
+Esse é um ponto pedagógico importante.
+
+---
+
+## 32.A15 FUNÇÕES DEFINIDAS POR PARTES
+
+Template vertical:
+
+```
+       ⎧ expressão 1, condição 1
+f(x) = ⎨ expressão 2, condição 2
+       ⎩ expressão 3, condição 3
+```
+
+Cada linha possui:
+
+- slot de expressão;
+- slot de condição.
+
+O usuário poderá adicionar/remover casos.
+
+No celular, a edição poderá focar uma linha por vez sem perder a visão da chave geral.
+
+---
+
+## 32.A16 NOTAÇÃO CIENTÍFICA
+
+Representação:
+
+```
+3,2 × 10⁵
+```
+
+O expoente deve usar o mesmo componente de potência já ensinado.
+
+O sistema não deve criar uma sintaxe separada desnecessária.
+
+---
+
+## 32.A17 PORCENTAGEM E UNIDADES
+
+Suportar:
+
+```
+25%
+20 m/s
+9,8 m/s²
+3 cm²
+```
+
+Unidades podem possuir expoentes.
+
+O editor deverá separar semanticamente valor matemático de unidade quando a atividade exigir análise dimensional.
+
+---
+
+## 32.A18 ÂNGULOS
+
+Suportar:
+
+```
+30°
+π/6 rad
+```
+
+O símbolo de grau deverá ser tratado como unidade/indicador de ângulo, não como expoente comum.
+
+---
+
+## 32.A19 TRIGONOMETRIA
+
+Templates simples:
+
+```
+sin(x)
+cos(x)
+tan(x)
+```
+
+Inversas:
+
+```
+sin⁻¹(x)
+cos⁻¹(x)
+tan⁻¹(x)
+```
+
+A interface e o conteúdo deverão deixar claro quando `sin⁻¹` representa função inversa, evitando confusão com `1/sin(x)`.
+
+---
+
+## 32.A20 LIMITES
+
+Template visual:
+
+```
+lim  f(x)
+x→a
+```
+
+Slots:
+
+- variável;
+- valor de aproximação;
+- direção lateral opcional;
+- expressão.
+
+Exemplo lateral:
+
+```
+lim   f(x)
+x→2⁺
+```
+
+e:
+
+```
+lim   f(x)
+x→2⁻
+```
+
+O subbloco `x→a` deverá ser tocável como uma região.
+
+---
+
+## 32.A21 INFINITO
+
+`∞` poderá aparecer em:
+
+- limites;
+- intervalos;
+- comportamento assintótico.
+
+Seu uso será liberado junto com o conteúdo relevante.
+
+---
+
+## 32.A22 DERIVADA EM NOTAÇÃO DE LAGRANGE
+
+Suportar:
+
+```
+f'(x)
+f''(x)
+```
+
+e ordens maiores de forma legível.
+
+---
+
+## 32.A23 DERIVADA EM NOTAÇÃO DE LEIBNIZ
+
+Template:
+
+```
+dy
+──
+dx
+```
+
+e:
+
+```
+d
+── f(x)
+dx
+```
+
+A fração de Leibniz não deverá ser tratada apenas como fração numérica comum, embora compartilhe componentes visuais.
+
+Também suportar segunda derivada:
+
+```
+d²y
+───
+dx²
+```
+
+---
+
+## 32.A24 AVALIAÇÃO DA DERIVADA EM UM PONTO
+
+Suportar formas como:
+
+```
+f'(2)
+```
+
+e, futuramente se necessário:
+
+```
+dy
+── │
+dx │x=2
+```
+
+A segunda forma poderá ser extensão caso complique o MVP.
+
+---
+
+## 32.A25 INTEGRAIS INDEFINIDAS
+
+Template:
+
+```
+∫ f(x) dx
+```
+
+Slots principais:
+
+- integrando;
+- diferencial/variável.
+
+O cursor deverá permitir entrar no integrando e depois sair para o diferencial de modo previsível.
+
+---
+
+## 32.A26 INTEGRAIS DEFINIDAS
+
+Template:
+
+```
+ b
+ ∫ f(x) dx
+ a
+```
+
+Slots:
+
+- limite inferior;
+- limite superior;
+- integrando;
+- variável de integração.
+
+Percurso de foco poderá ser:
+
+1. limite inferior;
+2. limite superior;
+3. integrando;
+4. variável;
+5. sair.
+
+O usuário deverá poder tocar diretamente em qualquer slot.
+
+---
+
+## 32.A27 BARRA DE AVALIAÇÃO DE ANTIDERIVADA
+
+Para o Teorema Fundamental do Cálculo:
+
+```
+[F(x)]ₐᵇ
+```
+
+ou notação equivalente adotada pelo curso.
+
+Slots inferior e superior reutilizam o sistema de subscrito/sobrescrito.
+
+---
+
+## 32.A28 SOMATÓRIO
+
+Necessário para somas de Riemann.
+
+Template:
+
+```
+ n
+ Σ expressão
+i=1
+```
+
+Slots:
+
+- índice/condição inferior;
+- limite superior;
+- termo.
+
+Assim como integral, deverá possuir navegação vertical previsível.
+
+---
+
+## 32.A29 DELTA E VARIAÇÃO
+
+Suportar:
+
+```
+Δx
+Δy
+Δy/Δx
+```
+
+Essas estruturas aparecem antes de derivada e deverão ser introduzidas em taxa média de variação.
+
+---
+
+## 32.A30 COORDENADAS E PARES ORDENADOS
+
+Template:
+
+```
+(x, y)
+```
+
+e valores:
+
+```
+(2, -3)
+```
+
+O editor deverá distinguir par ordenado de simples agrupamento quando o contexto exigir.
+
+---
+
+## 32.A31 SISTEMAS DE EQUAÇÕES
+
+Template vertical:
+
+```
+⎧ 2x + y = 5
+⎨
+⎩ x - y = 1
+```
+
+Cada equação é uma linha estruturada dentro de um único sistema.
+
+No mobile:
+
+- foco por equação;
+- chave preservada;
+- botão para adicionar/remover equação quando permitido.
+
+---
+
+## 32.A32 MATRIZES NÃO SÃO REQUISITO DO ESCOPO INICIAL
+
+A arquitetura poderá futuramente suportar grades/matrizes, mas isso não deverá aumentar o custo do MVP antes de haver currículo que as utilize.
+
+---
+
+## 32.A33 TABELAS MATEMÁTICAS
+
+Algumas atividades utilizarão tabelas de valores:
+
+```
+x | f(x)
+--|-----
+1 | 2
+2 | 4
+3 | 8
+```
+
+A tabela deverá ser componente próprio, não uma expressão improvisada.
+
+Será especialmente útil para:
+
+- funções;
+- aproximação de limites;
+- padrões;
+- dados experimentais.
+
+---
+
+## 32.A34 GRÁFICOS COMO OBJETO VINCULADO
+
+O gráfico não é parte textual da expressão.
+
+Ele deverá ser um objeto matemático vinculado a:
+
+- função;
+- tabela;
+- pontos;
+- atividade.
+
+O aluno poderá alternar entre representação algébrica e gráfica sem perder a expressão original.
+
+---
+
+## 32.A35 EXPRESSÕES SOB ANOTAÇÕES E DESTAQUES
+
+O professor/sistema poderá realçar partes de uma expressão sem modificar sua estrutura.
+
+Exemplo pedagógico:
+
+```
+3(x + 2)
+  └───┘
+   grupo
+```
+
+Esses realces deverão ser overlays visuais, não caracteres inseridos na matemática.
+
+---
+
+## 32.A36 ALINHAMENTO POR OPERADOR
+
+Além do sinal `=`, o editor poderá oferecer alinhamento visual apropriado para:
+
+- `=`;
+- `≈`;
+- `→`;
+- desigualdades;
+- etapas de derivação/integração.
+
+O alinhamento deve seguir a estrutura da resolução e nunca alterar o conteúdo.
+
+---
+
+## 32.A37 TEMPLATE REGISTRY
+
+A implementação deverá possuir um **registro central de templates matemáticos**.
+
+Conceitualmente:
+
+```
+template_id
+nome
+curriculum_skills
+visual_structure
+slots
+default_focus_order
+keyboard_tools
+linear_serialization
+accessible_description
+tutorial_id
+validation_support
+```
+
+Exemplos de IDs:
+
+```
+MATH_FRACTION
+MATH_POWER
+MATH_NTH_ROOT
+MATH_LOG_BASE
+MATH_LIMIT
+MATH_DERIVATIVE_LEIBNIZ
+MATH_INTEGRAL_DEFINITE
+MATH_SUMMATION
+MATH_PIECEWISE
+```
+
+Isso impedirá que cada tela implemente sua própria versão da mesma notação.
+
+---
+
+## 32.A38 REUTILIZAÇÃO DE PRIMITIVAS
+
+Estruturas complexas deverão ser construídas a partir de primitivas reutilizáveis.
+
+Exemplo:
+
+Integral definida usa:
+
+- operador;
+- sobrescrito;
+- subscrito;
+- expressão;
+- identificador de variável.
+
+Logaritmo usa:
+
+- operador;
+- subscrito;
+- argumento.
+
+Raiz n-ésima usa:
+
+- índice;
+- contêiner de radicando.
+
+Isso reduz inconsistência visual e de navegação.
+
+---
+
+## 32.A39 ORDEM DE FOCO DEVE SER TESTADA, NÃO PRESUMIDA
+
+A ordem ideal de entrada pode variar entre estruturas.
+
+Portanto os protótipos deverão testar com usuários:
+
+- base primeiro ou argumento primeiro em logaritmo;
+- limites primeiro ou integrando primeiro na integral;
+- condição ou expressão primeiro em função por partes.
+
+O template terá uma ordem padrão, mas o toque direto sempre permite acessar outro slot.
+
+---
+
+## 32.A40 O TECLADO DEVE MOSTRAR A ESTRUTURA, NÃO CÓDIGO
+
+O botão de logaritmo com base deverá parecer algo próximo de:
+
+`logₐ( )`
+
+e não:
+
+`log_base()`.
+
+O botão de integral definida deverá representar visualmente limites superior/inferior.
+
+O aluno aprende a notação matemática, não sintaxe de programação.
+
+---
+
+## 32.A41 VARIAÇÕES DE NOTAÇÃO ACEITAS
+
+Quando houver mais de uma notação matemática padrão, o motor poderá aceitar múltiplas formas.
+
+Exemplos:
+
+```
+√x
+x^(1/2)
+```
+
+quando equivalentes no contexto adequado.
+
+```
+f'(x)
+dy/dx
+```
+
+quando ambas representam a derivada apropriada.
+
+O conteúdo pode ensinar uma forma preferencial sem declarar a outra incorreta.
+
+---
+
+## 32.A42 FORMA PREFERENCIAL PEDAGÓGICA
+
+Atividades poderão indicar uma notação desejada.
+
+Exemplo:
+
+> Escreva a derivada usando notação de Leibniz.
+
+Nesse caso:
+
+`f'(x)`
+
+pode estar matematicamente correto como ideia, mas não satisfaz o objetivo de notação da atividade.
+
+A lógica segue a mesma separação entre validade matemática e aderência pedagógica definida no motor.
+
+---
+
+## 32.A43 TEMPLATES E NÍVEIS DE EXPERIÊNCIA
+
+### Iniciante
+
+- slots mais visíveis;
+- labels temporários;
+- preview;
+- botão “Próximo”;
+- ajuda de estrutura.
+
+### Intermediário
+
+- realce menor;
+- navegação rápida;
+- previews reduzidos.
+
+### Experiente
+
+- inserção imediata;
+- atalhos;
+- mínimo de elementos auxiliares.
+
+A expressão final renderizada deve ser igual nos três modos.
+
+---
+
+## 32.A44 NOTAÇÃO NOVA EXIGE TUTORIAL DE INTERFACE
+
+Sempre que uma habilidade introduzir uma estrutura visual inédita, seu módulo deverá declarar:
+
+```
+requires_editor_tutorial: true
+editor_template_id: ...
+```
+
+Exemplo:
+
+primeiro módulo de logaritmos:
+
+`MATH_LOG_BASE`
+
+primeiro módulo de integrais definidas:
+
+`MATH_INTEGRAL_DEFINITE`.
+
+Depois de demonstrada familiaridade, o tutorial não precisa reaparecer.
+
+---
+
+## 32.A45 MATRIZ CURRÍCULO ↔ NOTAÇÃO
+
+Deverá existir uma matriz rastreável:
+
+```
+habilidade curricular
+        ↓
+notações exigidas
+        ↓
+templates do editor
+        ↓
+tutorial de interface
+        ↓
+testes de usabilidade
+```
+
+Exemplo:
+
+```
+PC-LOG-02
+  ├── MATH_LOG_BASE
+  └── MATH_POWER
+
+C1-LIM-02
+  └── MATH_LIMIT
+
+C1-TFC-04
+  ├── MATH_INTEGRAL_DEFINITE
+  └── MATH_EVALUATION_BAR
+```
+
+Nenhuma habilidade poderá ser publicada com dependência de template inexistente.
+
+---
+
+## 32.A46 TESTES DE COMPOSIÇÃO
+
+Não basta testar cada símbolo isoladamente.
+
+O editor deverá ser testado com composições reais.
+
+Exemplos obrigatórios:
+
+```
+log₂(x² + 1)
+```
+
+```
+       log₂(x)
+lim    ───────
+x→1     x - 1
+```
+
+```
+  3
+  ∫ (x² + 1) dx
+  0
+```
+
+```
+        1
+       ───
+        x
+f(x) = e
+```
+
+e expressões aninhadas relevantes ao currículo.
+
+---
+
+## 32.A47 CRITÉRIO DE COMPLETUDE DO EDITOR
+
+Antes de um bloco curricular ser considerado implementável, deverá existir uma lista completa das notações necessárias naquele bloco.
+
+Exemplo:
+
+### Logaritmos
+
+- `log`;
+- base em subscrito;
+- argumento;
+- potência;
+- igualdade;
+- domínio/inequação.
+
+### Limites
+
+- `lim`;
+- subscrito `x→a`;
+- laterais;
+- infinito;
+- fração;
+- fatoração;
+- raiz.
+
+### Integrais
+
+- integral;
+- limites;
+- diferencial;
+- potência;
+- funções;
+- avaliação por extremos.
+
+Esse inventário será obrigatório no planejamento técnico.
+
+---
+
+## 32.A48 PRINCÍPIO UNIVERSAL DE NOTAÇÃO
+
+Sempre que uma notação matemática possuir significado espacial, o Eixo deverá preservar esse significado visualmente.
+
+A interface deverá perguntar:
+
+> “Como isso é escrito e lido em matemática?”
+
+antes de perguntar:
+
+> “Como é mais fácil armazenar isso no software?”
+
+A representação interna pode ser linear/estruturada.
+
+A representação para o aluno deve continuar matemática.
+
+---
+
 
 # 33. ACESSIBILIDADE
 
