@@ -25,6 +25,9 @@ Antes de alterar código:
 5. `docs/architecture/SECURITY_PRIVACY_TELEMETRY.md`
 6. `docs/quality/TEST_STRATEGY.md`
 7. `docs/implementation/ROADMAP.md`
+8. `docs/design/DESIGN_SYSTEM.md`
+9. `docs/assets/ASSET_PIPELINE.md` quando a tarefa envolver mídia
+10. `docs/assets/ASSET_MANIFEST.csv` quando a tarefa envolver mídia
 
 Não assumir requisitos ausentes.
 
