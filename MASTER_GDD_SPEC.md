@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.9 em construção  
+**Versão de especificação:** 0.10 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -4180,28 +4180,1368 @@ Isso conecta diretamente currículo, produto e qualidade técnica.
 
 ---
 
-# 28. BANCO DE QUESTÕES
+# 28. BANCO DE QUESTÕES, GERAÇÃO E SELEÇÃO DE ATIVIDADES
 
-Questões devem existir separadas da lógica do aplicativo.
+O Eixo não deverá depender de milhares de questões escritas manualmente uma a uma.
 
-Metadados esperados incluem:
+O sistema de conteúdo será híbrido e deverá combinar:
 
-- ID;
-- área;
-- assunto;
-- subassunto;
-- dificuldade;
-- pré-requisitos;
-- tipo de atividade;
-- nível de detalhamento;
-- política de calculadora;
-- resposta/relações matemáticas esperadas;
-- erros comuns;
-- dicas;
-- recursos gráficos;
-- dimensões de domínio avaliadas.
+1. questões autorais/curadas;
+2. famílias paramétricas de exercícios;
+3. adaptações de recursos educacionais legalmente utilizáveis;
+4. atividades interativas construídas especificamente para o Eixo;
+5. geração assistida por IA apenas sob validação estruturada;
+6. seleção adaptativa baseada em habilidade, domínio e contexto.
 
-O sistema deverá selecionar exercícios de forma adaptativa, evitando repetição desnecessária.
+O objetivo não é produzir volume pelo volume.
+
+O objetivo é conseguir gerar **variedade pedagogicamente útil e matematicamente verificável**.
+
+---
+
+## 28.1 QUESTÃO NÃO É SOMENTE ENUNCIADO + RESPOSTA
+
+Cada atividade deverá ser tratada como um objeto pedagógico estruturado.
+
+Metadados previstos:
+
+```
+activity_id
+version
+status
+
+skill_targets
+skill_prerequisites
+secondary_skills
+
+activity_type
+difficulty
+complexity
+novelty
+
+statement
+math_objects
+editor_templates_required
+
+pedagogical_goal
+required_strategy
+accepted_strategies
+strategies_not_proving_target_mastery
+
+detail_level
+calculator_policy
+
+solution_contract
+answer_contract
+domain_assumptions
+units
+
+common_errors
+hint_ladder
+
+visual_resources
+graph_config
+interactive_resources
+
+source_provenance
+license
+author
+review_status
+```
+
+Nem todos os campos serão obrigatórios em todas as atividades, mas o modelo deverá suportá-los.
+
+---
+
+## 28.2 TIPOS DE CONTEÚDO
+
+### Questão fixa
+
+Enunciado e dados definidos manualmente.
+
+Útil para:
+
+- problemas cuidadosamente desenhados;
+- aplicações;
+- desafios;
+- introduções;
+- situações com contexto específico.
+
+### Família paramétrica
+
+Possui estrutura pedagógica fixa e parâmetros variáveis.
+
+Exemplo:
+
+```
+a(x+b)=c
+```
+
+com restrições sobre `a`, `b` e `c`.
+
+### Atividade interativa
+
+Depende de:
+
+- gráfico;
+- slider;
+- construção;
+- previsão;
+- manipulação visual.
+
+### Atividade diagnóstica
+
+Projetada para distinguir possíveis lacunas.
+
+### Atividade de transferência
+
+Usa o mesmo conceito em contexto significativamente diferente.
+
+### Atividade de correção de erro
+
+Apresenta uma resolução e pede identificação/correção.
+
+### Atividade aberta
+
+Permite múltiplas estratégias e possivelmente múltiplas respostas válidas.
+
+---
+
+## 28.3 BLUEPRINT PEDAGÓGICO
+
+Cada família de atividades deverá possuir um **blueprint**.
+
+O blueprint define a intenção pedagógica antes dos números específicos.
+
+Exemplo:
+
+```
+Blueprint: EQUACAO_LINEAR_DISTRIBUTIVA_01
+
+habilidade-alvo:
+  MB-ALG-07
+  MB-EQU-05
+
+forma:
+  a(x+b)=c
+
+objetivo:
+  exigir distributiva antes de isolar x
+
+restrições:
+  a ≠ 0
+  solução inteira
+  evitar números excessivamente grandes
+
+variações:
+  sinal de a
+  sinal de b
+  posição dos termos
+  solução positiva/negativa/zero
+
+erros-alvo:
+  distributiva parcial
+  erro de sinal
+  operação em apenas um membro
+
+dificuldade:
+  ...
+```
+
+O blueprint é mais importante do que uma questão individual gerada.
+
+---
+
+## 28.4 GERAÇÃO PARAMÉTRICA NÃO PODE SER APENAS TROCA DE NÚMEROS
+
+Uma família precisa possuir eixos reais de variação.
+
+Exemplo ruim:
+
+```
+2(x+3)=10
+3(x+4)=15
+4(x+5)=20
+```
+
+O padrão fica óbvio e mede pouco.
+
+Melhor família pode variar:
+
+- coeficiente positivo/negativo;
+- constante positiva/negativa;
+- variável em lados diferentes;
+- parênteses de um ou dois lados;
+- solução positiva/negativa;
+- coeficientes fracionários em níveis avançados;
+- ordem visual dos termos.
+
+Exemplos:
+
+```
+3(x+2)=18
+-2(x-4)=10
+5-3(x+1)=-7
+2(x-3)=x+4
+```
+
+desde que cada instância continue alinhada ao objetivo pedagógico.
+
+---
+
+## 28.5 PARÂMETROS COM RESTRIÇÕES
+
+Geradores deverão declarar restrições matemáticas.
+
+Exemplo:
+
+para uma equação destinada a produzir solução inteira:
+
+```
+a ≠ 0
+x_solution ∈ Z
+c = a(x_solution+b)
+```
+
+Em vez de escolher números aleatórios e torcer para que a questão fique adequada.
+
+---
+
+## 28.6 GERAÇÃO A PARTIR DA SOLUÇÃO
+
+Quando útil, o gerador poderá começar pela resposta desejada.
+
+Exemplo:
+
+1. escolher `x=4`;
+2. escolher `a=3`;
+3. escolher `b=2`;
+4. construir:
+   `3(x+2)=18`.
+
+Isso facilita garantir características como:
+
+- solução inteira;
+- solução negativa;
+- solução fracionária;
+- raízes específicas;
+- fatoração exata.
+
+---
+
+## 28.7 GERAÇÃO POR ESTRUTURA ALGÉBRICA
+
+Para fatoração:
+
+em vez de criar trinômio aleatório e depois descobrir se é fatorável, gerar:
+
+```
+(x-r₁)(x-r₂)
+```
+
+e expandir automaticamente.
+
+Exemplo:
+
+escolher:
+
+`r₁=2`
+
+`r₂=3`
+
+gerar:
+
+```
+(x-2)(x-3)
+```
+
+e então:
+
+```
+x²-5x+6
+```
+
+Isso garante uma instância pedagogicamente controlável.
+
+---
+
+## 28.8 SEEDS REPRODUZÍVEIS
+
+Cada instância gerada deverá possuir uma seed ou identificador reproduzível.
+
+Assim:
+
+- um bug pode ser reproduzido;
+- professor/suporte pode abrir exatamente a mesma questão;
+- testes automatizados podem repetir casos;
+- evidências podem apontar para a instância real.
+
+Exemplo conceitual:
+
+```
+blueprint_id: EQUACAO_LINEAR_DISTRIBUTIVA_01
+seed: 845291
+```
+
+deve sempre reconstruir a mesma atividade naquela versão do gerador.
+
+---
+
+## 28.9 VERSÃO DO GERADOR
+
+BluePrints e geradores precisam ser versionados.
+
+Se uma regra mudar:
+
+```
+v1 → v2
+```
+
+atividades históricas continuam associadas à versão que as criou.
+
+Isso evita impossibilidade de reproduzir uma questão antiga.
+
+---
+
+## 28.10 SOLUTION CONTRACT
+
+Cada questão deverá possuir um contrato matemático de solução.
+
+Ele define:
+
+- objeto procurado;
+- domínio;
+- conjunto de respostas válidas;
+- necessidade de todas as soluções;
+- precisão;
+- unidades;
+- formas equivalentes;
+- condições adicionais.
+
+Exemplo:
+
+```
+type: SOLVE_EQUATION
+variable: x
+domain: REAL
+expected_solution_set: {2,3}
+require_all_solutions: true
+```
+
+O contrato não precisa definir uma única sequência de passos.
+
+---
+
+## 28.11 SOLUÇÃO DE REFERÊNCIA NÃO É CAMINHO OBRIGATÓRIO
+
+O conteúdo poderá armazenar uma ou mais soluções de referência para:
+
+- produção de dicas;
+- revisão humana;
+- documentação;
+- testes.
+
+Mas essas soluções nunca deverão se tornar implicitamente:
+
+> “a única forma correta”.
+
+O motor continua aceitando outros caminhos válidos.
+
+---
+
+## 28.12 ESTRATÉGIA-ALVO
+
+Quando o objetivo da aula exigir um método, a questão deverá declarar isso.
+
+Exemplo:
+
+```
+target_skill: PC-ALG-06
+required_evidence:
+  FACTOR_TRINOMIAL
+```
+
+Se o aluno usar fórmula quadrática:
+
+- resposta matemática pode ser correta;
+- evidência de fatoração não é concedida.
+
+---
+
+## 28.13 HINT LADDER POR BLUEPRINT
+
+Dicas deverão ser associadas à estrutura do exercício, não apenas à questão individual.
+
+Exemplo para distributiva:
+
+### Dica 1
+
+> Observe o número fora dos parênteses.
+
+### Dica 2
+
+> Ele precisa multiplicar cada termo dentro do grupo.
+
+### Dica 3
+
+Destacar visualmente:
+
+```
+3(x+2)
+↓ ↓
+3·x + 3·2
+```
+
+### Dica 4
+
+Mostrar o próximo passo.
+
+Parâmetros concretos são injetados automaticamente.
+
+---
+
+## 28.14 DICAS DEPENDENTES DO ERRO REAL
+
+Quando o motor reconhecer um erro específico, a questão poderá selecionar uma dica correspondente.
+
+Exemplo:
+
+`ERRO_DISTRIBUTIVA_PARCIAL`
+
+não deve receber uma dica genérica de “tente novamente”.
+
+A dica deve atacar aquele padrão.
+
+---
+
+## 28.15 DISTRAÇÕES E MÚLTIPLA ESCOLHA
+
+Quando houver múltipla escolha, alternativas incorretas deverão preferencialmente representar erros plausíveis.
+
+Exemplo:
+
+para:
+
+`3(x+2)`
+
+alternativas podem incluir:
+
+- `3x+6`;
+- `3x+2` — distributiva parcial;
+- `3x+5` — erro aritmético;
+- outra opção pedagogicamente justificável.
+
+Evitar alternativas aleatórias absurdas apenas para completar quatro opções.
+
+---
+
+## 28.16 MÚLTIPLA ESCOLHA NÃO É O FORMATO PADRÃO
+
+O Eixo deverá priorizar produção matemática pelo aluno.
+
+Múltipla escolha será adequada principalmente para:
+
+- reconhecimento conceitual;
+- leitura de gráfico;
+- identificação de erro;
+- diagnóstico rápido;
+- comparação.
+
+Não substituirá o Caderno Matemático.
+
+---
+
+## 28.17 VALIDAÇÃO AUTOMÁTICA DE QUESTÃO GERADA
+
+Antes de mostrar uma instância ao aluno, o pipeline deverá verificar:
+
+1. sintaxe;
+2. domínio;
+3. existência de solução;
+4. quantidade de soluções quando relevante;
+5. resposta esperada;
+6. restrições do blueprint;
+7. nível de dificuldade esperado;
+8. ausência de degenerações indesejadas;
+9. compatibilidade com o motor;
+10. compatibilidade com editor/templates.
+
+Se qualquer validação falhar:
+
+**descartar a instância e gerar outra.**
+
+---
+
+## 28.18 CASOS DEGENERADOS
+
+O gerador deverá evitar instâncias que destruam o objetivo pedagógico.
+
+Exemplo:
+
+uma questão de distributiva:
+
+```
+1(x+0)=x
+```
+
+pode ser matematicamente válida, mas pedagogicamente inútil para aquela aula.
+
+Outro exemplo:
+
+uma equação quadrática que acidentalmente vira linear após cancelamento.
+
+BluePrints precisam declarar degenerações proibidas.
+
+---
+
+## 28.19 VERIFICAÇÃO DUPLA EM CONTEÚDOS CRÍTICOS
+
+Para questões mais complexas, poderá haver duas formas independentes de confirmação.
+
+Exemplo:
+
+- construir simbolicamente;
+- resolver/verificar com motor matemático;
+- substituir soluções na expressão original.
+
+Isso reduz risco de disponibilizar questão errada.
+
+---
+
+## 28.20 TESTES DE PROPRIEDADE DOS GERADORES
+
+Geradores deverão possuir testes automatizados do tipo:
+
+> gerar 10.000 instâncias e verificar invariantes.
+
+Exemplos:
+
+- nenhuma possui divisão por zero;
+- todas têm solução inteira quando prometido;
+- todas exigem a habilidade-alvo;
+- todas permanecem no intervalo de dificuldade;
+- nenhuma resulta em expressão inválida.
+
+Isso será particularmente importante no Codex/CI.
+
+---
+
+## 28.21 COBERTURA DE VARIAÇÃO
+
+O sistema deverá medir se um blueprint está realmente produzindo variedade.
+
+Possíveis dimensões:
+
+- sinais;
+- tamanho de números;
+- posição de variável;
+- representação;
+- tipo de solução;
+- contexto;
+- combinação de pré-requisitos.
+
+Isso evita “1000 exercícios” que na prática são o mesmo exercício.
+
+---
+
+## 28.22 DIFICULDADE NÃO SERÁ UM ÚNICO NÚMERO
+
+A atividade poderá possuir dimensões como:
+
+- carga algébrica;
+- quantidade de etapas;
+- abstração;
+- novidade;
+- número de habilidades combinadas;
+- exigência de modelagem;
+- complexidade de notação;
+- suporte oferecido.
+
+A interface pode reduzir isso a rótulos simples.
+
+Internamente, a representação pode ser multidimensional.
+
+---
+
+## 28.23 CALIBRAÇÃO EMPÍRICA DE DIFICULDADE
+
+A dificuldade inicialmente será definida por especialistas/regras.
+
+Depois, dados reais poderão ajustar estimativas.
+
+Exemplo:
+
+uma questão classificada como “média” que consistentemente produz desempenho muito abaixo de outras questões similares deve ser revisada.
+
+Dados não substituem revisão pedagógica.
+
+---
+
+## 28.24 BANCO DE ITENS E BANCO DE BLUEPRINTS
+
+Devem existir dois conceitos separados.
+
+### Banco de Blueprints
+
+Templates geradores e regras pedagógicas.
+
+### Banco de Itens
+
+Questões fixas e/ou instâncias congeladas.
+
+Isso permite combinar conteúdo artesanal com geração dinâmica.
+
+---
+
+## 28.25 QUESTÕES DE REFERÊNCIA
+
+Para cada habilidade, deverá existir um pequeno conjunto de questões fixas de referência.
+
+Usos:
+
+- testes;
+- calibração;
+- demonstração;
+- validação do motor;
+- comparação entre versões.
+
+Elas não precisam ser exibidas frequentemente a alunos.
+
+---
+
+## 28.26 CONTEÚDO AUTORAL
+
+Atividades especialmente importantes deverão ser desenhadas manualmente.
+
+Exemplos:
+
+- introdução de limite;
+- visualização de derivada;
+- problema de otimização;
+- construção da integral;
+- desafios de unidade.
+
+Geradores paramétricos não substituem bom design instrucional.
+
+---
+
+## 28.27 CONTEÚDO EXTERNO
+
+Conteúdo externo só poderá entrar após:
+
+- verificar licença;
+- registrar origem;
+- adaptar ao modelo pedagógico;
+- revisar matemática;
+- mapear habilidades;
+- revisar linguagem;
+- validar acessibilidade;
+- verificar compatibilidade com o editor/motor.
+
+Copiar um enunciado da internet sem rastreabilidade não será permitido.
+
+---
+
+## 28.28 PROVENIÊNCIA
+
+Toda questão não totalmente autoral deverá armazenar:
+
+- fonte;
+- autor/instituição quando disponível;
+- URL ou identificador de origem;
+- licença;
+- data de obtenção;
+- tipo de adaptação;
+- atribuição exigida.
+
+Isso deverá existir mesmo quando a atribuição não aparece diretamente para o aluno em toda atividade.
+
+---
+
+## 28.29 LICENÇA COMO CAMPO EXECUTÁVEL
+
+A licença não deverá ser apenas texto em documentação.
+
+Ela deverá fazer parte do cadastro do conteúdo.
+
+Isso permite impedir publicação de material com status jurídico desconhecido.
+
+Possíveis estados:
+
+- AUTORAL;
+- DOMINIO_PUBLICO;
+- CC0;
+- CC_BY;
+- CC_BY_SA;
+- OUTRA_COMPATIVEL;
+- REVISAO_NECESSARIA;
+- NAO_PUBLICAVEL.
+
+A lista final deverá ser revisada juridicamente antes de produção.
+
+---
+
+## 28.30 IA COMO AUTORA AUXILIAR, NÃO FONTE DE VERDADE
+
+Modelos de linguagem poderão ajudar a:
+
+- criar variações de contexto;
+- reescrever enunciados;
+- propor erros comuns;
+- criar rascunhos de dicas;
+- classificar habilidades;
+- gerar propostas de blueprint.
+
+Mas a IA não deverá publicar diretamente atividades.
+
+---
+
+## 28.31 PIPELINE DE IA PARA CONTEÚDO
+
+Exemplo:
+
+```
+IA propõe
+   ↓
+parser transforma em estrutura
+   ↓
+motor matemático verifica
+   ↓
+regras pedagógicas verificam
+   ↓
+filtros de qualidade
+   ↓
+revisão humana quando necessária
+   ↓
+publicação
+```
+
+Em nenhum ponto:
+
+```
+IA → aluno
+```
+
+sem validação.
+
+---
+
+## 28.32 IA NÃO DEVE INVENTAR RESPOSTA ESPERADA IRREVISÁVEL
+
+Se a resposta não puder ser verificada pelo motor ou por regra confiável, a atividade deverá:
+
+- exigir revisão humana;
+- ou não entrar no fluxo automático.
+
+---
+
+## 28.33 GERAÇÃO DE CONTEXTO
+
+Um blueprint matemático poderá receber múltiplos contextos.
+
+Exemplo de função linear:
+
+- corrida de táxi;
+- assinatura;
+- produção;
+- consumo;
+- distância;
+- orçamento.
+
+Mas o contexto precisa obedecer:
+
+- números plausíveis;
+- unidades coerentes;
+- linguagem natural;
+- ausência de informação desnecessária;
+- não introduzir conhecimento externo irrelevante.
+
+---
+
+## 28.34 CONTEXTO NÃO PODE MASCARAR A MATEMÁTICA
+
+Um problema contextualizado não deve virar teste de leitura obscura quando a habilidade-alvo é matemática.
+
+Complexidade textual deve ser controlada separadamente.
+
+---
+
+## 28.35 DIVERSIDADE DE REPRESENTAÇÃO
+
+Uma habilidade deverá aparecer em diferentes representações.
+
+Exemplo para função linear:
+
+- expressão;
+- tabela;
+- gráfico;
+- descrição verbal;
+- situação real.
+
+Isso alimenta domínio de representação e transferência.
+
+---
+
+## 28.36 QUESTÕES ESPELHADAS
+
+O mesmo conceito poderá ser pedido de direções diferentes.
+
+Exemplo:
+
+### Direção A
+
+Dada a função, obtenha o gráfico.
+
+### Direção B
+
+Dado o gráfico, obtenha característica/função.
+
+### Direção C
+
+Dada uma situação, construa a função.
+
+Isso reduz memorização superficial.
+
+---
+
+## 28.37 ATIVIDADES DE PREVISÃO
+
+Em conteúdos visuais:
+
+1. aluno prevê;
+2. registra previsão;
+3. visualização é liberada;
+4. compara;
+5. explica diferença.
+
+Exemplo:
+
+> O que acontecerá ao gráfico se `a` passar de 1 para 3 em `y=ax²`?
+
+A atividade não precisa sempre ter “uma resposta final numérica”.
+
+---
+
+## 28.38 QUESTÕES DE EXPLICAÇÃO
+
+Algumas habilidades exigirão explicação.
+
+Exemplo:
+
+> Por que não podemos cancelar `x` em `x(x-2)=0` sem considerar `x=0`?
+
+A resposta em linguagem natural poderá ser:
+
+- avaliada por critérios/rubrica;
+- analisada assistidamente por IA;
+- revisada em atividades específicas.
+
+Esse formato não deverá ser núcleo do MVP até existir validação confiável.
+
+---
+
+## 28.39 RUBRICAS
+
+Atividades abertas poderão possuir rubrica estruturada.
+
+Exemplo:
+
+```
+modelou corretamente
+identificou domínio
+aplicou estratégia válida
+interpretou resultado
+incluiu unidade
+```
+
+Cada item produz evidência separada.
+
+---
+
+## 28.40 SELEÇÃO ADAPTATIVA DE QUESTÕES
+
+O seletor deverá considerar:
+
+- habilidade-alvo;
+- dimensões de domínio frágeis;
+- dificuldade atual;
+- atividades recentes;
+- representações recentes;
+- erros recorrentes;
+- necessidade de revisão;
+- nível de ajuda recente;
+- variedade.
+
+O objetivo é evitar repetir a mesma superfície.
+
+---
+
+## 28.41 ANTI-REPETIÇÃO
+
+O sistema deverá manter uma janela recente.
+
+Evitar:
+
+- mesmo blueprint repetido várias vezes;
+- mesmos números;
+- mesmo contexto;
+- mesma representação;
+- mesma estrutura visual.
+
+Repetição intencional poderá ocorrer durante aprendizagem inicial, mas deve ser controlada.
+
+---
+
+## 28.42 SELEÇÃO POR INFORMAÇÃO PEDAGÓGICA
+
+Quando houver dúvida entre duas possíveis lacunas, escolher uma atividade capaz de distingui-las.
+
+Exemplo:
+
+não sabemos se o aluno erra limites por:
+
+- fatoração;
+- conceito de limite.
+
+Selecionar questão que exige limite sem fatoração.
+
+Se acertar:
+
+a hipótese de fatoração ganha força.
+
+Esse é um uso diagnóstico do banco.
+
+---
+
+## 28.43 SESSÃO NÃO É PLAYLIST FIXA
+
+A sessão poderá ser montada dinamicamente.
+
+Exemplo:
+
+```
+Atividade 1 — conteúdo atual
+Atividade 2 — variação
+Atividade 3 — pré-requisito antigo
+Atividade 4 — aplicação
+```
+
+Depois do desempenho na Atividade 2, a Atividade 3 pode mudar.
+
+---
+
+## 28.44 INTERRUPÇÃO ADAPTATIVA
+
+Se o sistema já possui evidência suficiente:
+
+não precisa continuar até o “exercício 10”.
+
+Pode encerrar aquele bloco e avançar.
+
+Da mesma forma, dificuldade inesperada pode inserir uma microprática.
+
+---
+
+## 28.45 MODO PRÁTICA LIVRE
+
+Ao selecionar uma habilidade manualmente, o aluno poderá definir algo como:
+
+- rápido;
+- normal;
+- desafio;
+- misturado.
+
+O seletor adapta quantidade e dificuldade.
+
+Não precisa perguntar detalhes técnicos.
+
+---
+
+## 28.46 MODO PROVA
+
+Questões deverão ser selecionadas com:
+
+- cobertura definida;
+- distribuição de dificuldade;
+- pouca redundância;
+- controle de ajuda;
+- seed/reprodutibilidade.
+
+Uma avaliação formal precisa ser reproduzível.
+
+---
+
+## 28.47 QUESTÕES NÃO DEVEM VAZAR A RESPOSTA
+
+Verificar automaticamente problemas como:
+
+- resposta aparecendo no enunciado;
+- gráfico já marcando o ponto pedido;
+- alternativa destacada visualmente;
+- dica inicial revelando operação;
+- nome da atividade entregando método em avaliação mista.
+
+Exemplo ruim:
+
+> Módulo “Use fatoração”  
+> Questão: escolha o método para resolver.
+
+---
+
+## 28.48 TÍTULOS CONTEXTUAIS
+
+Durante aprendizagem:
+
+> Fatoração — diferença de quadrados
+
+é aceitável.
+
+Durante transferência/avaliação:
+
+usar título neutro:
+
+> Resolva
+
+para não entregar a estratégia.
+
+---
+
+## 28.49 LOCALIZAÇÃO E FORMATAÇÃO
+
+Questões deverão respeitar locale.
+
+Para pt-BR, por exemplo:
+
+- vírgula decimal quando apropriado;
+- moeda `R$`;
+- unidades e separadores coerentes;
+- linguagem brasileira natural.
+
+A estrutura matemática interna permanece independente da apresentação.
+
+---
+
+## 28.50 ACESSIBILIDADE DE QUESTÕES
+
+Cada atividade deverá prever:
+
+- descrição de imagens;
+- descrição de gráfico quando necessária;
+- ordem de leitura;
+- não depender apenas de cor;
+- linguagem compreensível;
+- alternativa equivalente quando interação específica não for acessível.
+
+---
+
+## 28.51 CICLO DE VIDA DO CONTEÚDO
+
+Status possíveis:
+
+```
+DRAFT
+AUTOMATICALLY_VALIDATED
+PEDAGOGICALLY_REVIEWED
+APPROVED
+PUBLISHED
+DEPRECATED
+RETIRED
+```
+
+Geração automática não pula diretamente para `PUBLISHED` em conteúdos que exigem revisão humana.
+
+---
+
+## 28.52 REVISÃO E VERSIONAMENTO
+
+Uma questão publicada não deverá ser alterada silenciosamente de forma que mude sua interpretação histórica.
+
+Mudança significativa cria nova versão.
+
+Isso preserva:
+
+- tentativas anteriores;
+- evidências;
+- auditoria;
+- reprodução.
+
+---
+
+## 28.53 RELATO DE PROBLEMA PELO ALUNO
+
+O aluno poderá sinalizar:
+
+- enunciado confuso;
+- possível erro;
+- resposta não aceita;
+- problema visual;
+- conteúdo inadequado.
+
+A ação deve capturar automaticamente:
+
+- activity_id;
+- version;
+- seed;
+- estado necessário para reprodução.
+
+Sem exigir que o aluno copie toda a conta.
+
+---
+
+## 28.54 TELEMETRIA DE QUALIDADE DA QUESTÃO
+
+Sem expor dados pessoais desnecessários, o sistema poderá observar indicadores como:
+
+- taxa anormal de abandono;
+- taxa de “não comprovado” do motor;
+- uso de dica;
+- relatos de erro;
+- tempo extremamente discrepante;
+- desempenho incompatível com questões semelhantes.
+
+Isso gera fila de revisão de conteúdo.
+
+---
+
+## 28.55 QUESTÃO COM MOTOR “NÃO COMPROVADO”
+
+Se muitas soluções válidas de uma questão resultarem em:
+
+`NAO_COMPROVADO`
+
+isso é sinal de que:
+
+- o motor precisa melhorar;
+- ou a questão não é adequada para publicação automatizada.
+
+A culpa não deve ser transferida ao aluno.
+
+---
+
+## 28.56 COBERTURA MÍNIMA POR HABILIDADE
+
+Antes de publicar uma habilidade, deverá haver cobertura suficiente em diferentes categorias.
+
+Exemplo conceitual:
+
+- introdução;
+- prática direta;
+- variação;
+- diagnóstico de erro;
+- aplicação;
+- transferência;
+- revisão.
+
+Nem toda habilidade precisa da mesma quantidade.
+
+---
+
+## 28.57 QUALIDADE > QUANTIDADE
+
+Não haverá meta artificial como:
+
+> cada habilidade precisa de 1000 perguntas.
+
+Uma boa combinação de:
+
+- blueprints ricos;
+- parâmetros controlados;
+- atividades artesanais;
+- variações de representação
+
+pode gerar grande diversidade com menos conteúdo-base.
+
+---
+
+## 28.58 EXEMPLO — BLUEPRINT DE DIFERENÇA DE QUADRADOS
+
+```
+id: PC_ALG_DIFF_SQUARES_FACTOR_01
+
+target_skill:
+  PC-ALG-05
+
+family:
+  A² - B²
+
+generation:
+  choose p,q
+  A = p*x^m
+  B = q
+  expression = A²-B²
+
+constraints:
+  p,q != 0
+  avoid trivial A=B
+  coefficients within level bounds
+
+expected_structure:
+  (A-B)(A+B)
+
+accepted:
+  algebraically equivalent factorization
+
+common_errors:
+  (A-B)²
+  A²-B
+  sign mistakes
+```
+
+Instâncias:
+
+```
+x²-16
+4x²-25
+9y²-1
+```
+
+em níveis adequados.
+
+---
+
+## 28.59 EXEMPLO — BLUEPRINT DE LIMITE COM FATORAÇÃO
+
+```
+id: C1_LIMIT_FACTOR_CANCEL_01
+
+target_skill:
+  C1-LAL-04
+  C1-LAL-05
+
+prerequisite:
+  PC-ALG-05
+
+generate:
+  choose a
+  numerator = x²-a²
+  denominator = x-a
+  approach = a
+
+constraints:
+  a != 0
+```
+
+Questão:
+
+```
+        x²-a²
+lim     ─────
+x→a      x-a
+```
+
+O sistema sabe que a estratégia natural é fatoração, mas continuará aceitando outro caminho matematicamente válido conforme contrato pedagógico.
+
+---
+
+## 28.60 EXEMPLO — BLUEPRINT DE REGRA DA CADEIA
+
+Gerar composição explícita:
+
+```
+f(x) = (ax+b)^n
+```
+
+Variar posteriormente:
+
+- potência;
+- trigonométrica;
+- exponencial;
+- logaritmo.
+
+O gerador precisa garantir que a função interna não seja trivial quando o objetivo é realmente testar cadeia.
+
+Exemplo ruim:
+
+`f(x)=(x+0)^2`
+
+pode reduzir demais a evidência desejada.
+
+---
+
+## 28.61 CONTEÚDO PARA GAMIFICAÇÃO
+
+Problemas ligados ao mundo/jogo também devem utilizar contratos estruturados.
+
+Uma missão pode conter:
+
+```
+narrative_context
+mathematical_model
+parameters
+visual_state
+success_condition
+skill_targets
+```
+
+A camada narrativa nunca substitui o objeto matemático verificável.
+
+---
+
+## 28.62 IMPORTAÇÃO FUTURA DE LISTAS
+
+Futuramente, professor/usuário poderá importar:
+
+- PDF;
+- imagem;
+- texto;
+- lista digital.
+
+Fluxo ideal:
+
+```
+importar
+↓
+extrair questões
+↓
+interpretar matemática
+↓
+sugerir habilidades
+↓
+resolver/verificar
+↓
+mostrar revisão ao usuário
+↓
+salvar coleção
+```
+
+Isso não deve ser requisito do MVP inicial.
+
+---
+
+## 28.63 IMPORTAÇÃO NÃO PRESUME DIREITO DE PUBLICAÇÃO
+
+Uma lista importada por usuário pode ser usada em contexto pessoal conforme regras futuras do produto, mas isso não concede automaticamente direito de adicioná-la ao banco público do Eixo.
+
+Banco público e coleção privada são conceitos separados.
+
+---
+
+## 28.64 CRITÉRIO DE PUBLICAÇÃO DE UM BLUEPRINT
+
+Um blueprint só poderá gerar atividades públicas quando:
+
+1. possui habilidade-alvo;
+2. possui restrições matemáticas;
+3. passa validação automática;
+4. possui solução/contrato verificável;
+5. possui casos de teste;
+6. evita degenerações conhecidas;
+7. possui dificuldade definida;
+8. possui erros comuns/dicas quando necessário;
+9. possui notação suportada;
+10. foi pedagogicamente revisado conforme criticidade.
+
+---
+
+## 28.65 PRINCÍPIO FINAL DO BANCO
+
+O Eixo não precisa saber previamente **todas as perguntas que fará**.
+
+Precisa saber:
+
+> **o que quer avaliar, quais estruturas pode variar e como provar que cada instância gerada é válida.**
+
+Esse será o fundamento para escalar o conteúdo sem sacrificar qualidade matemática.
 
 ---
 
