@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.8 em construção  
+**Versão de especificação:** 0.9 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -4254,6 +4254,1001 @@ Planejados inicialmente:
 - Avaliação.
 
 ---
+
+# 31.A ESTRUTURA DE MÓDULOS, AULAS E MAPA DE CONHECIMENTO
+
+O conteúdo do Eixo deverá possuir uma hierarquia clara para o aluno, mas flexível internamente.
+
+Hierarquia inicial:
+
+```
+Trilha
+  ↓
+Unidade
+  ↓
+Módulo
+  ↓
+Aula
+  ↓
+Blocos de aprendizagem
+  ↓
+Atividades
+```
+
+Essa organização é de apresentação.
+
+Internamente, as habilidades continuam ligadas pelo grafo curricular e podem cruzar módulos.
+
+---
+
+## 31.A1 TRILHAS PRINCIPAIS
+
+No escopo inicial:
+
+### Trilha 1 — Fundamentos Matemáticos
+
+Abrange Matemática Básica e preparação algébrica.
+
+### Trilha 2 — Pré-Cálculo
+
+Consolida funções, álgebra, trigonometria e preparação para limites.
+
+### Trilha 3 — Cálculo I
+
+Limites, derivadas, aplicações e integrais.
+
+A interface poderá exibir essas trilhas como grandes regiões do mapa.
+
+---
+
+## 31.A2 UNIDADES
+
+Uma Unidade reúne módulos relacionados.
+
+Exemplo:
+
+```
+Pré-Cálculo
+  └── Unidade: Funções
+      ├── Módulo: O que é uma função?
+      ├── Módulo: Domínio e imagem
+      ├── Módulo: Gráficos
+      ├── Módulo: Transformações
+      ├── Módulo: Composição
+      └── Módulo: Função inversa
+```
+
+Uma unidade deverá ter propósito conceitual, não apenas tamanho arbitrário.
+
+---
+
+## 31.A3 MÓDULO
+
+Um módulo é um conjunto pequeno de habilidades fortemente relacionadas.
+
+Exemplo:
+
+### Módulo — Frações equivalentes
+
+Pode trabalhar:
+
+- significado;
+- representação visual;
+- ampliação;
+- simplificação;
+- comparação.
+
+O módulo não precisa conter uma quantidade fixa de aulas.
+
+Sua duração depende do conteúdo.
+
+---
+
+## 31.A4 AULA
+
+Uma aula é a menor sequência pedagógica completa que o aluno percebe como uma sessão de conteúdo.
+
+Estrutura típica:
+
+```
+1. contexto/intuição
+2. exploração
+3. explicação
+4. ferramenta nova, se houver
+5. exemplo
+6. prática guiada
+7. prática independente
+8. aplicação
+9. consolidação
+```
+
+Nem toda aula precisa utilizar todas as etapas.
+
+---
+
+## 31.A5 BLOCOS DE APRENDIZAGEM
+
+A aula será composta por blocos pequenos.
+
+Tipos previstos:
+
+- introdução;
+- explicação;
+- demonstração;
+- manipulação interativa;
+- previsão;
+- exemplo resolvido;
+- atividade guiada;
+- atividade livre;
+- gráfico;
+- rascunho;
+- reflexão;
+- desafio;
+- resumo.
+
+Isso permite montar aulas variadas sem criar telas únicas para cada assunto.
+
+---
+
+## 31.A6 DURAÇÃO FLEXÍVEL
+
+O Eixo não deverá dizer que toda aula possui, por exemplo, exatamente 10 questões.
+
+A duração deve variar conforme:
+
+- habilidade;
+- desempenho;
+- ajuda usada;
+- evidência já existente;
+- necessidade de revisão.
+
+Um aluno que demonstra rapidamente domínio pode concluir antes.
+
+Outro pode receber mais prática.
+
+---
+
+## 31.A7 OBJETIVO VISÍVEL
+
+Ao iniciar uma aula, o aluno deverá saber claramente:
+
+> O que vou aprender?
+
+Exemplo:
+
+> **Hoje você vai aprender a usar a propriedade distributiva para remover parênteses.**
+
+E, se houver ferramenta nova:
+
+> **Também vamos aprender a escrever parênteses e blocos de expressão no Eixo.**
+
+Matemática e interface são apresentadas separadamente.
+
+---
+
+## 31.A8 PRÉ-REQUISITOS VISÍVEIS QUANDO RELEVANTES
+
+O aluno poderá ver:
+
+```
+Para esta aula você vai usar:
+
+✓ multiplicação
+✓ números negativos
+✓ parênteses
+```
+
+Normalmente isso deverá ser discreto.
+
+Se houver dificuldade detectada:
+
+> Antes desta aula, recomendo revisar números negativos.
+
+---
+
+## 31.A9 MAPA DE CONHECIMENTO
+
+O Eixo deverá possuir um mapa visual de progressão.
+
+Ele não será apenas uma lista vertical de capítulos.
+
+Deverá representar conexões entre grandes grupos de conhecimento.
+
+Exemplo conceitual:
+
+```
+Números
+   │
+   ├──── Frações
+   │       │
+   │       └──── Álgebra
+   │                │
+   │                ├──── Equações
+   │                │
+   │                └──── Funções
+   │                       │
+   │                       ├──── Trigonometria
+   │                       │
+   │                       └──── Pré-Cálculo
+   │                               │
+   │                               └──── Limites
+   │                                      │
+   │                                      └──── Derivadas
+   │                                             │
+   │                                             └──── Integrais
+```
+
+O mapa exibido será simplificado em relação ao grafo interno.
+
+---
+
+## 31.A10 MAPA NÃO DEVE VIRAR TEIA INCOMPREENSÍVEL
+
+O grafo curricular real poderá conter centenas de dependências.
+
+A interface não deve mostrar tudo simultaneamente.
+
+O mapa deverá trabalhar por níveis de zoom:
+
+### Visão geral
+
+Grandes áreas.
+
+### Visão de unidade
+
+Módulos.
+
+### Visão de módulo
+
+Habilidades principais.
+
+O usuário poderá entrar e sair de cada nível.
+
+---
+
+## 31.A11 ESTADOS VISUAIS NO MAPA
+
+Cada nó poderá aparecer como:
+
+- não iniciado;
+- disponível;
+- aprendendo;
+- praticando;
+- em consolidação;
+- dominado;
+- revisão recomendada;
+- bloqueado por pré-requisito.
+
+A cor nunca será o único indicador.
+
+Ícone, forma ou símbolo também deverão comunicar estado.
+
+---
+
+## 31.A12 BLOQUEIO EXPLICÁVEL
+
+Ao tocar em um nó bloqueado:
+
+não apenas:
+
+> 🔒 Bloqueado
+
+mas:
+
+> Para começar **Regra da Cadeia**, você precisa de:
+>
+> ✓ Derivadas básicas
+> ◐ Composição de funções — em consolidação
+
+A tela poderá oferecer:
+
+**Revisar composição**
+
+---
+
+## 31.A13 CAMINHO RECOMENDADO
+
+O mapa poderá destacar uma rota recomendada.
+
+Exemplo:
+
+```
+Você está aqui
+      ↓
+Funções
+      ↓
+Composição
+      ↓
+Função inversa
+      ↓
+Preparação para limites
+```
+
+Mas outros conteúdos já disponíveis continuam exploráveis.
+
+---
+
+## 31.A14 LIBERDADE DE EXPLORAÇÃO
+
+O aluno poderá abrir conteúdos já disponíveis fora da recomendação.
+
+O Eixo deve evitar sensação de corredor obrigatório.
+
+Conteúdo realmente dependente de pré-requisito poderá permanecer bloqueado ou marcado como avançado.
+
+---
+
+## 31.A15 “POR QUE ESTOU APRENDENDO ISSO?”
+
+Cada habilidade importante poderá mostrar:
+
+**Isso será usado depois em:**
+
+Exemplo para fatoração:
+
+```
+Fatoração
+  ↓
+Equações quadráticas
+  ↓
+Funções racionais
+  ↓
+Limites
+```
+
+Isso ajuda a combater a sensação de conteúdos matemáticos desconectados.
+
+---
+
+## 31.A16 CONEXÕES RETROSPECTIVAS
+
+Ao chegar em um conteúdo avançado, o sistema poderá mostrar:
+
+> Lembra de diferença de quadrados? Agora você vai usá-la para resolver um limite.
+
+Isso transforma pré-requisitos antigos em ferramentas vivas.
+
+---
+
+## 31.A17 TELA DE UM MÓDULO
+
+Exemplo:
+
+```
+FUNÇÕES — DOMÍNIO
+
+O que você vai aprender
+• identificar valores permitidos
+• reconhecer restrições
+• relacionar domínio ao gráfico
+
+Pré-requisitos
+✓ frações
+✓ equações
+✓ plano cartesiano
+
+Aulas
+1. O que significa domínio       ✓
+2. Restrições em frações         ◐
+3. Raízes e domínio              ○
+4. Desafio de domínio            🔒
+
+[Continuar]
+```
+
+---
+
+## 31.A18 TELA DE AULA
+
+Antes de começar:
+
+```
+Domínio em funções racionais
+
+Objetivo
+Encontrar valores que tornam uma expressão inválida.
+
+Você vai usar
+• frações
+• equações
+
+Nova ferramenta do editor
+Nenhuma
+
+Duração estimada
+curta / média
+```
+
+Evitar estimativas rígidas em minutos se o sistema adaptativo puder alterar muito a duração.
+
+---
+
+## 31.A19 MARCOS
+
+Alguns pontos do mapa poderão ser marcos importantes:
+
+- primeira equação;
+- primeira função;
+- entrada em Pré-Cálculo;
+- primeira ideia de limite;
+- primeira derivada;
+- primeiro problema de otimização;
+- primeira integral;
+- Teorema Fundamental do Cálculo.
+
+Esses marcos podem receber tratamento visual especial.
+
+---
+
+## 31.A20 DESAFIOS DE UNIDADE
+
+Ao terminar uma unidade, poderá existir um desafio que mistura as principais habilidades.
+
+Exemplo:
+
+Unidade de funções:
+
+- interpretar gráfico;
+- construir função;
+- encontrar domínio;
+- calcular valor;
+- escolher representação.
+
+O desafio não deve ser apenas uma prova de repetição.
+
+---
+
+## 31.A21 REVISÃO DA UNIDADE
+
+A conclusão de uma unidade não significa que todas as habilidades nunca mais aparecerão.
+
+O sistema poderá mostrar:
+
+```
+Funções
+✓ 8 habilidades dominadas
+◐ 2 em consolidação
+! 1 revisão recomendada
+```
+
+O aluno pode avançar se os pré-requisitos do próximo módulo estiverem suficientes.
+
+---
+
+# 31.B FLUXO COMPLETO DO APLICATIVO
+
+---
+
+## 31.B1 PRIMEIRA ABERTURA
+
+Fluxo inicial:
+
+```
+Logo / identidade
+      ↓
+Proposta do Eixo
+      ↓
+Escolher objetivo
+      ↓
+Breve tutorial da interface
+      ↓
+Nivelamento opcional
+      ↓
+Mapa inicial
+```
+
+---
+
+## 31.B2 APRESENTAÇÃO DO PRODUTO
+
+A apresentação deve ser curta.
+
+Mensagem central:
+
+> Aprenda matemática resolvendo de verdade, passo a passo.
+
+Mostrar rapidamente:
+
+- Caderno Matemático;
+- visualizações;
+- mapa de conhecimento;
+- adaptação ao nível do aluno.
+
+Evitar carrossel longo de onboarding.
+
+---
+
+## 31.B3 OBJETIVO DO ALUNO
+
+O usuário poderá escolher algo como:
+
+### Quero construir minha base
+
+Começar por Matemática Básica.
+
+### Quero me preparar para Pré-Cálculo
+
+Realizar diagnóstico de fundamentos.
+
+### Quero chegar em Cálculo
+
+Construir rota recomendada até Cálculo I.
+
+### Quero revisar algo específico
+
+Explorar mapa.
+
+Essa escolha orienta recomendações, não limita o acesso permanentemente.
+
+---
+
+## 31.B4 NIVELAMENTO
+
+Pode ser:
+
+**Fazer nivelamento**
+
+ou:
+
+**Começar do início**
+
+ou:
+
+**Escolher onde começar**
+
+O nivelamento deverá ser opcional.
+
+---
+
+## 31.B5 TUTORIAL INICIAL DE ESCRITA
+
+Antes da primeira atividade real:
+
+o usuário deverá completar uma miniatividade de interface.
+
+Exemplo:
+
+1. inserir `2+3`;
+2. criar nova linha;
+3. apagar;
+4. desfazer;
+5. concluir.
+
+Somente recursos básicos.
+
+Frações, raízes e outros templates serão ensinados posteriormente.
+
+---
+
+## 31.B6 HOME
+
+A tela inicial deverá responder imediatamente:
+
+> O que faz sentido estudar agora?
+
+Estrutura conceitual:
+
+```
+Olá
+
+[Continuar de onde parei]
+
+Próximo recomendado
+→ Frações equivalentes
+
+Revisão curta
+→ Sinais com números negativos
+
+Seu caminho
+[Ver mapa]
+
+Atalhos
+[Praticar] [Laboratório] [Livro]
+```
+
+Evitar excesso de widgets e estatísticas.
+
+---
+
+## 31.B7 CONTINUAR DE ONDE PAROU
+
+Se houver aula/atividade incompleta:
+
+essa deverá ser a ação principal.
+
+Ao tocar:
+
+retorna exatamente ao quadro, linha e cursor salvos.
+
+---
+
+## 31.B8 SESSÃO RECOMENDADA
+
+O Eixo poderá montar uma sessão curta automaticamente:
+
+```
+1 conteúdo atual
+1 revisão
+1 aplicação
+```
+
+Mas o aluno poderá:
+
+- remover revisão;
+- estudar só conteúdo atual;
+- escolher outra habilidade.
+
+---
+
+## 31.B9 ENTRADA EM UMA AULA
+
+Fluxo:
+
+```
+Tela do módulo
+      ↓
+Objetivo da aula
+      ↓
+revisão de pré-requisito se necessária
+      ↓
+conteúdo
+      ↓
+atividade
+      ↓
+consolidação
+      ↓
+resumo
+```
+
+---
+
+## 31.B10 DENTRO DA AULA
+
+A aula não deverá trocar de tela desnecessariamente.
+
+Exemplo:
+
+```
+explicação curta
+   ↓ gesto/continuar
+visualização
+   ↓
+atividade guiada
+   ↓
+atividade independente
+```
+
+A transição deve preservar sensação de continuidade.
+
+---
+
+## 31.B11 ENTRADA NO CADERNO
+
+Quando a aula chega a uma atividade matemática:
+
+o Caderno ocupa o centro da experiência.
+
+A interface geral da aula deve recuar.
+
+O aluno precisa sentir:
+
+> agora vou resolver.
+
+---
+
+## 31.B12 PAUSAR UMA ATIVIDADE
+
+O usuário poderá sair sem perder progresso.
+
+Ao voltar:
+
+- mesma atividade;
+- mesmo quadro;
+- mesma linha;
+- mesmo rascunho.
+
+---
+
+## 31.B13 CONCLUSÃO DE ATIVIDADE
+
+Após concluir:
+
+### Se correta e alinhada
+
+Mostrar feedback curto primeiro.
+
+Exemplo:
+
+> ✓ Boa resolução. Você aplicou corretamente fatoração.
+
+Depois opções:
+
+- próxima;
+- ver análise;
+- comparar métodos quando relevante.
+
+### Se correta por outro método
+
+> ✓ A resposta está correta.
+>
+> Esta atividade queria praticar fatoração.
+
+Oferecer:
+
+**Tentar com fatoração**
+
+### Se houver erro
+
+Destacar primeiro ponto relevante e iniciar feedback/dica.
+
+---
+
+## 31.B14 NÃO EXIBIR FESTA A CADA CONTA
+
+Microanimações podem confirmar progresso.
+
+Mas uma atividade simples não deverá interromper estudo com telas completas de:
+
+- confete;
+- moedas;
+- ranking;
+- “INCRÍVEL!!!”.
+
+Celebrações maiores ficam para marcos reais.
+
+---
+
+## 31.B15 RESUMO DA AULA
+
+Ao final:
+
+```
+Você trabalhou:
+
+✓ propriedade distributiva
+✓ preservação da igualdade
+
+Em consolidação:
+◐ sinais com números negativos
+
+Nova ferramenta:
+✓ parênteses no editor
+```
+
+Não mostrar somente:
+
+> 8/10.
+
+---
+
+## 31.B16 PRÓXIMA AÇÃO
+
+Depois de uma aula, oferecer uma recomendação clara:
+
+**Continuar**
+
+e opções secundárias:
+
+- praticar mais;
+- ver mapa;
+- revisar;
+- encerrar sessão.
+
+---
+
+## 31.B17 FINAL DE SESSÃO
+
+Se o usuário decidir parar:
+
+poderá receber um resumo leve:
+
+```
+Hoje você:
+• concluiu 2 habilidades
+• revisou frações
+• começou funções
+
+Próximo passo sugerido:
+Domínio e imagem
+```
+
+Evitar técnicas agressivas de retenção.
+
+---
+
+## 31.B18 TELA PRATICAR
+
+Permitir escolher:
+
+- prática recomendada;
+- habilidade específica;
+- conteúdo recente;
+- revisão;
+- mistura de habilidades;
+- modo prova.
+
+---
+
+## 31.B19 TELA REVISAR
+
+Organizar por necessidade:
+
+```
+Revisão recomendada
+• sinais
+• fatoração
+
+Manutenção
+• porcentagem
+• equações
+
+Dominado
+• operações básicas
+```
+
+---
+
+## 31.B20 LABORATÓRIO
+
+Área exploratória sem obrigação de “acertar”.
+
+Ferramentas futuras:
+
+- gráficos;
+- manipulação de funções;
+- comparação de curvas;
+- parâmetros;
+- tangentes;
+- áreas;
+- visualização de Riemann.
+
+O laboratório deve servir para experimentar matemática.
+
+---
+
+## 31.B21 LIVRO MATEMÁTICO
+
+Atalho para conceitos já aprendidos.
+
+O aluno poderá navegar por:
+
+- assunto;
+- ferramenta;
+- exemplos próprios;
+- fórmulas;
+- visualizações.
+
+---
+
+## 31.B22 PESQUISA
+
+Futuramente, o usuário poderá pesquisar:
+
+> regra da cadeia
+
+e chegar a:
+
+- conceito;
+- exemplos;
+- habilidade no mapa;
+- prática;
+- sua própria resolução anterior.
+
+Não precisa ser MVP se aumentar muito o escopo.
+
+---
+
+## 31.B23 PERFIL E PROGRESSO
+
+Deverá priorizar informações úteis:
+
+- caminho atual;
+- habilidades dominadas;
+- áreas em consolidação;
+- histórico de marcos;
+- objetivos.
+
+Evitar transformar aprendizado em painel de métricas excessivo.
+
+---
+
+## 31.B24 NAVEGAÇÃO PRINCIPAL
+
+Possível navegação inferior mobile:
+
+```
+[Início] [Mapa] [Praticar] [Livro] [Perfil]
+```
+
+**Laboratório** pode existir dentro de Início/Mapa ou como item próprio após testes de UX.
+
+A quantidade final de abas deverá ser validada em protótipo.
+
+---
+
+## 31.B25 CADERNO NÃO É UMA ABA GLOBAL VAZIA
+
+O Caderno existe principalmente dentro de atividades.
+
+Poderá existir futuramente um “Caderno Livre”, mas não deve confundir a navegação principal do MVP.
+
+---
+
+## 31.B26 RETORNO PREVISÍVEL
+
+O botão voltar precisa seguir hierarquia clara:
+
+```
+atividade
+→ aula
+→ módulo
+→ unidade/mapa
+```
+
+Dentro de Quadros, mudar página não altera a pilha de navegação geral.
+
+---
+
+## 31.B27 DEEP LINK INTERNO
+
+Recomendações do sistema deverão poder abrir diretamente:
+
+- habilidade;
+- aula;
+- revisão;
+- exemplo;
+- ferramenta.
+
+Isso deverá ser previsto na arquitetura de rotas.
+
+---
+
+## 31.B28 ESTADO GLOBAL DE CONTINUIDADE
+
+O aplicativo deverá saber:
+
+- qual trilha está ativa;
+- módulo atual;
+- aula atual;
+- atividade atual;
+- quadro atual;
+- posição de edição.
+
+Assim, “Continuar” funciona de forma confiável.
+
+---
+
+## 31.B29 OFFLINE E FLUXO
+
+Quando estudarmos arquitetura offline, o objetivo será manter disponível, sempre que possível:
+
+- aula atual;
+- atividades baixadas;
+- Caderno;
+- Rascunho;
+- progresso local;
+- motor necessário para o conteúdo atual.
+
+Sincronização não deverá bloquear escrita.
+
+---
+
+## 31.B30 CRITÉRIO DE SUCESSO DA NAVEGAÇÃO
+
+Um novo usuário deve conseguir responder facilmente:
+
+1. onde estou?
+2. o que estou estudando?
+3. o que faço agora?
+4. como volto?
+5. onde vejo meu caminho?
+6. por que este conteúdo está bloqueado?
+7. como continuo depois?
+
+Se qualquer resposta depender de explorar menus escondidos, a navegação precisa ser revisada.
+
+---
+
 
 # 32. UX MOBILE E ESCRITA MATEMÁTICA 2D
 
