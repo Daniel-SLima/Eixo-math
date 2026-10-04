@@ -9280,20 +9280,21 @@ Blocos estruturais já definidos em nível inicial:
 - catálogo universal de templates/notação matemática;
 - rascunho espacial e navegação entre Quadros;
 - estrutura de módulos, aulas e mapa de conhecimento;
-- fluxo inicial de navegação do aplicativo (onboarding, início, aula, atividade, conclusão e continuidade).
+- fluxo inicial de navegação do aplicativo (onboarding, início, aula, atividade, conclusão e continuidade);
+- banco de questões, blueprints paramétricos e seleção adaptativa;
+- política de proveniência, licenças e conteúdo externo.
 
 Prioridade atual:
 
-1. sistema de banco/importação/seleção de questões;
-2. gamificação e camada lúdica integrada à matemática;
-3. perfil, progresso, histórico e Livro Matemático;
-4. arquitetura técnica e escolha de tecnologias;
-5. persistência, sincronização e funcionamento offline/online;
-6. segurança, privacidade e telemetria pedagógica;
-7. definição formal do MVP;
-8. critérios de aceite e estratégia de testes;
-9. roadmap;
-10. instruções finais para Codex/agentes e início da implementação.
+1. gamificação e camada lúdica integrada à matemática;
+2. perfil, progresso, histórico e Livro Matemático;
+3. arquitetura técnica e escolha de tecnologias;
+4. persistência, sincronização e funcionamento offline/online;
+5. segurança, privacidade e telemetria pedagógica;
+6. definição formal do MVP;
+7. critérios de aceite e estratégia de testes;
+8. roadmap;
+9. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
