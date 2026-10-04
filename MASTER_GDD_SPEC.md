@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.16 em construção  
+**Versão de especificação:** 0.17 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -11364,13 +11364,46 @@ Blocos estruturais já definidos em nível inicial:
 - arquitetura técnica e stack inicial selecionadas;
 - persistência local-first, sincronização e funcionamento offline definidos;
 - segurança, privacidade e telemetria pedagógica definidas;
-- escopo formal do MVP definido.
+- escopo formal do MVP definido;
+- critérios de aceite e estratégia de testes definidos.
 
 Prioridade atual:
 
-1. critérios de aceite e estratégia de testes;
-2. roadmap;
-3. instruções finais para Codex/agentes e início da implementação.
+1. roadmap de implementação;
+2. instruções finais para Codex/agentes;
+3. fechamento das últimas decisões de produto antes de autorizar implementação.
+
+---
+
+# 42.A ESTRATÉGIA DE TESTES E CRITÉRIOS DE ACEITE
+
+Documento detalhado:
+
+`docs/quality/TEST_STRATEGY.md`
+
+A estratégia de qualidade deverá combinar:
+
+- Vitest;
+- fast-check para property-based tests;
+- Playwright para web/visual/accessibilidade;
+- Maestro para mobile;
+- testes de usabilidade reais;
+- testes de segurança;
+- testes offline;
+- testes de migração.
+
+Áreas críticas:
+
+- Math Core;
+- editor;
+- blueprints;
+- persistência;
+- sincronização;
+- acessibilidade.
+
+Uma falha que ensina matemática incorreta deverá bloquear release.
+
+O MVP somente poderá ser aceito quando o usuário conseguir completar o fluxo central, inclusive offline, sem dependência de IA.
 
 ---
 
