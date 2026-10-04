@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.4 em construção  
+**Versão de especificação:** 0.5 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -1859,97 +1859,1326 @@ Se o aluno entende limite mas não consegue fatorar `x²-4`, recomendar revisão
 
 ---
 
-# 27. CURRÍCULO INICIAL
+# 27. ARQUITETURA CURRICULAR
 
-## 27.1 Matemática Básica
+O currículo do Eixo não será modelado apenas como capítulos em sequência.
 
-Escopo inicial previsto:
+A unidade principal será a **habilidade curricular**, representada como um nó em um grafo de dependências.
 
-- números naturais;
+Uma habilidade poderá depender de várias anteriores e desbloquear várias posteriores.
+
+Exemplo:
+
+```
+Frações equivalentes
+       ↓
+Operações com frações
+       ↓
+Frações algébricas
+       ↓
+Funções racionais
+       ↓
+Limites com fatoração
+```
+
+Outro ramo:
+
+```
+Razão
+   ↓
+Inclinação
+   ↓
+Taxa média de variação
+   ↓
+Reta secante
+   ↓
+Derivada
+```
+
+A trilha visual mostrada ao estudante poderá ser simples e linearizada, mas internamente o sistema deverá preservar o grafo real.
+
+## 27.1 TIPOS DE HABILIDADE
+
+Cada nó curricular poderá ser classificado como:
+
+### Núcleo
+
+Conhecimento necessário para seguir pela trilha principal.
+
+### Ponte
+
+Conhecimento que conecta dois blocos importantes.
+
+Exemplo: taxa média de variação conecta funções a derivadas.
+
+### Apoio
+
+Conhecimento útil para compreensão, aplicações ou recuperação de lacunas, mas que não precisa bloquear toda a progressão.
+
+### Extensão
+
+Conteúdo que amplia a formação, porém não é requisito para concluir o escopo inicial Matemática Básica → Pré-Cálculo → Cálculo I.
+
+## 27.2 IDENTIFICADORES ESTÁVEIS
+
+Cada habilidade deverá possuir um ID estável.
+
+Convenção inicial:
+
+- `MB-...` — Matemática Básica;
+- `PC-...` — Pré-Cálculo;
+- `C1-...` — Cálculo I.
+
+Exemplos:
+
+- `MB-FRA-03` — simplificação de frações;
+- `PC-FUN-04` — domínio e imagem;
+- `C1-DER-07` — regra da cadeia.
+
+Esses IDs deverão ser usados por:
+
+- banco de questões;
+- motor matemático;
+- sistema de domínio;
+- dicas;
+- códigos de erro;
+- telemetria pedagógica;
+- testes automatizados;
+- documentação.
+
+O nome exibido ao estudante poderá mudar sem quebrar a identidade interna da habilidade.
+
+## 27.3 METADADOS DE UMA HABILIDADE
+
+Cada nó curricular deverá poder armazenar:
+
+- ID;
+- nome;
+- descrição;
+- área;
+- tipo: núcleo, ponte, apoio ou extensão;
+- pré-requisitos diretos;
+- conhecimentos que desbloqueia;
+- conceitos matemáticos;
+- notações necessárias;
+- ferramentas do teclado necessárias;
+- transformações que o motor precisa reconhecer;
+- erros comuns;
+- tipos de atividade permitidos;
+- dimensões de domínio avaliadas;
+- critérios de domínio;
+- exemplos de aplicação;
+- recursos visuais associados;
+- dificuldade mínima/máxima;
+- política de calculadora típica.
+
+## 27.4 REGRA DE PROGRESSÃO
+
+A progressão não deverá exigir que o aluno faça todo o conteúdo novamente quando já demonstra domínio.
+
+O sistema poderá:
+
+- aplicar diagnóstico;
+- reconhecer conhecimentos prévios;
+- liberar habilidades já dominadas;
+- exigir apenas pré-requisitos realmente necessários;
+- recomendar revisões locais quando surgirem lacunas.
+
+Entretanto, habilidades críticas não deverão ser ignoradas somente porque o aluno acertou uma questão isolada.
+
+---
+
+# 27.A MATEMÁTICA BÁSICA
+
+O objetivo desta etapa é construir a linguagem e as operações que sustentam Álgebra, Pré-Cálculo e Cálculo.
+
+## 27.A1 LINGUAGEM MATEMÁTICA E SENTIDO NUMÉRICO
+
+### MB-NUM-01 — Ler e escrever números
+
+- naturais;
 - inteiros;
-- números negativos;
-- operações;
-- ordem das operações;
-- divisibilidade;
-- múltiplos e divisores;
-- números primos;
-- frações;
 - decimais;
-- porcentagens;
-- razão e proporção;
-- regra de três;
+- representação numérica básica.
+
+### MB-NUM-02 — Comparação e ordenação
+
+- maior/menor;
+- igualdade;
+- ordenação;
+- símbolos `<`, `>`, `=`.
+
+### MB-NUM-03 — Reta numérica
+
+- posição;
+- distância;
+- orientação;
+- números positivos e negativos.
+
+### MB-NUM-04 — Números negativos
+
+- significado;
+- comparação;
+- opostos;
+- operações intuitivas.
+
+### MB-NUM-05 — Valor absoluto
+
+- distância até zero;
+- interpretação geométrica;
+- cálculo básico.
+
+Dependências principais:
+
+```
+MB-NUM-01
+   ↓
+MB-NUM-02
+   ↓
+MB-NUM-03
+   ↓
+MB-NUM-04
+   ↓
+MB-NUM-05
+```
+
+## 27.A2 OPERAÇÕES ARITMÉTICAS
+
+### MB-ARI-01 — Adição
+
+### MB-ARI-02 — Subtração
+
+### MB-ARI-03 — Multiplicação
+
+- soma repetida;
+- propriedades básicas;
+- sinais.
+
+### MB-ARI-04 — Divisão
+
+- repartição;
+- razão inicial;
+- resto;
+- divisão por zero como operação não definida.
+
+### MB-ARI-05 — Propriedades das operações
+
+- comutativa;
+- associativa;
+- distributiva em contexto numérico.
+
+### MB-ARI-06 — Ordem das operações
+
+- parênteses;
 - potências;
-- propriedades de potências;
-- raízes;
-- notação científica;
-- expressões;
-- introdução à álgebra;
-- equações;
-- geometria básica;
-- áreas;
-- perímetros;
-- unidades de medida.
+- multiplicação/divisão;
+- soma/subtração.
 
-## 27.2 Pré-Cálculo
+### MB-ARI-07 — Operações combinadas
 
+Resolver expressões numéricas com múltiplas operações.
+
+## 27.A3 DIVISIBILIDADE
+
+### MB-DIV-01 — Múltiplos e divisores
+
+### MB-DIV-02 — Critérios de divisibilidade
+
+### MB-DIV-03 — Números primos
+
+### MB-DIV-04 — Fatoração prima
+
+### MB-DIV-05 — MDC
+
+### MB-DIV-06 — MMC
+
+Essas habilidades sustentam principalmente frações, simplificação e denominadores comuns.
+
+## 27.A4 FRAÇÕES
+
+### MB-FRA-01 — Significado de fração
+
+- parte-todo;
+- quociente;
+- medida;
+- número na reta numérica.
+
+### MB-FRA-02 — Frações equivalentes
+
+### MB-FRA-03 — Simplificação de frações
+
+### MB-FRA-04 — Comparação de frações
+
+### MB-FRA-05 — Número misto e fração imprópria
+
+Quando pedagogicamente útil.
+
+### MB-FRA-06 — Soma e subtração com mesmo denominador
+
+### MB-FRA-07 — Denominador comum
+
+### MB-FRA-08 — Soma e subtração com denominadores diferentes
+
+### MB-FRA-09 — Multiplicação de frações
+
+### MB-FRA-10 — Divisão de frações
+
+### MB-FRA-11 — Operações combinadas com frações
+
+### MB-FRA-12 — Frações negativas
+
+Dependência resumida:
+
+```
+significado
+   ↓
+equivalência
+   ↓
+simplificação
+   ├──────────────┐
+   ↓              ↓
+comparação   denominador comum
+                  ↓
+            soma/subtração
+                  ↓
+       multiplicação/divisão
+                  ↓
+       operações combinadas
+```
+
+## 27.A5 DECIMAIS
+
+### MB-DEC-01 — Valor posicional decimal
+
+### MB-DEC-02 — Fração ↔ decimal
+
+### MB-DEC-03 — Comparação de decimais
+
+### MB-DEC-04 — Soma e subtração
+
+### MB-DEC-05 — Multiplicação
+
+### MB-DEC-06 — Divisão
+
+### MB-DEC-07 — Arredondamento e aproximação
+
+### MB-DEC-08 — Erro e precisão básica
+
+Essa habilidade servirá posteriormente para aproximações numéricas em funções e Cálculo.
+
+## 27.A6 PORCENTAGEM, RAZÃO E PROPORÇÃO
+
+### MB-RAZ-01 — Razão
+
+### MB-RAZ-02 — Taxa
+
+### MB-RAZ-03 — Proporção
+
+### MB-RAZ-04 — Proporcionalidade direta
+
+### MB-RAZ-05 — Proporcionalidade inversa
+
+### MB-RAZ-06 — Regra de três como consequência de proporções
+
+O Eixo deverá evitar ensinar regra de três apenas como algoritmo mecânico.
+
+### MB-POR-01 — Significado de porcentagem
+
+### MB-POR-02 — Fração, decimal e porcentagem
+
+### MB-POR-03 — Calcular porcentagem de uma quantidade
+
+### MB-POR-04 — Aumento e desconto percentual
+
+### MB-POR-05 — Variação percentual
+
+### MB-POR-06 — Porcentagens sucessivas
+
+## 27.A7 POTÊNCIAS, RAÍZES E NOTAÇÃO CIENTÍFICA
+
+### MB-POT-01 — Potência como multiplicação repetida
+
+### MB-POT-02 — Expoente zero
+
+### MB-POT-03 — Expoentes negativos
+
+Pode ser introduzido após frações e propriedades.
+
+### MB-POT-04 — Produto de potências de mesma base
+
+### MB-POT-05 — Quociente de potências
+
+### MB-POT-06 — Potência de potência
+
+### MB-POT-07 — Potência de produto/quociente
+
+### MB-RAI-01 — Raiz quadrada
+
+### MB-RAI-02 — Relação entre potência e raiz
+
+### MB-RAI-03 — Raízes exatas
+
+### MB-RAI-04 — Aproximação de raízes não exatas
+
+### MB-NOT-01 — Notação científica
+
+### MB-NOT-02 — Operações básicas em notação científica
+
+## 27.A8 MEDIDAS E UNIDADES
+
+### MB-MED-01 — Comprimento
+
+### MB-MED-02 — Área
+
+### MB-MED-03 — Volume
+
+### MB-MED-04 — Tempo
+
+### MB-MED-05 — Massa
+
+### MB-MED-06 — Conversão de unidades
+
+### MB-MED-07 — Análise dimensional intuitiva
+
+A análise dimensional será uma ponte para problemas aplicados em Cálculo.
+
+## 27.A9 GEOMETRIA FUNDAMENTAL
+
+### MB-GEO-01 — Ponto, reta, segmento e plano
+
+### MB-GEO-02 — Ângulos
+
+### MB-GEO-03 — Triângulos
+
+### MB-GEO-04 — Quadriláteros e polígonos
+
+### MB-GEO-05 — Perímetro
+
+### MB-GEO-06 — Área
+
+### MB-GEO-07 — Circunferência e círculo
+
+### MB-GEO-08 — Teorema de Pitágoras
+
+### MB-GEO-09 — Semelhança e escala
+
+Semelhança será importante como apoio à trigonometria.
+
+## 27.A10 INTRODUÇÃO À ÁLGEBRA
+
+### MB-ALG-01 — Variável e incógnita
+
+Distinguir o uso de uma letra como número desconhecido, variável ou parâmetro.
+
+### MB-ALG-02 — Expressão algébrica
+
+### MB-ALG-03 — Termo, coeficiente e constante
+
+### MB-ALG-04 — Avaliação de expressão por substituição
+
+### MB-ALG-05 — Termos semelhantes
+
+### MB-ALG-06 — Simplificação de expressões
+
+### MB-ALG-07 — Propriedade distributiva algébrica
+
+### MB-ALG-08 — Remoção e uso de parênteses
+
+### MB-ALG-09 — Expressões com frações simples
+
+## 27.A11 IGUALDADE E EQUAÇÕES
+
+### MB-EQU-01 — Significado de igualdade
+
+A igualdade deverá ser ensinada como relação entre duas expressões, e não apenas como “o lugar onde aparece a resposta”.
+
+### MB-EQU-02 — Equações de uma etapa
+
+### MB-EQU-03 — Operação inversa
+
+### MB-EQU-04 — Preservar igualdade fazendo a mesma operação nos dois membros
+
+### MB-EQU-05 — Equações lineares de múltiplas etapas
+
+### MB-EQU-06 — Equações com parênteses
+
+### MB-EQU-07 — Equações com frações numéricas
+
+### MB-EQU-08 — Verificação da solução
+
+## 27.A12 INEQUAÇÕES INICIAIS
+
+### MB-INE-01 — Significado de desigualdade
+
+### MB-INE-02 — Representação na reta numérica
+
+### MB-INE-03 — Inequações lineares simples
+
+### MB-INE-04 — Multiplicar/dividir por número negativo
+
+### MB-INE-05 — Intervalos simples
+
+A notação formal de intervalos poderá ser aprofundada em Pré-Cálculo.
+
+## 27.A13 PLANO CARTESIANO
+
+### MB-CAR-01 — Eixos e origem
+
+### MB-CAR-02 — Coordenadas ordenadas
+
+### MB-CAR-03 — Quadrantes
+
+### MB-CAR-04 — Representar pontos
+
+### MB-CAR-05 — Ler informações de gráficos
+
+### MB-CAR-06 — Variação horizontal e vertical
+
+Essa habilidade será ponte para inclinação.
+
+## 27.A14 MODELAGEM E LEITURA DE PROBLEMAS
+
+Habilidades transversais:
+
+### MB-MOD-01 — Identificar dados e pergunta
+
+### MB-MOD-02 — Escolher operações
+
+### MB-MOD-03 — Traduzir frase em expressão
+
+### MB-MOD-04 — Traduzir situação em equação
+
+### MB-MOD-05 — Interpretar o resultado no contexto
+
+### MB-MOD-06 — Conferir plausibilidade
+
+Essas habilidades deverão aparecer ao longo de todos os módulos, não como um capítulo isolado.
+
+---
+
+# 27.B PRÉ-CÁLCULO
+
+O objetivo é transformar a base aritmética e algébrica em domínio funcional, gráfico e trigonométrico suficiente para Cálculo I.
+
+## 27.B1 ÁLGEBRA INTERMEDIÁRIA
+
+### PC-ALG-01 — Manipulação algébrica fluente
+
+### PC-ALG-02 — Produtos notáveis
+
+- quadrado da soma;
+- quadrado da diferença;
+- produto da soma pela diferença.
+
+### PC-ALG-03 — Fator comum
+
+### PC-ALG-04 — Agrupamento
+
+### PC-ALG-05 — Diferença de quadrados
+
+### PC-ALG-06 — Fatoração de trinômios
+
+### PC-ALG-07 — Soma/diferença de cubos
+
+Pode ser classificada como apoio/extensão conforme o escopo.
+
+### PC-ALG-08 — Simplificação de expressões racionais
+
+### PC-ALG-09 — Restrições de domínio em expressões racionais
+
+### PC-ALG-10 — Racionalização
+
+### PC-ALG-11 — Expoentes racionais
+
+### PC-ALG-12 — Radicais algébricos
+
+## 27.B2 EQUAÇÕES E INEQUAÇÕES
+
+### PC-EQU-01 — Sistemas lineares 2×2
+
+### PC-EQU-02 — Sistemas e interpretação gráfica
+
+### PC-EQU-03 — Equação quadrática por fatoração
+
+### PC-EQU-04 — Completamento de quadrado
+
+### PC-EQU-05 — Fórmula quadrática
+
+### PC-EQU-06 — Discriminante
+
+### PC-EQU-07 — Equações polinomiais simples
+
+### PC-EQU-08 — Equações racionais
+
+Com restrições e verificação de soluções.
+
+### PC-EQU-09 — Equações radicais
+
+Com verificação de soluções extranhas.
+
+### PC-EQU-10 — Equações com valor absoluto
+
+### PC-INE-01 — Inequações lineares compostas
+
+### PC-INE-02 — Notação de intervalos
+
+### PC-INE-03 — Inequações quadráticas
+
+### PC-INE-04 — Inequações polinomiais
+
+### PC-INE-05 — Inequações racionais
+
+### PC-INE-06 — Inequações com valor absoluto
+
+## 27.B3 FUNÇÕES — FUNDAMENTOS
+
+Este é um dos blocos mais importantes de todo o Pré-Cálculo.
+
+### PC-FUN-01 — Relações e funções
+
+### PC-FUN-02 — Entrada, saída e regra
+
+### PC-FUN-03 — Notação `f(x)`
+
+### PC-FUN-04 — Avaliar função
+
+### PC-FUN-05 — Domínio
+
+### PC-FUN-06 — Imagem
+
+### PC-FUN-07 — Zeros/interceptos
+
+### PC-FUN-08 — Representações múltiplas
+
+Relacionar:
+
+- fórmula;
+- tabela;
+- gráfico;
+- descrição verbal.
+
+### PC-FUN-09 — Crescimento e decrescimento
+
+### PC-FUN-10 — Taxa média de variação
+
+Ponte direta para derivadas.
+
+### PC-FUN-11 — Funções definidas por partes
+
+### PC-FUN-12 — Operações com funções
+
+### PC-FUN-13 — Composição
+
+### PC-FUN-14 — Função inversa
+
+### PC-FUN-15 — Teste da reta vertical/horizontal quando aplicável
+
+## 27.B4 TRANSFORMAÇÕES DE GRÁFICOS
+
+### PC-GRA-01 — Translação vertical
+
+### PC-GRA-02 — Translação horizontal
+
+### PC-GRA-03 — Reflexões
+
+### PC-GRA-04 — Escala vertical
+
+### PC-GRA-05 — Escala horizontal
+
+### PC-GRA-06 — Combinação de transformações
+
+Exemplo:
+
+`g(x)=a f(b(x-h))+k`
+
+O objetivo é compreender geometricamente cada parâmetro, não decorar uma fórmula.
+
+## 27.B5 FUNÇÕES LINEARES E AFINS
+
+### PC-LIN-01 — Inclinação
+
+### PC-LIN-02 — Inclinação como razão `Δy/Δx`
+
+### PC-LIN-03 — Forma `y=mx+b`
+
+### PC-LIN-04 — Equação da reta a partir de pontos
+
+### PC-LIN-05 — Forma ponto-inclinação
+
+### PC-LIN-06 — Retas paralelas/perpendiculares
+
+### PC-LIN-07 — Modelagem linear
+
+Inclinação deverá ser conectada explicitamente a taxa de variação.
+
+## 27.B6 FUNÇÕES QUADRÁTICAS
+
+### PC-QUA-01 — Forma padrão
+
+### PC-QUA-02 — Parábola
+
+### PC-QUA-03 — Vértice
+
+### PC-QUA-04 — Forma fatorada
+
+### PC-QUA-05 — Forma de vértice
+
+### PC-QUA-06 — Zeros e gráfico
+
+### PC-QUA-07 — Máximo/mínimo de uma quadrática
+
+### PC-QUA-08 — Modelagem quadrática
+
+## 27.B7 POLINÔMIOS
+
+### PC-POL-01 — Grau e coeficientes
+
+### PC-POL-02 — Operações
+
+### PC-POL-03 — Zeros e fatores
+
+### PC-POL-04 — Multiplicidade
+
+### PC-POL-05 — Comportamento final
+
+### PC-POL-06 — Esboço de gráfico
+
+### PC-POL-07 — Divisão polinomial
+
+### PC-POL-08 — Teorema do resto/fator
+
+Podem ser apoio conforme a profundidade desejada.
+
+## 27.B8 FUNÇÕES RACIONAIS
+
+### PC-RAC-01 — Domínio e pontos proibidos
+
+### PC-RAC-02 — Simplificação sem perder restrições
+
+### PC-RAC-03 — Buracos/descontinuidades removíveis
+
+### PC-RAC-04 — Assíntotas verticais
+
+### PC-RAC-05 — Assíntotas horizontais
+
+### PC-RAC-06 — Comportamento gráfico
+
+### PC-RAC-07 — Modelagem simples
+
+Esse bloco é ponte direta para limites.
+
+## 27.B9 EXPONENCIAIS
+
+### PC-EXP-01 — Crescimento exponencial
+
+### PC-EXP-02 — Decaimento exponencial
+
+### PC-EXP-03 — Função `a^x`
+
+### PC-EXP-04 — Número `e`
+
+### PC-EXP-05 — Transformações de exponenciais
+
+### PC-EXP-06 — Equações exponenciais
+
+### PC-EXP-07 — Modelagem exponencial
+
+## 27.B10 LOGARITMOS
+
+### PC-LOG-01 — Logaritmo como inversa da exponencial
+
+### PC-LOG-02 — Definição `log_a b=c ↔ a^c=b`
+
+### PC-LOG-03 — Domínio do logaritmo
+
+### PC-LOG-04 — Produto
+
+### PC-LOG-05 — Quociente
+
+### PC-LOG-06 — Potência
+
+### PC-LOG-07 — Mudança de base
+
+### PC-LOG-08 — Equações logarítmicas
+
+### PC-LOG-09 — Equações exponenciais usando logaritmos
+
+### PC-LOG-10 — Logaritmo natural
+
+## 27.B11 GEOMETRIA ANALÍTICA
+
+### PC-GAN-01 — Distância entre pontos
+
+### PC-GAN-02 — Ponto médio
+
+### PC-GAN-03 — Equação do círculo
+
+### PC-GAN-04 — Interseções
+
+### PC-GAN-05 — Interpretação geométrica de equações
+
+Cônicas adicionais poderão ser extensão, pois não são requisito central para o escopo inicial de Cálculo I.
+
+## 27.B12 TRIGONOMETRIA — FUNDAMENTOS
+
+### PC-TRI-01 — Ângulo
+
+### PC-TRI-02 — Graus e radianos
+
+Radianos são obrigatórios antes de derivadas trigonométricas.
+
+### PC-TRI-03 — Conversão graus ↔ radianos
+
+### PC-TRI-04 — Círculo trigonométrico
+
+### PC-TRI-05 — Seno
+
+### PC-TRI-06 — Cosseno
+
+### PC-TRI-07 — Tangente
+
+### PC-TRI-08 — Sinais por quadrante
+
+### PC-TRI-09 — Valores notáveis
+
+### PC-TRI-10 — Relação pitagórica fundamental
+
+## 27.B13 GRÁFICOS TRIGONOMÉTRICOS
+
+### PC-TGR-01 — Gráfico do seno
+
+### PC-TGR-02 — Gráfico do cosseno
+
+### PC-TGR-03 — Gráfico da tangente
+
+### PC-TGR-04 — Amplitude
+
+### PC-TGR-05 — Período
+
+### PC-TGR-06 — Deslocamento de fase
+
+### PC-TGR-07 — Transformações trigonométricas
+
+## 27.B14 IDENTIDADES E EQUAÇÕES TRIGONOMÉTRICAS
+
+### PC-TID-01 — Identidade pitagórica
+
+### PC-TID-02 — Identidades recíprocas
+
+### PC-TID-03 — Identidades de quociente
+
+### PC-TID-04 — Simplificação trigonométrica
+
+### PC-TID-05 — Equações trigonométricas básicas
+
+Identidades de soma/diferença e ângulo duplo poderão ser apoio/extensão dependendo do currículo final.
+
+## 27.B15 FUNÇÕES TRIGONOMÉTRICAS INVERSAS
+
+### PC-INV-01 — `arcsin`
+
+### PC-INV-02 — `arccos`
+
+### PC-INV-03 — `arctan`
+
+### PC-INV-04 — Domínios e imagens restritos
+
+Importante se o Cálculo I incluir derivadas de funções trigonométricas inversas.
+
+## 27.B16 SEQUÊNCIAS E PADRÕES
+
+### PC-SEQ-01 — Sequência
+
+### PC-SEQ-02 — Notação
+
+### PC-SEQ-03 — Sequência aritmética
+
+### PC-SEQ-04 — Sequência geométrica
+
+### PC-SEQ-05 — Intuição de comportamento infinito
+
+Este bloco é principalmente ponte conceitual. Séries formais ficam fora do escopo inicial de Cálculo I.
+
+## 27.B17 PREPARAÇÃO DIRETA PARA CÁLCULO
+
+Antes de desbloquear Cálculo I, o aluno deverá trabalhar explicitamente:
+
+### PC-CAL-01 — Taxa média de variação
+
+### PC-CAL-02 — Reta secante
+
+### PC-CAL-03 — Aproximar uma taxa instantânea
+
+### PC-CAL-04 — Comportamento de função perto de um ponto
+
+### PC-CAL-05 — Aproximação por tabela
+
+### PC-CAL-06 — Aproximação por gráfico
+
+### PC-CAL-07 — Assíntotas e comportamento extremo
+
+### PC-CAL-08 — Revisão de manipulação algébrica para limites
+
+Esse bloco deverá fazer o aluno chegar a Cálculo já entendendo intuitivamente o problema que limites e derivadas resolvem.
+
+---
+
+# 27.C CÁLCULO I
+
+## 27.C1 LIMITES — INTUIÇÃO E REPRESENTAÇÕES
+
+### C1-LIM-01 — Ideia de aproximação
+
+### C1-LIM-02 — Notação de limite
+
+### C1-LIM-03 — Limite por tabela
+
+### C1-LIM-04 — Limite por gráfico
+
+### C1-LIM-05 — Limite por expressão
+
+### C1-LIM-06 — Limites laterais
+
+### C1-LIM-07 — Quando o limite existe
+
+### C1-LIM-08 — Quando o limite não existe
+
+O aluno deverá relacionar sempre que possível:
+
+```
+tabela ↔ gráfico ↔ expressão
+```
+
+## 27.C2 CÁLCULO ALGÉBRICO DE LIMITES
+
+### C1-LAL-01 — Substituição direta
+
+### C1-LAL-02 — Leis dos limites
+
+### C1-LAL-03 — Indeterminação `0/0`
+
+### C1-LAL-04 — Fatoração
+
+### C1-LAL-05 — Cancelamento com restrição de domínio
+
+### C1-LAL-06 — Racionalização
+
+### C1-LAL-07 — Limites trigonométricos fundamentais
+
+Quando o currículo e o motor estiverem preparados.
+
+## 27.C3 LIMITES INFINITOS E NO INFINITO
+
+### C1-INF-01 — Limite infinito
+
+### C1-INF-02 — Assíntota vertical
+
+### C1-INF-03 — Limite no infinito
+
+### C1-INF-04 — Comportamento dominante
+
+### C1-INF-05 — Assíntota horizontal
+
+### C1-INF-06 — Comparação de ordens de crescimento
+
+## 27.C4 CONTINUIDADE
+
+### C1-CON-01 — Continuidade intuitiva
+
+### C1-CON-02 — Condições formais de continuidade em um ponto
+
+### C1-CON-03 — Tipos de descontinuidade
+
+### C1-CON-04 — Continuidade em intervalos
+
+### C1-CON-05 — Teorema do Valor Intermediário
+
+Pode ser tratado como núcleo conceitual/aplicação conforme o curso.
+
+## 27.C5 DERIVADA — MOTIVAÇÃO
+
+### C1-DER-01 — Taxa média
+
+Revisão/ponte.
+
+### C1-DER-02 — Taxa instantânea
+
+### C1-DER-03 — Reta tangente
+
+### C1-DER-04 — Quociente de diferenças
+
+### C1-DER-05 — Derivada como limite
+
+### C1-DER-06 — Notações de derivada
+
+- `f'(x)`;
+- `dy/dx`;
+- outras quando necessárias.
+
+### C1-DER-07 — Derivabilidade e interpretação
+
+## 27.C6 REGRAS DE DERIVAÇÃO
+
+### C1-REG-01 — Constante
+
+### C1-REG-02 — Potência
+
+### C1-REG-03 — Constante multiplicativa
+
+### C1-REG-04 — Soma e diferença
+
+### C1-REG-05 — Produto
+
+### C1-REG-06 — Quociente
+
+### C1-REG-07 — Regra da cadeia
+
+A regra da cadeia deverá ser considerada uma habilidade crítica.
+
+## 27.C7 DERIVADAS DE FUNÇÕES ESPECÍFICAS
+
+### C1-ESP-01 — Exponenciais
+
+### C1-ESP-02 — `e^x`
+
+### C1-ESP-03 — Logaritmos
+
+### C1-ESP-04 — `ln x`
+
+### C1-ESP-05 — Seno
+
+### C1-ESP-06 — Cosseno
+
+### C1-ESP-07 — Tangente
+
+### C1-ESP-08 — Trigonométricas inversas
+
+Se incluídas no escopo principal.
+
+## 27.C8 DERIVAÇÃO IMPLÍCITA E DERIVADAS DE ORDEM SUPERIOR
+
+### C1-IMP-01 — Relações implícitas
+
+### C1-IMP-02 — Derivação implícita
+
+### C1-IMP-03 — Resolver para `dy/dx`
+
+### C1-ORD-01 — Segunda derivada
+
+### C1-ORD-02 — Derivadas de ordem superior
+
+### C1-ORD-03 — Interpretação física de posição, velocidade e aceleração
+
+## 27.C9 TAXAS RELACIONADAS
+
+### C1-TAX-01 — Identificar quantidades variáveis
+
+### C1-TAX-02 — Construir relação entre variáveis
+
+### C1-TAX-03 — Derivar em relação ao tempo
+
+### C1-TAX-04 — Substituir valores no momento correto
+
+### C1-TAX-05 — Interpretar sinal e unidade
+
+Esse módulo exige forte domínio de modelagem e unidades.
+
+## 27.C10 ANÁLISE DE FUNÇÕES COM DERIVADAS
+
+### C1-ANA-01 — Pontos críticos
+
+### C1-ANA-02 — Crescimento e decrescimento
+
+### C1-ANA-03 — Máximos e mínimos locais
+
+### C1-ANA-04 — Extremos absolutos
+
+### C1-ANA-05 — Concavidade
+
+### C1-ANA-06 — Pontos de inflexão
+
+### C1-ANA-07 — Teste da primeira derivada
+
+### C1-ANA-08 — Teste da segunda derivada
+
+### C1-ANA-09 — Esboço de curvas
+
+## 27.C11 TEOREMAS DE DERIVADAS
+
+### C1-TEO-01 — Teorema de Rolle
+
+### C1-TEO-02 — Teorema do Valor Médio
+
+O foco deverá incluir significado geométrico, não apenas aplicação algorítmica.
+
+## 27.C12 OTIMIZAÇÃO
+
+### C1-OTI-01 — Definir variável e objetivo
+
+### C1-OTI-02 — Identificar restrições
+
+### C1-OTI-03 — Construir função objetivo
+
+### C1-OTI-04 — Determinar domínio viável
+
+### C1-OTI-05 — Encontrar candidatos
+
+### C1-OTI-06 — Comparar candidatos
+
+### C1-OTI-07 — Interpretar solução
+
+Otimização deverá ser um dos principais exemplos de matemática integrada à mecânica do jogo.
+
+## 27.C13 APROXIMAÇÃO LOCAL
+
+### C1-APR-01 — Linearização
+
+### C1-APR-02 — Diferenciais
+
+### C1-APR-03 — Aproximação e erro
+
+Pode ser núcleo ou apoio conforme a grade final.
+
+## 27.C14 ANTIDERIVADAS
+
+### C1-ANT-01 — Operação inversa da derivação
+
+### C1-ANT-02 — Família de antiderivadas
+
+### C1-ANT-03 — Constante de integração
+
+### C1-ANT-04 — Regras básicas
+
+### C1-ANT-05 — Condição inicial simples
+
+## 27.C15 ÁREA E SOMAS DE RIEMANN
+
+### C1-RIE-01 — Área acumulada
+
+### C1-RIE-02 — Partição de intervalo
+
+### C1-RIE-03 — Retângulos à esquerda
+
+### C1-RIE-04 — Retângulos à direita
+
+### C1-RIE-05 — Ponto médio
+
+### C1-RIE-06 — Soma de Riemann
+
+### C1-RIE-07 — Limite das somas
+
+A visualização deverá ter papel central neste bloco.
+
+## 27.C16 INTEGRAL DEFINIDA
+
+### C1-INT-01 — Notação de integral definida
+
+### C1-INT-02 — Integral como acumulação
+
+### C1-INT-03 — Integral como área orientada
+
+### C1-INT-04 — Propriedades da integral
+
+### C1-INT-05 — Interpretação de unidades
+
+## 27.C17 TEOREMA FUNDAMENTAL DO CÁLCULO
+
+### C1-TFC-01 — Relação entre acumulação e derivada
+
+### C1-TFC-02 — Primeira parte do TFC
+
+### C1-TFC-03 — Segunda parte do TFC
+
+### C1-TFC-04 — Avaliar integral definida por antiderivada
+
+Esse deverá ser um dos pontos de culminação conceitual do primeiro ciclo do Eixo.
+
+## 27.C18 INTEGRAÇÃO BÁSICA
+
+### C1-IBS-01 — Integral indefinida
+
+### C1-IBS-02 — Regra da potência
+
+### C1-IBS-03 — Linearidade
+
+### C1-IBS-04 — Integrais exponenciais/logarítmicas básicas
+
+### C1-IBS-05 — Integrais trigonométricas básicas
+
+### C1-IBS-06 — Substituição simples
+
+A substituição poderá ser núcleo ou ponte para Cálculo II, conforme o recorte final adotado.
+
+## 27.C19 APLICAÇÕES BÁSICAS DE INTEGRAIS
+
+### C1-APL-01 — Deslocamento a partir de velocidade
+
+### C1-APL-02 — Acumulação de taxa
+
+### C1-APL-03 — Área entre curvas
+
+### C1-APL-04 — Valor médio de uma função
+
+Volumes e técnicas adicionais poderão ficar como extensão ou início de um futuro Cálculo II.
+
+---
+
+# 27.D CONTEÚDOS DE EXTENSÃO — FORA DO NÚCLEO INICIAL
+
+O Eixo deverá poder crescer futuramente para:
+
+- números complexos;
+- cônicas aprofundadas;
+- vetores;
+- matrizes;
+- matemática discreta;
+- probabilidade;
+- estatística;
+- Cálculo II;
+- Cálculo III;
+- Álgebra Linear;
+- Equações Diferenciais;
+- Física matemática;
+- outros percursos.
+
+Esses conteúdos não deverão influenciar a arquitetura inicial de forma que dificultem o MVP, mas o modelo curricular deve permitir sua inclusão futura.
+
+---
+
+# 27.E DEPENDÊNCIAS CRÍTICAS PARA ENTRAR EM CÁLCULO I
+
+Antes de considerar o aluno preparado para a trilha principal de Cálculo I, o sistema deverá possuir evidência suficiente, especialmente em:
+
+- operações com frações;
+- sinais;
+- potências e raízes;
 - manipulação algébrica;
-- produtos notáveis;
 - fatoração;
 - equações;
-- inequações;
-- sistemas;
-- valor absoluto;
-- plano cartesiano;
-- distância;
-- funções;
-- domínio e imagem;
-- composição;
-- função inversa;
-- transformações de gráficos;
-- funções lineares;
-- quadráticas;
-- polinomiais;
-- racionais;
+- inequações básicas;
+- domínio;
+- notação de função;
+- leitura de gráficos;
+- taxa média de variação;
+- funções polinomiais;
+- funções racionais;
 - exponenciais;
 - logaritmos;
-- trigonometria;
-- círculo trigonométrico;
-- seno, cosseno e tangente;
-- identidades;
-- equações trigonométricas;
-- sequências.
+- radianos;
+- seno e cosseno;
+- comportamento gráfico.
 
-## 27.3 Cálculo I
+O aluno não precisa possuir domínio perfeito de cada subtema de Pré-Cálculo para abrir a primeira aula de limites, mas lacunas críticas deverão gerar revisão recomendada ou obrigatória quando impedirem a compreensão.
 
-- introdução intuitiva a limites;
-- cálculo de limites;
-- limites laterais;
-- limites infinitos;
-- limites no infinito;
-- continuidade;
-- taxa de variação;
-- reta tangente;
-- definição de derivada;
-- regras de derivação;
-- produto;
-- quociente;
-- regra da cadeia;
-- derivadas trigonométricas;
-- exponenciais;
-- logaritmos;
-- derivação implícita;
-- taxas relacionadas;
-- máximos e mínimos;
-- pontos críticos;
-- otimização;
-- análise de gráficos;
-- antiderivadas;
-- somas de Riemann;
-- integral definida;
-- integral indefinida;
-- Teorema Fundamental do Cálculo.
+## 27.E1 GATE DE PRONTIDÃO
 
-A árvore curricular completa ainda será especificada em detalhe.
+O Eixo poderá utilizar um **Gate de Prontidão para Cálculo**.
+
+Esse gate não será uma única prova com nota.
+
+Ele agregará evidências já coletadas ao longo da trilha e, quando necessário, pequenas atividades diagnósticas.
+
+Resultado possível:
+
+### Pronto
+
+Pré-requisitos essenciais suficientemente consolidados.
+
+### Pronto com revisão recomendada
+
+Pode iniciar Cálculo, mas alguns nós devem ser revisados em paralelo.
+
+### Revisão necessária
+
+Há lacunas que provavelmente impedirão o progresso.
+
+O sistema deverá indicar exatamente quais habilidades precisam de reforço.
+
+---
+
+# 27.F EXEMPLOS DE GRAFO DE DEPENDÊNCIAS
+
+## Derivada pela definição
+
+```
+frações
+   ↓
+manipulação algébrica
+   ↓
+funções
+   ↓
+taxa média
+   ↓
+limites
+   ↓
+quociente de diferenças
+   ↓
+derivada pela definição
+```
+
+## Regra da cadeia
+
+```
+funções
+   ↓
+composição de funções
+   ↓
+regras básicas de derivação
+   ↓
+regra da cadeia
+```
+
+## Otimização
+
+```
+modelagem
+   ├──→ funções
+   ├──→ domínio/restrições
+   └──→ equações
+             ↓
+        derivadas
+             ↓
+       pontos críticos
+             ↓
+        otimização
+```
+
+## Integral definida
+
+```
+área
+   ↓
+funções e gráficos
+   ↓
+somatórios/partições
+   ↓
+limites
+   ↓
+somas de Riemann
+   ↓
+integral definida
+   ↓
+Teorema Fundamental do Cálculo
+```
+
+---
+
+# 27.G REGRA DE CONTEÚDO PUBLICÁVEL
+
+Uma habilidade curricular somente poderá ser liberada em produção quando existirem:
+
+1. definição pedagógica;
+2. pré-requisitos cadastrados;
+3. notação suportada pelo editor;
+4. ferramentas necessárias ensinadas;
+5. transformações necessárias reconhecidas pelo motor;
+6. erros principais classificados;
+7. atividades suficientes para aprendizagem e domínio;
+8. critérios de domínio;
+9. testes automatizados do motor;
+10. revisão pedagógica do conteúdo.
+
+Isso conecta diretamente currículo, produto e qualidade técnica.
 
 ---
 
