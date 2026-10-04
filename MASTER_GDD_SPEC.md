@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.12 em construção  
+**Versão de especificação:** 0.13 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -2693,6 +2693,124 @@ Não precisa existir um inimigo visual.
 O nome exibido poderá ser:
 
 **Desafio-Marco**, **Projeto**, **Missão de Síntese** ou equivalente.
+
+---
+
+## 23.51 PÓS-MVP — DESAFIOS ENTRE AMIGOS
+
+Futuramente, o Eixo poderá possuir desafios competitivos entre amigos.
+
+Possíveis conexões:
+
+- internet;
+- rede local;
+- proximidade/Bluetooth quando tecnicamente adequado.
+
+Formato inicial possível:
+
+- mesmos conteúdos;
+- mesmas condições;
+- conjunto equivalente ou mesma seed de questões;
+- tempo opcional;
+- pontuação por acerto, qualidade e/ou eficiência;
+- resultado final comparativo.
+
+## 23.52 COMPETIÇÃO NÃO DEVE INCENTIVAR CHUTE
+
+A pontuação não deverá premiar apenas velocidade.
+
+Possíveis critérios combinados:
+
+- correção;
+- quantidade de questões;
+- dificuldade;
+- independência;
+- penalização leve por chute ou respostas inválidas;
+- tempo como fator secundário quando fizer sentido.
+
+## 23.53 MATCH JUSTO
+
+Para evitar vantagem por diferença curricular, o sistema deverá comparar:
+
+- habilidades disponíveis para ambos;
+- dificuldade compatível;
+- nível de domínio aproximado;
+- ferramentas permitidas.
+
+Um aluno avançado não deverá simplesmente receber conteúdo de Cálculo contra alguém em frações.
+
+## 23.54 MODOS FUTUROS
+
+Possibilidades:
+
+### Corrida de precisão
+
+Quem resolve corretamente mais atividades dentro do período.
+
+### Melhor de N
+
+Mesmo conjunto de questões; vence quem tiver melhor desempenho.
+
+### Desafio assíncrono
+
+Um amigo conclui uma sequência e envia o desafio para outro tentar superar.
+
+### Duelo de habilidade
+
+Ambos escolhem uma habilidade já disponível para os dois.
+
+## 23.55 PRIVACIDADE E CONTROLE SOCIAL
+
+Recursos sociais deverão ser opt-in.
+
+Considerar posteriormente:
+
+- convites;
+- bloqueio;
+- apelidos;
+- presença;
+- menores;
+- lista de amigos;
+- denúncia/moderação se houver comunicação.
+
+Chat livre não é requisito desse recurso.
+
+## 23.56 BLUETOOTH/PROXIMIDADE
+
+Bluetooth poderá ser avaliado como opção pós-MVP para desafios presenciais sem depender de internet.
+
+Não deverá ser requisito arquitetural do MVP.
+
+A implementação só deverá ser escolhida após avaliar:
+
+- suporte real das plataformas;
+- permissões;
+- descoberta de dispositivos;
+- segurança;
+- sincronização;
+- complexidade de QA.
+
+## 23.57 DESAFIO SOCIAL NÃO ALTERA DOMÍNIO DE FORMA CEGA
+
+Uma partida pode gerar evidência pedagógica, mas:
+
+- pressão de tempo altera comportamento;
+- competição pode aumentar chute;
+- ajuda externa é possível.
+
+Portanto resultados competitivos não deverão ter o mesmo peso automático de uma atividade normal de domínio.
+
+## 23.58 REGRA DE ESCOPO
+
+**Desafios entre amigos ficam explicitamente fora do MVP.**
+
+A arquitetura deve evitar bloquear sua inclusão futura, mas nenhum requisito do MVP depende de:
+
+- multiplayer;
+- Bluetooth;
+- matchmaking;
+- presença online;
+- ranking social.
 
 ---
 
@@ -6642,23 +6760,496 @@ Se isso não puder ser respondido, o conteúdo não deverá ser publicado.
 
 ---
 
-# 30. LIVRO MATEMÁTICO PESSOAL
+# 30. PERFIL, PROGRESSO, HISTÓRICO E LIVRO MATEMÁTICO
 
-O sistema poderá construir automaticamente um material de revisão com os conceitos aprendidos pelo aluno.
+O sistema de acompanhamento deverá ajudar o aluno a responder:
+
+- o que eu já aprendi?
+- o que ainda estou consolidando?
+- onde estou errando?
+- como cheguei até aqui?
+- quais ferramentas já domino?
+- quais resoluções importantes quero rever?
+- qual é meu próximo passo?
+
+O objetivo não é transformar o perfil em um painel de métricas.
+
+---
+
+## 30.1 PERFIL DO ALUNO
+
+O perfil deverá conter principalmente informações úteis ao estudo:
+
+- nome/apelido;
+- objetivo atual;
+- trilha atual;
+- progresso por grandes áreas;
+- marcos;
+- conquistas relevantes;
+- preferências de acessibilidade;
+- preferências de experiência.
+
+Dados sociais e públicos não são requisito do MVP.
+
+---
+
+## 30.2 PROGRESSO GLOBAL
+
+A visão geral poderá mostrar:
+
+```
+Fundamentos Matemáticos     Dominado / avançando
+Pré-Cálculo                 Em progresso
+Cálculo I                   Ainda não iniciado
+```
+
+Evitar uma porcentagem global enganosa que misture habilidades muito diferentes.
+
+---
+
+## 30.3 PROGRESSO POR HABILIDADE
+
+Cada habilidade poderá mostrar estado pedagógico:
+
+- aprendendo;
+- praticando;
+- em consolidação;
+- dominada;
+- revisão recomendada;
+- lacuna detectada.
+
+Ao tocar, o aluno vê:
+
+- descrição;
+- pré-requisitos;
+- evidências recentes;
+- exemplos;
+- prática;
+- onde será usada depois.
+
+---
+
+## 30.4 DIMENSÕES SEM EXCESSO DE COMPLEXIDADE
+
+Internamente existem:
+
+- cálculo;
+- interpretação;
+- representação;
+- aplicação;
+- transferência.
+
+Na interface, isso poderá ser resumido quando necessário.
 
 Exemplo:
 
-## Potência
+```
+Regra da potência
 
-`a² = a × a`
+Procedimento      Forte
+Aplicação         Em consolidação
+Transferência     Precisa praticar
+```
 
-## Função linear
+Não exibir números pseudoexatos como 83,27%.
 
-`f(x)=ax+b`
+---
 
-## Derivada
+## 30.5 HISTÓRICO DE APRENDIZAGEM
 
-Definição, interpretação gráfica e exemplos já resolvidos pelo próprio estudante.
+O aluno poderá consultar uma linha do tempo pedagógica.
+
+Exemplos:
+
+```
+Hoje
+✓ concluiu fatoração por diferença de quadrados
+◐ iniciou funções racionais
+
+Ontem
+✓ revisou sinais
+✓ resolveu primeiro desafio de função
+```
+
+O histórico deverá priorizar eventos significativos, não cada toque.
+
+---
+
+## 30.6 HISTÓRICO DE RESOLUÇÕES
+
+O Eixo deverá preservar resoluções relevantes.
+
+Para cada atividade concluída, conforme política de armazenamento:
+
+- enunciado;
+- versão/seed;
+- quadros de resolução;
+- resposta final;
+- método reconhecido;
+- erros e autocorreções relevantes;
+- data;
+- habilidade.
+
+O aluno poderá reabrir em modo de consulta.
+
+---
+
+## 30.7 RESOLUÇÕES FAVORITAS
+
+O aluno poderá marcar uma resolução para rever depois.
+
+Usos:
+
+- solução que achou elegante;
+- erro importante;
+- desafio difícil;
+- método alternativo.
+
+Essas resoluções poderão aparecer no Livro Matemático.
+
+---
+
+## 30.8 COMPARAÇÃO COM TENTATIVAS ANTERIORES
+
+Ao refazer uma habilidade, o Eixo poderá mostrar opcionalmente:
+
+> Na sua tentativa anterior você usou este método.
+
+Isso pode ajudar a perceber evolução.
+
+Não mostrar automaticamente se isso entregar a solução atual.
+
+---
+
+## 30.9 ERROS COMO HISTÓRICO DE APRENDIZAGEM
+
+O perfil não deverá exibir uma “lista de falhas” punitiva.
+
+Pode mostrar padrões úteis:
+
+```
+Para revisar:
+• sinais em inequações
+• domínio de logaritmos
+```
+
+O foco é ação, não julgamento.
+
+---
+
+## 30.10 MARCOS
+
+Marcos importantes poderão ter uma linha do tempo própria:
+
+- primeira equação;
+- primeira função;
+- entrada em Pré-Cálculo;
+- primeiro limite;
+- primeira derivada;
+- primeira otimização;
+- primeira integral;
+- conclusão de Cálculo I.
+
+---
+
+## 30.11 CAIXA DE FERRAMENTAS MATEMÁTICAS
+
+O perfil deverá oferecer uma área visual de ferramentas.
+
+Exemplo:
+
+```
+Aritmética
+✓ fração
+✓ potência
+✓ raiz
+
+Funções
+✓ f(x)
+✓ composição
+
+Cálculo
+✓ limite
+○ derivada
+🔒 integral
+```
+
+Cada ferramenta poderá abrir:
+
+- significado;
+- exemplo;
+- tutorial de interface;
+- habilidades relacionadas;
+- praticar.
+
+---
+
+## 30.12 FAMILIARIDADE COM A INTERFACE
+
+Separadamente do domínio matemático, manter competências como:
+
+- criar fração;
+- editar expoente;
+- usar log com base;
+- navegar em integral;
+- trocar de quadro;
+- usar rascunho.
+
+Essa informação serve apenas para UX/adaptação da interface.
+
+---
+
+# 30.A LIVRO MATEMÁTICO PESSOAL
+
+O Livro Matemático será uma coleção dinâmica construída com o aprendizado real do usuário.
+
+Não será apenas um glossário estático.
+
+---
+
+## 30.A1 CONTEÚDO DO LIVRO
+
+Cada entrada poderá combinar:
+
+- definição;
+- significado;
+- notação;
+- representação visual;
+- exemplos;
+- erros comuns;
+- aplicações;
+- ferramentas associadas;
+- resoluções do próprio aluno.
+
+---
+
+## 30.A2 ENTRADAS DESBLOQUEADAS PELO APRENDIZADO
+
+Conceitos aparecem no Livro quando são introduzidos.
+
+Eles podem evoluir conforme domínio.
+
+Exemplo:
+
+### Derivada — início
+
+- taxa instantânea;
+- reta tangente.
+
+### Derivada — depois
+
+- regras;
+- aplicações;
+- otimização;
+- exemplos pessoais.
+
+O Livro cresce junto com o aluno.
+
+---
+
+## 30.A3 EXEMPLOS DO PRÓPRIO ALUNO
+
+Quando apropriado, uma entrada poderá incluir:
+
+> Seu exemplo
+
+seguido de uma resolução que o usuário marcou ou que o sistema sugeriu salvar.
+
+Isso aumenta relevância pessoal.
+
+---
+
+## 30.A4 NÃO SALVAR AUTOMATICAMENTE TODO EXERCÍCIO NO LIVRO
+
+O histórico pode conter muitas atividades.
+
+O Livro deve ser curado.
+
+Entram automaticamente apenas:
+
+- marcos;
+- exemplos representativos;
+- descobertas conceituais.
+
+O aluno também pode adicionar manualmente.
+
+---
+
+## 30.A5 DESCOBERTAS
+
+Explorações do Laboratório poderão criar entradas.
+
+Exemplo:
+
+> Você observou que aumentar `|a|` em `y=ax²` torna a parábola mais estreita.
+
+Depois a aula formaliza e a entrada é atualizada.
+
+---
+
+## 30.A6 FÓRMULAS COM CONTEXTO
+
+Evitar um formulário de fórmulas sem significado.
+
+Exemplo ruim:
+
+```
+m = (y₂-y₁)/(x₂-x₁)
+```
+
+isolado.
+
+Preferir:
+
+- o que representa;
+- quando usar;
+- visual;
+- exemplo;
+- conexão com taxa de variação.
+
+---
+
+## 30.A7 BUSCA E NAVEGAÇÃO
+
+O Livro poderá ser navegado por:
+
+- área;
+- habilidade;
+- ferramenta;
+- palavra-chave;
+- favoritos.
+
+Busca textual pode ficar pós-MVP se necessário.
+
+---
+
+## 30.A8 CONEXÕES ENTRE CONCEITOS
+
+Entradas deverão apontar relações:
+
+```
+Razão
+  ↓
+Inclinação
+  ↓
+Taxa média
+  ↓
+Derivada
+```
+
+Isso reforça a ideia central do Eixo.
+
+---
+
+## 30.A9 REVISÃO PELO LIVRO
+
+Cada conceito poderá oferecer:
+
+- rever explicação;
+- ver exemplo;
+- praticar;
+- abrir no mapa;
+- ver resolução favorita.
+
+---
+
+## 30.A10 EXPORTAÇÃO FUTURA
+
+Pós-MVP, poderá existir exportação do Livro ou partes dele para:
+
+- PDF;
+- impressão;
+- compartilhamento;
+- estudo offline externo.
+
+Não é requisito do MVP inicial.
+
+---
+
+# 30.B TELA DE PROGRESSO
+
+Uma tela de progresso poderá possuir três níveis:
+
+### Visão geral
+
+Grandes áreas e caminho atual.
+
+### Habilidades
+
+Estados por habilidade.
+
+### Histórico
+
+Linha do tempo e resoluções.
+
+Evitar colocar tudo em uma única tela longa.
+
+---
+
+## 30.B1 DESTAQUE PARA AÇÃO
+
+Se houver uma lacuna clara, a tela deve responder:
+
+> O que faço com essa informação?
+
+Exemplo:
+
+```
+Fatoração — revisão recomendada
+[Revisar agora]
+```
+
+Não apenas mostrar indicador vermelho.
+
+---
+
+## 30.B2 PROGRESSO NÃO DEVE GERAR ANSIEDADE
+
+Evitar:
+
+- porcentagem de “curso atrasado”;
+- contagem regressiva;
+- comparação obrigatória com outros usuários;
+- mensagens culpabilizadoras por ausência.
+
+O foco é evolução individual.
+
+---
+
+## 30.B3 PRIVACIDADE DO PERFIL
+
+Por padrão, progresso acadêmico é privado.
+
+Se recursos sociais forem adicionados posteriormente, compartilhar:
+
+- conquistas;
+- nível;
+- desafios;
+
+deverá ser opt-in.
+
+Não compartilhar automaticamente lacunas, erros ou histórico detalhado.
+
+---
+
+## 30.B4 SINCRONIZAÇÃO FUTURA
+
+Perfil, Livro, histórico e domínio deverão possuir modelo compatível com sincronização entre dispositivos.
+
+Detalhes serão definidos na seção de persistência.
+
+---
+
+## 30.B5 CRITÉRIO FINAL
+
+Ao abrir Perfil/Progresso, o aluno deve sair com pelo menos uma destas sensações:
+
+- “eu evoluí”;
+- “sei o que preciso revisar”;
+- “sei o que vem depois”;
+- “consigo rever como resolvi isso”.
+
+Se a tela apenas exibe números, ela falhou.
 
 ---
 
