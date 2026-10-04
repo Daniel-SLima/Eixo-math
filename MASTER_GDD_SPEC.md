@@ -5746,12 +5746,14 @@ Blocos estruturais já definidos em nível inicial:
 - Motor Matemático e Pedagógico;
 - validação de transformações e equivalência;
 - árvore curricular Matemática Básica → Pré-Cálculo → Cálculo I;
-- Sistema de Domínio e Aprendizagem Adaptativa.
+- Sistema de Domínio e Aprendizagem Adaptativa;
+- UX matemática mobile e editor 2D estruturado;
+- rascunho espacial e navegação entre Quadros.
 
 Prioridade atual:
 
-1. UX completa e fluxo de navegação do aplicativo;
-2. estrutura de módulos, aulas e mapa de conhecimento;
+1. estrutura de módulos, aulas e mapa de conhecimento;
+2. fluxo completo de navegação do aplicativo (onboarding, início, sessão e conclusão);
 3. sistema de banco/importação/seleção de questões;
 4. gamificação e camada lúdica integrada à matemática;
 5. perfil, progresso, histórico e Livro Matemático;
