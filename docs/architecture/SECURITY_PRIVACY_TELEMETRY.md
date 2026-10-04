@@ -162,17 +162,19 @@ Nunca tornar público automaticamente:
 
 # 10. MENORES DE IDADE
 
-Como o público final ainda não está formalmente limitado por faixa etária, a arquitetura deverá assumir que menores podem utilizar o produto.
+O público-alvo primário do MVP foi definido como **14+**, incluindo adolescentes e adultos.
 
-Antes do lançamento, definir:
+Como parte desse público ainda pode ser menor de idade, a arquitetura deverá assumir uso por adolescentes de 14–17 anos.
 
-- faixa etária alvo;
-- requisitos de consentimento;
-- política de conta;
+Antes do lançamento público, validar juridicamente:
+
+- requisitos de consentimento aplicáveis;
+- política de conta para menores;
 - controles parentais quando legalmente necessários;
-- termos e política de privacidade apropriados.
+- termos e política de privacidade apropriados;
+- requisitos específicos das lojas e regiões de distribuição.
 
-Não adicionar coleta extensa agora que tornaria essa adaptação difícil depois.
+Não adicionar coleta extensa que torne essa adaptação difícil depois.
 
 ---
 
