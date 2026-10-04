@@ -763,17 +763,22 @@ Código não implementado não precisa existir; a arquitetura apenas reserva lim
 
 # 32. DECISÕES QUE CONTINUAM ABERTAS
 
-Ainda serão definidos:
+Já definidos em documentos posteriores:
 
-- estratégia exata de sync/conflito;
-- schema de dados;
-- necessidade de login obrigatório/opcional;
-- E2E mobile framework;
-- analytics/telemetria;
-- distribuição de content packs;
-- notificações;
-- monetização;
-- hosting definitivo.
+- persistência local-first e estratégia base de sync/conflito;
+- modelo de dados v1;
+- login opcional para iniciar estudos;
+- telemetria com allowlist e minimização;
+- content packs versionados.
+
+Ainda serão refinados:
+
+- schema SQL físico final;
+- detalhes operacionais do backend remoto;
+- hosting definitivo;
+- notificações pós-MVP;
+- monetização pós-validação;
+- parâmetros finais de performance e device matrix.
 
 ---
 
