@@ -10740,24 +10740,108 @@ e não:
 
 ---
 
-# 39. DECISÕES TÉCNICAS AINDA NÃO FECHADAS
+# 39. ARQUITETURA TÉCNICA — DIREÇÃO SELECIONADA
 
-Ainda NÃO escolher definitivamente:
+A stack inicial recomendada para implementação será:
 
-- Flutter;
-- React Native;
-- Godot;
-- framework web;
-- motor simbólico;
-- banco de dados;
-- backend;
-- mecanismo de gráficos;
-- reconhecimento manuscrito;
-- provedor/modelo de IA futuro, caso o módulo opcional venha a ser ativado.
+- **React + TypeScript**;
+- **Vite**;
+- **Capacitor** para Android/iOS;
+- **MathLive Mathfield** para o editor matemático 2D;
+- **MathJSON** como representação estruturada;
+- **CortexJS Compute Engine** como fundação simbólica;
+- camada própria **Eixo Math Core** para validação pedagógica e matemática;
+- **Mafs** como base inicial para visualizações interativas;
+- **SQLite nativo** no app Android/iOS;
+- **IndexedDB/Dexie** na versão web;
+- **Supabase/Postgres + Auth + Edge Functions** como backend remoto inicial;
+- **Vitest + fast-check** para testes do núcleo e geradores.
 
-Decisão já fechada: **o MVP não usará IA em runtime e deverá ser completo sem IA**.
+Documento técnico detalhado:
 
-A tecnologia deverá ser escolhida depois que os requisitos do produto estiverem suficientemente fechados.
+`docs/architecture/TECH_STACK.md`
+
+## 39.1 MOTIVO PRINCIPAL DA ESCOLHA
+
+O editor matemático 2D é o maior risco técnico do produto.
+
+Uma arquitetura web-first permite integrar diretamente MathLive e seu ecossistema de MathJSON/Compute Engine, mantendo uma única base para:
+
+- mobile;
+- web;
+- futura versão desktop quando desejável.
+
+Capacitor fornece empacotamento nativo e acesso futuro a APIs do dispositivo.
+
+## 39.2 REGRA DE ABSTRAÇÃO
+
+Dependências críticas deverão ficar atrás de adapters/interfaces próprias.
+
+Exemplos:
+
+- MathEditorAdapter;
+- MathEngine;
+- VisualizationAdapter;
+- LocalRepository;
+- SyncService;
+- AuthService;
+- AITutor futuro.
+
+Isso reduz acoplamento e permite troca futura.
+
+## 39.3 OFFLINE-FIRST
+
+O núcleo educacional deverá funcionar localmente:
+
+- editor;
+- motor;
+- conteúdo disponível;
+- Caderno;
+- Rascunho;
+- validação;
+- progresso;
+- visualizações compatíveis.
+
+Backend não deverá participar de cada tecla ou etapa matemática.
+
+## 39.4 PROVA TÉCNICA OBRIGATÓRIA
+
+Antes de construir o produto completo, a implementação deverá validar em um protótipo:
+
+- fração;
+- potência;
+- raiz;
+- log com base;
+- limite;
+- derivada;
+- integral;
+- navegação entre slots;
+- teclado customizado;
+- MathJSON;
+- validação;
+- persistência;
+- offline;
+- gráfico;
+- desempenho em Android real.
+
+Se a experiência do editor não atingir o nível esperado, a stack deverá ser reavaliada antes de escalar o desenvolvimento.
+
+## 39.5 DECISÕES AINDA ABERTAS
+
+Ainda serão detalhados:
+
+- schema completo de persistência;
+- algoritmo de sincronização/conflitos;
+- login obrigatório ou opcional;
+- telemetria;
+- E2E mobile;
+- hosting definitivo;
+- monetização;
+- notificações.
+
+Decisão já fechada:
+
+**o MVP será completo sem IA em runtime.**
 
 ---
 
@@ -11149,18 +11233,19 @@ Blocos estruturais já definidos em nível inicial:
 - banco de questões, blueprints paramétricos e seleção adaptativa;
 - política de proveniência, licenças e conteúdo externo;
 - módulo futuro de IA totalmente especificado e fora do MVP;
-- gamificação matemática, Desafios-Marco e progressão lúdica.
+- gamificação matemática, Desafios-Marco e progressão lúdica;
+- desafios sociais entre amigos registrados como pós-MVP;
+- perfil, progresso, histórico e Livro Matemático;
+- arquitetura técnica e stack inicial selecionadas.
 
 Prioridade atual:
 
-1. perfil, progresso, histórico e Livro Matemático;
-2. arquitetura técnica e escolha de tecnologias;
-3. persistência, sincronização e funcionamento offline/online;
-4. segurança, privacidade e telemetria pedagógica;
-5. definição formal do MVP;
-6. critérios de aceite e estratégia de testes;
-7. roadmap;
-8. instruções finais para Codex/agentes e início da implementação.
+1. persistência, sincronização e funcionamento offline/online;
+2. segurança, privacidade e telemetria pedagógica;
+3. definição formal do MVP;
+4. critérios de aceite e estratégia de testes;
+5. roadmap;
+6. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
