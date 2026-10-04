@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.19 — pronta para revisão  
+**Versão de especificação:** 0.20 — auditoria concluída  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -11445,7 +11445,10 @@ Documentos adicionais de fechamento:
 - `docs/pedagogy/MVP_MASTERY_CRITERIA.md`;
 - `docs/design/DESIGN_SYSTEM.md`;
 - `docs/architecture/DATA_MODEL_V1.md`;
-- `docs/SPEC_REVIEW_CHECKLIST.md`.
+- `docs/SPEC_REVIEW_CHECKLIST.md`;
+- `docs/SPEC_AUDIT_REPORT.md`.
+
+A auditoria de consistência foi concluída sem bloqueadores estruturais. Foram corrigidos pontos desatualizados sobre decisões técnicas, faixa etária e perfil do modelo do Codex.
 
 A implementação continua proibida até aprovação explícita e mudança para:
 
