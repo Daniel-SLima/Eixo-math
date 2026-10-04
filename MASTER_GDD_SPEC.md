@@ -1,6 +1,6 @@
 # MASTER GDD / PRODUCT SPEC — Eixo Math
 
-**Versão de especificação:** 0.10 em construção  
+**Versão de especificação:** 0.11 em construção  
 **Status:** pré-implementação  
 **Escopo inicial:** Matemática Básica → Pré-Cálculo → Cálculo I  
 **Plataformas-alvo:** mobile como prioridade; expansão futura para web/desktop/tablet  
@@ -9215,11 +9215,338 @@ Ainda NÃO escolher definitivamente:
 - backend;
 - mecanismo de gráficos;
 - reconhecimento manuscrito;
-- uso de IA em produção.
+- provedor/modelo de IA futuro, caso o módulo opcional venha a ser ativado.
+
+Decisão já fechada: **o MVP não usará IA em runtime e deverá ser completo sem IA**.
 
 A tecnologia deverá ser escolhida depois que os requisitos do produto estiverem suficientemente fechados.
 
 ---
+
+# 39.A MÓDULO FUTURO DE IA — ESPECIFICADO, FORA DO MVP
+
+## 39.A1 DECISÃO DE PRODUTO
+
+O MVP do Eixo deverá ser **completamente funcional sem qualquer API de IA em runtime**.
+
+Isso inclui, sem IA:
+
+- editor matemático;
+- Caderno;
+- Rascunho;
+- Quadros;
+- validação matemática;
+- classificação de erros suportados;
+- dicas determinísticas;
+- currículo;
+- banco de atividades;
+- geração paramétrica;
+- adaptação;
+- sistema de domínio;
+- gráficos e visualizações;
+- gamificação;
+- progresso.
+
+Nenhum usuário deverá precisar fornecer chave de API.
+
+Nenhuma funcionalidade essencial poderá parar de funcionar pela indisponibilidade de um provedor de IA.
+
+---
+
+## 39.A2 PRINCÍPIO DE DEPENDÊNCIA ZERO
+
+A arquitetura deverá respeitar:
+
+```
+Eixo Core
+   ↓
+funciona sozinho
+
+IA futura
+   ↓
+camada opcional
+```
+
+A dependência deve ser unidirecional:
+
+```
+IA pode usar dados estruturados do Eixo
+```
+
+mas:
+
+```
+Eixo Core não depende da IA
+```
+
+---
+
+## 39.A3 CASOS DE USO FUTUROS
+
+### Tutor explicativo
+
+A partir de um diagnóstico já produzido pelo motor:
+
+> Explique este erro de outra forma.
+
+### Perguntas conceituais
+
+Exemplo:
+
+> Por que o sinal da inequação inverte?
+
+### Exemplos personalizados
+
+Gerar um exemplo adicional alinhado à habilidade atual.
+
+### Reformulação pedagógica
+
+Explicar em linguagem mais simples, mais formal ou por analogia.
+
+### Análise de justificativas textuais
+
+Complementarmente, nunca como autoridade matemática única.
+
+### Assistência interna de produção
+
+- criação de contextos;
+- propostas de blueprints;
+- rascunhos de dicas;
+- revisão de linguagem;
+- classificação inicial.
+
+---
+
+## 39.A4 IA NÃO DECIDE CORREÇÃO MATEMÁTICA
+
+Fluxo permitido:
+
+```
+Motor determinístico
+      ↓
+ERRO_REGRA_CADEIA_INCOMPLETA
+      ↓
+IA
+      ↓
+explicação personalizada
+```
+
+Fluxo proibido como autoridade final:
+
+```
+resolução do aluno
+      ↓
+IA "acha" que está certa
+      ↓
+nota
+```
+
+A IA poderá sugerir, mas o veredito matemático deverá continuar baseado em motor verificável ou revisão humana.
+
+---
+
+## 39.A5 CONTRATO DE CONTEXTO PARA IA
+
+Se implementado, o módulo receberá contexto estruturado mínimo.
+
+Exemplo conceitual:
+
+```
+skill_id
+activity_id
+mode
+student_level
+math_expression
+validated_steps
+error_codes
+hint_level
+editor_context
+language
+```
+
+Evitar enviar histórico desnecessário.
+
+---
+
+## 39.A6 PRIVACIDADE POR PADRÃO
+
+O módulo futuro deverá minimizar dados enviados a terceiros.
+
+Preferir:
+
+- expressão atual;
+- código de erro;
+- habilidade;
+- contexto pedagógico estritamente necessário.
+
+Evitar enviar:
+
+- perfil completo;
+- histórico inteiro;
+- identificadores pessoais;
+- rascunhos não relacionados.
+
+A política final dependerá da arquitetura e dos provedores escolhidos.
+
+---
+
+## 39.A7 CAMADA DE ABSTRAÇÃO DE PROVEDOR
+
+A aplicação não deverá acoplar suas telas diretamente a um provedor específico.
+
+Conceitualmente:
+
+```
+AI Tutor Interface
+       ↓
+AI Gateway
+       ↓
+Provider Adapter
+       ├── provedor A
+       ├── provedor B
+       └── modelo local futuro
+```
+
+Isso permitirá trocar fornecedor sem reescrever a experiência pedagógica.
+
+---
+
+## 39.A8 FEATURE FLAG
+
+Toda funcionalidade de IA deverá poder ser:
+
+- desativada globalmente;
+- desativada por ambiente;
+- desativada por região/conta;
+- ocultada no MVP.
+
+Exemplo conceitual:
+
+```
+AI_TUTOR_ENABLED=false
+```
+
+O aplicativo deve continuar íntegro com a flag desligada.
+
+---
+
+## 39.A9 FALLBACK OBRIGATÓRIO
+
+Toda ação futura de IA deverá possuir fallback determinístico.
+
+Exemplo:
+
+**Explicar de outra forma**
+
+Se IA indisponível:
+
+> mostrar explicação pedagógica cadastrada para o código de erro.
+
+Nunca exibir:
+
+> “Você não pode continuar porque a IA está indisponível.”
+
+---
+
+## 39.A10 CUSTO E RATE LIMIT
+
+Se ativada futuramente, IA deverá possuir:
+
+- orçamento por usuário/período;
+- limites;
+- cache quando seguro;
+- proteção contra loops;
+- observabilidade de custo.
+
+Chamadas não deverão ocorrer a cada tecla ou linha.
+
+---
+
+## 39.A11 IA NÃO FICA NO APK COM SEGREDO
+
+Caso use API comercial:
+
+```
+App
+ ↓
+Backend/Gateway do Eixo
+ ↓
+Provedor
+```
+
+Chaves secretas não deverão ser distribuídas no cliente.
+
+---
+
+## 39.A12 MODERAÇÃO E SEGURANÇA
+
+Um tutor de linguagem natural precisará de:
+
+- política de conteúdo;
+- limites de escopo;
+- tratamento para menores, se aplicável;
+- proteção contra prompt injection;
+- prevenção de vazamento de sistema/dados;
+- logs apropriados sem coleta excessiva.
+
+---
+
+## 39.A13 TESTES DO MÓDULO FUTURO
+
+Antes de ativação:
+
+- respostas matematicamente consistentes com o diagnóstico;
+- não contradizer o motor;
+- não revelar resposta quando não permitido;
+- respeitar nível de dica;
+- respeitar modo prova;
+- funcionar com provedor indisponível;
+- funcionar com timeout;
+- funcionar com saída inválida;
+- não quebrar o fluxo offline básico.
+
+---
+
+## 39.A14 MODO PROVA
+
+Por padrão, IA deverá ficar desativada em avaliações que proíbem ajuda.
+
+O contrato da atividade poderá controlar isso explicitamente.
+
+---
+
+## 39.A15 DADOS DE TREINO / MELHORIA
+
+O Eixo não deverá presumir que conversas ou dados educacionais podem ser enviados para treinamento de terceiros.
+
+Qualquer uso desse tipo exigirá política explícita, consentimento adequado e análise de privacidade.
+
+---
+
+## 39.A16 CRITÉRIO PARA ATIVAR IA PÓS-MVP
+
+Só considerar IA em produção quando o núcleo sem IA estiver validado e houver evidência de que a IA melhora algo específico.
+
+Pergunta obrigatória:
+
+> Qual problema pedagógico real esta chamada de IA resolve melhor do que a solução determinística?
+
+Se não houver resposta clara, não adicionar.
+
+---
+
+## 39.A17 PRINCÍPIO FINAL
+
+A IA será:
+
+> **amplificador de explicação e personalização**
+
+e não:
+
+> **fundação necessária para o Eixo funcionar**.
+
+---
+
 
 # 40. ESCRITA À MÃO — DIREÇÃO ATUAL
 
