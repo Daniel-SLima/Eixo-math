@@ -1,0 +1,40 @@
+asset_id,type,filename,category,priority,ratio_or_duration,base_size_or_master,alpha,method,status,notes
+IMG-001,image,brand_app_icon_main.png,brand,P0,1:1,1024x1024,no,ai_concept,planned,Final icon may be redrawn as vector
+IMG-002,image,brand_logo_mark.png,brand,P1,1:1,1024x1024,yes,ai_concept,planned,Final logo may be redrawn as vector
+IMG-003,image,brand_splash_hero_portrait.png,brand,P1,9:16,1440x2560,no,ai_generation,planned,Keep central safe area
+IMG-010,image,onboarding_math_journey.png,onboarding,P1,4:5,1600x2000,no,ai_generation,planned,No readable formulas
+IMG-011,image,onboarding_math_editor.png,onboarding,P1,4:5,1600x2000,no,ai_generation,planned,Abstract structured math only
+IMG-012,image,onboarding_progress_book.png,onboarding,P1,4:5,1600x2000,no,ai_generation,planned,No readable text
+IMG-020,image,world_fundamentals_banner.png,worlds,P1,16:9,1920x1080,no,ai_generation,planned,Fundamentals region
+IMG-021,image,world_algebra_banner.png,worlds,P1,16:9,1920x1080,no,ai_generation,planned,Algebra region
+IMG-022,image,world_functions_banner.png,worlds,P1,16:9,1920x1080,no,ai_generation,planned,Functions region
+IMG-023,image,world_limits_banner.png,worlds,P1,16:9,1920x1080,no,ai_generation,planned,Limits region
+IMG-030,image,challenge_equilibrium_keyart.png,challenges,P1,16:9,1920x1080,no,ai_generation,planned,Equation challenge
+IMG-031,image,challenge_connect_points_keyart.png,challenges,P1,16:9,1920x1080,no,ai_generation,planned,Slope challenge
+IMG-032,image,challenge_limit_point_keyart.png,challenges,P1,16:9,1920x1080,no,ai_generation,planned,Final MVP challenge
+IMG-040,image,empty_no_history.png,empty,P2,4:3,1600x1200,preferred,ai_generation,planned,History empty state
+IMG-041,image,empty_no_favorites.png,empty,P2,4:3,1600x1200,preferred,ai_generation,planned,Favorites empty state
+IMG-042,image,empty_offline_mode.png,empty,P2,4:3,1600x1200,preferred,ai_generation,planned,Offline informative state
+IMG-043,image,empty_no_review_needed.png,empty,P2,4:3,1600x1200,preferred,ai_generation,planned,No review pending
+IMG-050,image,decor_geometric_pack.png,decorative,P2,1:1,2048x2048,yes,ai_generation,planned,Reusable abstract elements
+IMG-051,image,decor_map_ambient_background.png,decorative,P2,9:16,1440x2560,no,ai_generation,planned,Low visual noise
+IMG-052,image,decor_challenge_ambient_overlay.png,decorative,P2,16:9,1920x1080,yes,ai_generation,planned,Keep center clear
+IMG-060,image,badge_tool_unlock_frame.png,badges,P2,1:1,1024x1024,yes,ai_generation,planned,Real math symbol rendered by app
+IMG-061,image,badge_milestone_frame.png,badges,P2,1:1,1024x1024,yes,ai_generation,planned,Center remains clear
+SFX-001,audio,ui_tap_soft.wav,ui,P0,50-100ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Frequent use
+SFX-002,audio,ui_panel_open.wav,ui,P2,100-180ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Optional frequent UI
+SFX-003,audio,ui_panel_close.wav,ui,P2,100-180ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Pair with open
+SFX-004,audio,ui_board_switch.wav,ui,P2,100-180ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Disable if tiring
+SFX-010,audio,feedback_step_valid.wav,feedback,P0,120-250ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Frequent math feedback
+SFX-011,audio,feedback_step_invalid.wav,feedback,P0,120-250ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Calm not punitive
+SFX-012,audio,feedback_attention.wav,feedback,P0,120-250ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Neutral warning
+SFX-013,audio,feedback_unproven.wav,feedback,P0,150-280ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Neither success nor error
+SFX-014,audio,feedback_self_correction.wav,feedback,P2,150-300ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Subtle positive cue
+SFX-020,audio,progress_tool_unlock.wav,progression,P0,450-800ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,New math tool
+SFX-021,audio,progress_lesson_complete.wav,progression,P0,500-900ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Lesson completion
+SFX-022,audio,progress_skill_mastered.wav,progression,P2,700-1200ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Skill mastery
+SFX-023,audio,progress_milestone_reached.wav,progression,P2,900-1500ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Major milestone
+SFX-024,audio,progress_challenge_complete.wav,progression,P0,1000-1800ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Challenge resolution
+SFX-030,audio,system_sync_complete.wav,system,P3,100-220ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Normally silent background sync
+SFX-031,audio,system_saved_offline.wav,system,P2,120-250ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Explicit local save only
+SFX-032,audio,system_connection_restored.wav,system,P3,150-300ms,WAV 48kHz 24-bit,n/a,audio_generation,planned,Only if UX justifies
