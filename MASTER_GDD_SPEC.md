@@ -4490,18 +4490,29 @@ Quando a especificação for considerada pronta, ela deverá incluir, além dest
 
 # 42. PRÓXIMOS BLOCOS DE ESPECIFICAÇÃO
 
+Blocos estruturais já definidos em nível inicial:
+
+- Caderno Matemático, Teclado e Rascunho;
+- sistema de Quadros de Trabalho;
+- Motor Matemático e Pedagógico;
+- validação de transformações e equivalência;
+- árvore curricular Matemática Básica → Pré-Cálculo → Cálculo I;
+- Sistema de Domínio e Aprendizagem Adaptativa.
+
 Prioridade atual:
 
-1. Motor Matemático e Pedagógico;
-2. validação de transformações;
-3. equivalência matemática;
-4. classificação de erros;
-5. árvore completa Matemática Básica → Pré-Cálculo → Cálculo I;
-6. sistema de domínio/adaptação;
-7. UX restante;
-8. arquitetura técnica;
-9. definição do MVP;
-10. plano de implementação.
+1. UX completa e fluxo de navegação do aplicativo;
+2. estrutura de módulos, aulas e mapa de conhecimento;
+3. sistema de banco/importação/seleção de questões;
+4. gamificação e camada lúdica integrada à matemática;
+5. perfil, progresso, histórico e Livro Matemático;
+6. arquitetura técnica e escolha de tecnologias;
+7. persistência, sincronização e funcionamento offline/online;
+8. segurança, privacidade e telemetria pedagógica;
+9. definição formal do MVP;
+10. critérios de aceite e estratégia de testes;
+11. roadmap;
+12. instruções finais para Codex/agentes e início da implementação.
 
 ---
 
