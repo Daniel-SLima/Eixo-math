@@ -14,7 +14,13 @@ Data local: 2026-10-04. Escopo: somente assets e documentação. `SPEC_STATUS=RE
 
 The manifest contains 22 images and 17 SFX. Each image has one generated candidate (`_v01`) in the exact manifest dimensions. Built-in image output was resampled with Pillow to the specified base size. Each SFX has one actual 48 kHz, 24-bit mono WAV master, created with local synthesis. No file was moved to `approved/`. The built-in image prompts followed the item prompt plus the universal style clause in `IMAGE_ASSET_PROMPTS.md`; audio frequencies and envelopes were chosen to express the SFX prompt descriptions. `assets/ASSET_PROVENANCE.csv` records tool, date, prompt source and human review state.
 
-All 39 candidates passed `python scripts/assets/validate_manifest.py` (0 technical errors). Visual inspection used a contact sheet; no obvious watermark or readable formula was found at that scale. Full-size visual inspection and phone listening are required before approval. The image concepts for the editor and progress book contain abstract glyph-like details and deserve close inspection for accidental pseudo-text. The final challenge art should be checked for a clear missing connection. Badge frame centers are transparent by file inspection; their usability under the real app symbol needs review.
+All 39 candidates passed `python scripts/assets/validate_manifest.py` (0 technical errors). Visual inspection used a contact sheet; no obvious watermark or readable formula was found at that scale. Full-size visual inspection and phone listening are required before approval. Badge frame centers are transparent by file inspection; their usability under the real app symbol needs review.
+
+### Audit continuation — 2026-10-04
+
+- Independent comparison found 39 manifest IDs, 39 provenance records and 39 distinct media files, with no missing, extra or duplicate candidate. Every path appears in this report; all manifest statuses remain `review_required`, all provenance rows say `human_reviewed=false`, and `approved/` contains no media.
+- `assets/REVIEW_CONTACT_SHEET.jpg` opens as a 1600×1620 JPEG. Four priority images were also inspected at larger size: IMG-011 uses blank abstract math blocks, IMG-012 has icon-like marks without readable text, IMG-032 shows the intended missing connection, and IMG-042 uses text-like bars without readable words. These observations refine the initial contact-sheet cautions; they do not constitute approval.
+- The current owner-facing review queue and batch decision flow are in `docs/assets/ASSET_REVIEW_CHECKLIST.md`.
 
 ## Batch A — Brand
 
