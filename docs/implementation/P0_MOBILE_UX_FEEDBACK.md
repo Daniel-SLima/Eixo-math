@@ -15,9 +15,9 @@ Após testar no Samsung SM-S911B, o proprietário confirmou que o editor funcion
 - Typecheck, lint, testes e build web passaram; o APK debug foi compilado e instalado no emulador Android.
 - A matriz 2×2 foi inserida e vista no modo dedicado com o teclado aberto. Os controles de zoom foram observados em 70%, 100% e 145%; “Concluir” fechou o teclado e voltou aos dois campos.
 - [Retrato](P0_MOBILE_EDITOR_PORTRAIT.png) e [paisagem](P0_MOBILE_EDITOR_LANDSCAPE.png) no emulador.
+- O APK revisado foi instalado com `adb install -r` no Samsung SM-S911B em 2026-10-05. O rascunho existente (`5·5−5 → 20`) permaneceu, e a área dedicada abriu com o teclado e os controles visíveis. [Captura no aparelho](P0_MOBILE_EDITOR_PHONE.png).
 
 ## Ainda necessário
 
-- Retestar o APK atualizado no aparelho do proprietário quando o ADB estiver conectado; a versão corrigida ainda não foi instalada nele.
-- Medir conforto real de toque, foco, seleção e navegação com fórmulas aninhadas. Capturas e toques automatizados não aprovam a usabilidade.
+- Medir conforto real de toque, foco, seleção e navegação com fórmulas aninhadas nesta versão revisada. Capturas e toques automatizados não aprovam a usabilidade.
 - Definir e testar o teclado progressivo definitivo na fase P3, inclusive matriz, entrada de números, acessibilidade e telas menores. Este ajuste não transforma a prova P0 na interface final.
