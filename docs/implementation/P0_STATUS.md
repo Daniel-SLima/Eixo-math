@@ -1,8 +1,8 @@
 # P0 — prova técnica do editor e motor
 
-**Estado:** em andamento. A prova automatizada no Android real passou; o gate de conforto ao toque ainda aguarda avaliação humana.
+**Estado:** editor aprovado pelo proprietário em 2026-10-05 para continuidade do roadmap. A prova automatizada no Android real passou. O desempenho em aparelho intermediário permanece como risco de validação.
 
-O feedback do proprietário sobre matriz, espaço para edição e excesso de informação no mobile está registrado em [P0_MOBILE_UX_FEEDBACK.md](P0_MOBILE_UX_FEEDBACK.md). A versão revisada foi verificada no emulador e instalada no aparelho real em 2026-10-05, preservando o rascunho; falta avaliação humana da ergonomia atualizada.
+O feedback do proprietário sobre matriz, espaço para edição e excesso de informação no mobile está registrado em [P0_MOBILE_UX_FEEDBACK.md](P0_MOBILE_UX_FEEDBACK.md). A versão revisada foi verificada no emulador e instalada no aparelho real em 2026-10-05, preservando o rascunho. Após avaliá-la, o proprietário liberou a continuidade em 2026-10-05.
 
 Android Studio, SDK API 36 e o emulador foram instalados em 2026-10-04 após o proprietário concluir o Setup Wizard e aceitar as licenças. A prova roda no emulador Android 17/API 37 e foi instalada em um Samsung SM-S911B com Android 16/API 36 em 2026-10-04.
 
@@ -31,14 +31,14 @@ Android Studio, SDK API 36 e o emulador foram instalados em 2026-10-04 após o p
 - No mesmo aparelho, a integral definida exibiu os três placeholders, `Próximo espaço` moveu a seleção para o placeholder seguinte, e o rascunho sobreviveu a force-stop/reabertura e a `adb install -r` com o mesmo APK debug. A inspeção MathJSON também apareceu na tela.
 - O Android reportou `TotalTime` de 1388 ms na primeira abertura e 592/556 ms em duas reaberturas. Esses valores medem a Activity, não o tempo até toda a interface estar interativa, e o aparelho testado não representa desempenho de entrada.
 
-## Gate ainda pendente
+## Decisão do gate e risco pendente
 
-1. O proprietário avaliar conforto de foco, teclado, seleção, templates e fórmulas longas usando o próprio touch. A automação ADB confirmou comportamentos pontuais, mas não substitui uma pessoa editando.
-2. Medir carregamento e resposta da interface em um Android intermediário antes de declarar o desempenho representativo para o público-alvo.
+- O proprietário aprovou a ergonomia atual para avançar no roadmap. Essa aprovação não declara a interface final; o teclado progressivo e os testes de usabilidade seguem na fase P3.
+- Ainda é necessário medir carregamento e resposta em um Android intermediário antes de declarar o desempenho representativo para o público-alvo. Esse risco acompanha P3/P14 e não deve ser descrito como teste concluído.
 
 Na fase de distribuição, testar atualização assinada com uma chave persistente: `adb install -r` só verificou continuidade com a assinatura debug local. As regras de domínio e contratos pedagógicos serão tratadas no Math Core em P2.
 
-Não avançar automaticamente para P2 ou telas finais só porque o build web passou. O roadmap completo continua sendo o objetivo, sujeito aos gates de cada fase.
+O proprietário autorizou a continuidade do roadmap após avaliar a versão no aparelho. Os gates seguintes continuam obrigatórios.
 
 ## Comandos
 

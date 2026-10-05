@@ -1,6 +1,6 @@
 # P1 — fundação do repositório
 
-**Estado:** iniciado enquanto a avaliação humana do editor P0 está pendente. O gate P1 ainda não foi aprovado.
+**Estado:** implementação local verificada; aguarda a primeira execução remota da CI para fechar o gate. O proprietário aprovou a continuidade após avaliar o editor P0 em 2026-10-05.
 
 ## Implementado
 
