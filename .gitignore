@@ -11,3 +11,5 @@ coverage/
 *.p12
 *.pem
 apps/eixo/android/local.properties
+**/playwright-report/
+**/test-results/

@@ -17,4 +17,5 @@ jobs:
           version: 11.19.0
           runtime: node@22
           cache: true
+      - run: pnpm --filter eixo exec playwright install --with-deps chromium
       - run: pnpm run check
