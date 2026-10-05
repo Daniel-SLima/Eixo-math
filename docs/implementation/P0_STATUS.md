@@ -2,6 +2,8 @@
 
 **Estado:** em andamento. A prova automatizada no Android real passou; o gate de conforto ao toque ainda aguarda avaliação humana.
 
+O feedback do proprietário sobre matriz, espaço para edição e excesso de informação no mobile está registrado em [P0_MOBILE_UX_FEEDBACK.md](P0_MOBILE_UX_FEEDBACK.md). A versão revisada foi verificada no emulador e ainda precisa ser reinstalada no aparelho real.
+
 Android Studio, SDK API 36 e o emulador foram instalados em 2026-10-04 após o proprietário concluir o Setup Wizard e aceitar as licenças. A prova roda no emulador Android 17/API 37 e foi instalada em um Samsung SM-S911B com Android 16/API 36 em 2026-10-04.
 
 ## Entregas implementadas

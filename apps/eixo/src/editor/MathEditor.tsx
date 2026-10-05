@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react'
+import { useEffect, useRef, type RefObject } from 'react'
 import { MathfieldElement } from 'mathlive'
 
 MathfieldElement.fontsDirectory = '/fonts'
@@ -21,17 +21,21 @@ interface MathEditorProps {
 }
 
 export function MathEditor({ label, initialValue, elementRef, onChange, onFocus }: MathEditorProps) {
+  const handlers = useRef({ onChange, onFocus })
+  handlers.current = { onChange, onFocus }
+
   useEffect(() => {
     const element = elementRef.current
     if (!element) return
     element.mathVirtualKeyboardPolicy = 'manual'
     element.setValue(initialValue)
-    const handleInput = () => onChange(element.value)
+    const handleInput = () => handlers.current.onChange(element.value)
+    const handleFocus = () => handlers.current.onFocus()
     element.addEventListener('input', handleInput)
-    element.addEventListener('focus', onFocus)
+    element.addEventListener('focus', handleFocus)
     return () => {
       element.removeEventListener('input', handleInput)
-      element.removeEventListener('focus', onFocus)
+      element.removeEventListener('focus', handleFocus)
     }
     // Initial value is restored once; edits are managed by the mathfield.
     // eslint-disable-next-line react-hooks/exhaustive-deps
