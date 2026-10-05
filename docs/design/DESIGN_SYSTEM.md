@@ -23,6 +23,8 @@ Palavras-chave:
 
 A matemática é o elemento mais importante da tela.
 
+As ilustrações geradas mais elaboradas (onboarding, mundos, desafios, estados vazios e ambientação) são referências visuais para a composição, não planos de fundo obrigatórios nem telas prontas. A interface final deve permanecer limpa, com superfícies simples e espaço para conteúdo, controles e matemática reais. Logo e ícones simples podem ser avaliados como assets de uso direto, conforme o contexto. A aprovação visual de um PNG não aprova automaticamente seu uso como fundo de tela.
+
 Hierarquia:
 
 1. expressão/conteúdo;

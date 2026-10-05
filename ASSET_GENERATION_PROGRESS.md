@@ -12,15 +12,22 @@ Data local: 2026-10-04. Escopo: somente assets e documentação. `SPEC_STATUS=RE
 
 ## Process
 
-The manifest contains 22 images and 17 SFX. Each image has one generated candidate (`_v01`) in the exact manifest dimensions. Built-in image output was resampled with Pillow to the specified base size. Each SFX has one actual 48 kHz, 24-bit mono WAV master, created with local synthesis. No file was moved to `approved/`. The built-in image prompts followed the item prompt plus the universal style clause in `IMAGE_ASSET_PROMPTS.md`; audio frequencies and envelopes were chosen to express the SFX prompt descriptions. `assets/ASSET_PROVENANCE.csv` records tool, date, prompt source and human review state.
+The manifest contains 22 images and 17 SFX. Each image has one generated candidate (`_v01`) in the exact manifest dimensions. Built-in image output was resampled with Pillow to the specified base size. Each SFX initially had one actual 48 kHz, 24-bit mono WAV master, created with local synthesis. The built-in image prompts followed the item prompt plus the universal style clause in `IMAGE_ASSET_PROMPTS.md`; audio frequencies and envelopes were chosen to express the SFX prompt descriptions. `assets/ASSET_PROVENANCE.csv` records the initial tool, date, prompt source and human review state.
 
 All 39 candidates passed `python scripts/assets/validate_manifest.py` (0 technical errors). Visual inspection used a contact sheet; no obvious watermark or readable formula was found at that scale. Full-size visual inspection and phone listening are required before approval. Badge frame centers are transparent by file inspection; their usability under the real app symbol needs review.
 
 ### Audit continuation — 2026-10-04
 
-- Independent comparison found 39 manifest IDs, 39 provenance records and 39 distinct media files, with no missing, extra or duplicate candidate. Every path appears in this report; all manifest statuses remain `review_required`, all provenance rows say `human_reviewed=false`, and `approved/` contains no media.
+- Before the owner's review, independent comparison found 39 manifest IDs, 39 provenance records and 39 distinct initial media files, with no missing, extra or duplicate candidate. Every initial path appears in this report.
 - `assets/REVIEW_CONTACT_SHEET.jpg` opens as a 1600×1620 JPEG. Four priority images were also inspected at larger size: IMG-011 uses blank abstract math blocks, IMG-012 has icon-like marks without readable text, IMG-032 shows the intended missing connection, and IMG-042 uses text-like bars without readable words. These observations refine the initial contact-sheet cautions; they do not constitute approval.
 - The current owner-facing review queue and batch decision flow are in `docs/assets/ASSET_REVIEW_CHECKLIST.md`.
+
+### Owner comments processed — 2026-10-04
+
+- The owner's 21 explicit `aprovado` marks for images were recorded in `assets/ASSET_APPROVALS.csv`. Exact byte-for-byte copies with final manifest names are in `assets/approved/images/<category>/`; original `_v01` files remain in `generated/` to preserve the review trail. The manifest now marks those 21 IDs `approved`, and their provenance rows have `human_reviewed=true`. IMG-043 remains `review_required`.
+- The owner clarified that elaborate images are approved as visual references for a clean interface, not as automatic full-screen backgrounds or finished screens. Names such as `background`, `overlay`, `banner` and `splash` do not mandate their use as raster backdrops. Logo and simple icons may be considered for direct use. This interpretation is recorded in the Design System and Asset Pipeline; no media or approval record was removed.
+- The owner said the SFX v01 sound too similar and requested they be made again. Root cause: `scripts/assets/generate_sfx.py` used the same `soft_tone` oscillator and envelope for nearly every cue. The 17 originals remain untouched. `scripts/assets/generate_sfx_v02.py` produced 17 distinct second-pass WAV candidates using different transients, sweeps, tonal colors and rhythms. See `assets/AUDIO_V02_PROVENANCE.csv` and the [v02 review index](docs/assets/SFX_V02_REVIEW.md). All audio remains `review_required`, including the four UI sounds marked `aprovado` before the later global audio comment.
+- The v02 review reel is `assets/SFX_V02_REVIEW_REEL.wav`. No v02 audio was approved automatically.
 
 ## Batch A — Brand
 
@@ -76,7 +83,7 @@ All 39 candidates passed `python scripts/assets/validate_manifest.py` (0 technic
 
 ## Batch S1 — Essential SFX
 
-Selected candidates, all requiring human listening on smartphone speaker, ordinary headphones and low volume, plus 10–20 repetitions for frequent sounds:
+Original v01 candidates, superseded for human listening by the v02 set. The new candidates require listening on smartphone speaker, ordinary headphones and low volume, plus 10–20 repetitions for frequent sounds:
 
 - SFX-001 `assets/generated/audio/ui/ui_tap_soft.wav`
 - SFX-010 `assets/generated/audio/feedback/feedback_step_valid.wav`
@@ -89,7 +96,7 @@ Selected candidates, all requiring human listening on smartphone speaker, ordina
 
 ## Batch S2 — Secondary SFX
 
-Selected candidates, all requiring the same listening review:
+Original v01 candidates, superseded for human listening by the v02 set. The new candidates require the same listening review:
 
 - SFX-002 `assets/generated/audio/ui/ui_panel_open.wav`
 - SFX-003 `assets/generated/audio/ui/ui_panel_close.wav`
@@ -104,17 +111,17 @@ Selected candidates, all requiring the same listening review:
 ## Blockers
 
 - No generation-capability blocker. `IMAGE_GENERATION_BLOCKED` and `AUDIO_GENERATION_BLOCKED` do not apply.
-- Human visual and listening approval remains pending for all 39 candidates. In particular, procedural SFX need perceptual review; technical checks alone cannot establish their sound quality.
+- Human review remains pending for IMG-043 and all 17 v02 SFX. Technical checks alone cannot establish sound quality.
 - `apps/eixo/public/assets/` is a future runtime export location and intentionally does not exist while app implementation is unauthorized.
 
 ## Manifest summary
 
 - planned: 0
 - generated awaiting status change: 0
-- review_required: 39 (22 images, 17 SFX)
-- approved: 0
+- review_required: 18 (1 image, 17 SFX)
+- approved: 21 images
 - rejected: 0
 - blocked: 0
-- candidate media total: 41,779,336 bytes
+- original candidate media total: 41,779,336 bytes; v02 audio and approved copies are additional preserved files
 
-After human review, move accepted candidates to `assets/approved/` without `_v01`, update the manifest/provenance, and only then consider runtime optimization. Do not start application implementation from this report.
+After human review of IMG-043 and the v02 SFX, record each decision before moving accepted files to `assets/approved/` without a variant suffix, update the manifest/provenance, and only then consider runtime optimization. Do not start application implementation from this report.

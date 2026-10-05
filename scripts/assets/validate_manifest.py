@@ -7,6 +7,7 @@ Run from anywhere with: python scripts/assets/validate_manifest.py
 from __future__ import annotations
 
 import csv
+import hashlib
 from pathlib import Path
 import re
 import wave
@@ -46,10 +47,16 @@ def validate_image(row: dict[str, str], errors: list[str]) -> None:
             if "A" not in image.getbands() or image.getchannel("A").getextrema()[0] == 255:
                 errors.append(f"{row['asset_id']}: transparent pixels required")
         print(f"OK {row['asset_id']} {path.relative_to(ROOT).as_posix()} {image.width}x{image.height} {image.mode}")
+    if row["status"] == "approved":
+        approved = ROOT / "assets/approved/images" / row["category"] / row["filename"]
+        if not approved.is_file():
+            errors.append(f"{row['asset_id']}: missing approved copy")
+        elif hashlib.sha256(path.read_bytes()).digest() != hashlib.sha256(approved.read_bytes()).digest():
+            errors.append(f"{row['asset_id']}: approved copy differs from reviewed candidate")
 
 
-def validate_audio(row: dict[str, str], errors: list[str]) -> None:
-    path = audio_path(row)
+def validate_audio(row: dict[str, str], errors: list[str], path: Path | None = None) -> None:
+    path = path or audio_path(row)
     if not path.is_file():
         errors.append(f"{row['asset_id']}: missing {path.relative_to(ROOT)}")
         return
@@ -90,6 +97,10 @@ def main() -> int:
             validate_image(row, errors)
         elif row["type"] == "audio":
             validate_audio(row, errors)
+            name = Path(row["filename"])
+            revision = ROOT / "assets/generated/audio" / row["category"] / f"{name.stem}_v02.wav"
+            if revision.exists():
+                validate_audio(row, errors, revision)
         else:
             errors.append(f"{row['asset_id']}: unknown type")
     print(f"Manifest: {len(rows)} items, {len(errors)} errors")

@@ -1,8 +1,10 @@
 # Eixo Math — Checklist de revisão humana dos assets
 
-**Estado:** 39 candidatos em `review_required`; nenhum aprovado. Use a [montagem](../../assets/REVIEW_CONTACT_SHEET.jpg) para triagem e abra os PNGs individuais antes de decidir. A origem e o caminho de cada arquivo constam em `assets/ASSET_PROVENANCE.csv`.
+**Estado após os comentários do proprietário:** 21 imagens aprovadas, IMG-043 sem decisão e 17 sons em revisão. Use a [montagem](../../assets/REVIEW_CONTACT_SHEET.jpg) para triagem e abra os PNGs individuais antes de decidir. A origem e o caminho de cada arquivo constam em `assets/ASSET_PROVENANCE.csv`. As aprovações das imagens estão registradas em `assets/ASSET_APPROVALS.csv`.
 
-Para cada ID, anote **aprovar**, **refazer** ou **rejeitar**, com uma observação breve. Marcar a caixa significa que a decisão foi registrada, não que o asset foi aprovado. Não mova arquivos nem altere o status do manifesto antes de registrar a decisão humana.
+**Escopo da aprovação das imagens:** as marcações `aprovado` aceitam a direção visual dos candidatos. As ilustrações elaboradas são base/referência para a futura interface limpa, não aprovação para usá-las como fundo de tela ou imagem integral. Logo e ícones simples podem ser considerados para uso direto. Mesmo os arquivos com nome `background`, `overlay`, `banner` ou `splash` não devem impor esse tratamento à interface.
+
+Para cada ID, anote **aprovar**, **refazer** ou **rejeitar**, com uma observação breve. As 21 marcações textuais `aprovado` nas imagens foram tratadas como decisões explícitas; os arquivos originais foram preservados em `generated/` e cópias foram registradas em `approved/`. As quatro marcações de UI audio permanecem no histórico abaixo, mas o comentário posterior pedindo para refazer **todos** os sons prevalece: nenhum áudio foi aprovado.
 
 ## Critérios comuns
 
@@ -12,62 +14,65 @@ Para cada ID, anote **aprovar**, **refazer** ou **rejeitar**, com uma observaç�
 
 ## Lote 1 — Brand (3)
 
-- [ ] **IMG-001** `brand_app_icon_main_v01.png` — prioridade máxima: reconhecer em tamanho pequeno; conferir distinção e aparência Android.
-- [ ] **IMG-002** `brand_logo_mark_v01.png` — conferir conceito de marca e recorte transparente.
-- [ ] IMG-003 `brand_splash_hero_portrait_v01.png` — conferir respiro central e superior para logo real.
+- [ aprovado] **IMG-001** `brand_app_icon_main_v01.png` — prioridade máxima: reconhecer em tamanho pequeno; conferir distinção e aparência Android.
+- [ aprovado] **IMG-002** `brand_logo_mark_v01.png` — conferir conceito de marca e recorte transparente.
+- [ aprovado] IMG-003 `brand_splash_hero_portrait_v01.png` — conferir respiro central e superior para logo real.
 
 Decisões/observações: ________________________________________________
 
 ## Lote 2 — Onboarding (3)
 
-- [ ] IMG-010 `onboarding_math_journey_v01.png` — progressão compreensível e espaço para texto.
-- [ ] **IMG-011** `onboarding_math_editor_v01.png` — blocos abstratos não devem parecer fórmula funcional ou UI final.
-- [ ] IMG-012 `onboarding_progress_book_v01.png` — livro, nós e ferramentas devem comunicar progresso sem texto gerado.
+- [ aprovado] IMG-010 `onboarding_math_journey_v01.png` — progressão compreensível e espaço para texto.
+- [ aprovado] **IMG-011** `onboarding_math_editor_v01.png` — blocos abstratos não devem parecer fórmula funcional ou UI final.
+- [ aprovado] IMG-012 `onboarding_progress_book_v01.png` — livro, nós e ferramentas devem comunicar progresso sem texto gerado.
 
 Decisões/observações: ________________________________________________
 
 ## Lote 3 — Worlds (4)
 
-- [ ] IMG-020 `world_fundamentals_banner_v01.png` — fundamentos, corte 16:9 e área para UI.
-- [ ] IMG-021 `world_algebra_banner_v01.png` — transformação/equilíbrio, corte e área para UI.
-- [ ] IMG-022 `world_functions_banner_v01.png` — relações entre representações sem gráfico pedagógico falso.
-- [ ] IMG-023 `world_limits_banner_v01.png` — aproximação e convergência sem notação incorreta.
+- [aprovado ] IMG-020 `world_fundamentals_banner_v01.png` — fundamentos, corte 16:9 e área para UI.
+- [aprovado ] IMG-021 `world_algebra_banner_v01.png` — transformação/equilíbrio, corte e área para UI.
+- [aprovado ] IMG-022 `world_functions_banner_v01.png` — relações entre representações sem gráfico pedagógico falso.
+- [ aprovado] IMG-023 `world_limits_banner_v01.png` — aproximação e convergência sem notação incorreta.
 
 Decisões/observações: ________________________________________________
 
 ## Lote 4 — Challenges (3)
 
-- [ ] **IMG-030** `challenge_equilibrium_keyart_v01.png` — significado do desafio e espaço para título.
-- [ ] **IMG-031** `challenge_connect_points_keyart_v01.png` — dois pontos e inclinação legíveis como conceito.
-- [ ] **IMG-032** `challenge_limit_point_keyart_v01.png` — lacuna crítica perceptível; evitar leitura de perigo/combate.
+- [aprovado ] **IMG-030** `challenge_equilibrium_keyart_v01.png` — significado do desafio e espaço para título.
+- [aprovado ] **IMG-031** `challenge_connect_points_keyart_v01.png` — dois pontos e inclinação legíveis como conceito.
+- [ aprovado] **IMG-032** `challenge_limit_point_keyart_v01.png` — lacuna crítica perceptível; evitar leitura de perigo/combate.
 
 Decisões/observações: ________________________________________________
 
 ## Lote 5 — Empty (4)
 
-- [ ] IMG-040 `empty_no_history_v01.png` — histórico vazio sem parecer erro.
-- [ ] IMG-041 `empty_no_favorites_v01.png` — favoritos vazios sem confundir com histórico.
-- [ ] IMG-042 `empty_offline_mode_v01.png` — estudo local e nuvem desconectada; barras na tela não devem parecer texto falso.
+- [aprovado ] IMG-040 `empty_no_history_v01.png` — histórico vazio sem parecer erro.
+- [aprovado ] IMG-041 `empty_no_favorites_v01.png` — favoritos vazios sem confundir com histórico.
+- [ aprovado] IMG-042 `empty_offline_mode_v01.png` — estudo local e nuvem desconectada; barras na tela não devem parecer texto falso.
 - [ ] IMG-043 `empty_no_review_needed_v01.png` — ausência de pendências sem triunfo infantil.
 
 Decisões/observações: ________________________________________________
 
 ## Lote 6 — Decorative (3) e badges (2)
 
-- [ ] IMG-050 `decor_geometric_pack_v01.png` — elementos isolados para recorte.
-- [ ] IMG-051 `decor_map_ambient_background_v01.png` — centro discreto, contraste com nós da UI.
-- [ ] IMG-052 `decor_challenge_ambient_overlay_v01.png` — centro transparente e pouco ruído.
-- [ ] **IMG-060** `badge_tool_unlock_frame_v01.png` — símbolo matemático real cabe no centro transparente.
-- [ ] **IMG-061** `badge_milestone_frame_v01.png` — ícone real cabe no centro transparente.
+- [ aprovado] IMG-050 `decor_geometric_pack_v01.png` — elementos isolados para recorte.
+- [ aprovado] IMG-051 `decor_map_ambient_background_v01.png` — centro discreto, contraste com nós da UI.
+- [ aprovado] IMG-052 `decor_challenge_ambient_overlay_v01.png` — centro transparente e pouco ruído.
+- [ aprovado] **IMG-060** `badge_tool_unlock_frame_v01.png` — símbolo matemático real cabe no centro transparente.
+- [aprovado ] **IMG-061** `badge_milestone_frame_v01.png` — ícone real cabe no centro transparente.
 
 Decisões/observações: ________________________________________________
+APARENTEMENTA PRA MIM NO AUDIO TODAS TEM UM MESMO SOM, SO MUDA A VELOCIDADE, TENTE CRIAR NOVAMENTE OS SONS
+
+**Ação registrada:** os 17 SFX ganharam candidatos `_v02.wav` com timbres e ritmos diferentes. Os WAVs originais foram preservados; [ouça e avalie os v02](SFX_V02_REVIEW.md). Nenhum som foi movido para `approved/`.
 
 ## Lote 7 — UI audio (4)
 
-- [ ] **SFX-001** `ui_tap_soft.wav` — uso muito frequente: testar fadiga em 20 repetições.
-- [ ] SFX-002 `ui_panel_open.wav` — abertura discreta.
-- [ ] SFX-003 `ui_panel_close.wav` — formar par natural com abertura.
-- [ ] SFX-004 `ui_board_switch.wav` — repetição e possível cansaço.
+- [ aprovado] **SFX-001** `ui_tap_soft.wav` — uso muito frequente: testar fadiga em 20 repetições.
+- [ aprovado] SFX-002 `ui_panel_open.wav` — abertura discreta.
+- [aprovado ] SFX-003 `ui_panel_close.wav` — formar par natural com abertura.
+- [aprovado ] SFX-004 `ui_board_switch.wav` — repetição e possível cansaço.
 
 Decisões/observações: ________________________________________________
 
@@ -103,6 +108,9 @@ Decisões/observações: ________________________________________________
 
 | Data | Lote | IDs | Decisão por ID | Motivo / ajuste solicitado | Revisor |
 |---|---|---|---|---|---|
+| 2026-10-04 | 1–6 | 21 imagens em `assets/ASSET_APPROVALS.csv` | aprovado | Marcações `aprovado` no checklist; IMG-043 não marcado | proprietário |
+| 2026-10-04 | 7–10 | 17 SFX do manifesto | refazer | Sons v01 percebidos como semelhantes; v02 aguardando escuta | proprietário |
+| 2026-10-04 | 1–6 | 21 imagens aprovadas | esclarecer uso | Ilustrações elaboradas são referência; interface final deve ser limpa, sem tratá-las automaticamente como fundo | proprietário |
 | | | | | | |
 
 **Prioridade:** itens em negrito primeiro. Todos os demais também exigem revisão humana antes de qualquer aprovação.
