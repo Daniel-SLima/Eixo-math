@@ -177,7 +177,7 @@ Todo estado sonoro também precisa possuir representação visual.
 
 # 7. ESTRUTURA DE PASTAS LOCAL
 
-Quando a implementação começar, criar:
+Na etapa de geração de assets, criar:
 
 ```
 assets/
@@ -188,7 +188,8 @@ assets/
 │   │   ├── worlds/
 │   │   ├── challenges/
 │   │   ├── empty/
-│   │   └── decorative/
+│   │   ├── decorative/
+│   │   └── badges/
 │   └── audio/
 │       ├── ui/
 │       ├── feedback/
@@ -229,6 +230,8 @@ Somente depois de revisão passa para:
 `assets/approved/`
 
 O app de produção não deve depender diretamente de `generated/`.
+
+`approved/` registra a aprovação visual do candidato. Para ilustrações elaboradas, isso significa referência de estilo e composição; não determina que o arquivo seja exibido integralmente no app. Em especial, nomes como `background`, `overlay`, `banner` e `splash` descrevem a intenção original de geração, não uma obrigação de usar imagem como fundo. A decisão de integração visual deve respeitar o Design System: interface limpa e matemática em primeiro plano. Logo e ícones simples podem ser avaliados para uso direto.
 
 ---
 

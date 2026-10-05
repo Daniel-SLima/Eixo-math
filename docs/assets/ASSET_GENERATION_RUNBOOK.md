@@ -28,8 +28,8 @@ No PowerShell:
 
 ```powershell
 cd C:\Users\Usuario\Documents
-git clone https://github.com/Daniel-SLima/Eixo-math.git
-cd Eixo-math
+git clone https://github.com/Daniel-SLima/Eixo-math.git 0-AppMath
+cd 0-AppMath
 ```
 
 Confirme:

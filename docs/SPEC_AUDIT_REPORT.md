@@ -2,7 +2,7 @@
 
 **Data:** 2026-10-04  
 **Status:** revisão concluída em nível estrutural  
-**Resultado:** pronto para revisão do proprietário; implementação permanece bloqueada.
+**Resultado da auditoria na data original:** pronto para revisão do proprietário. O proprietário autorizou a implementação em 2026-10-04; o estado vigente está em `MASTER_GDD_SPEC.md`.
 
 ---
 

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.vite/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p12
+*.pem
+apps/eixo/android/local.properties
+**/playwright-report/
+**/test-results/

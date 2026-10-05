@@ -84,7 +84,8 @@ assets/
 │   │   ├── worlds/
 │   │   ├── challenges/
 │   │   ├── empty/
-│   │   └── decorative/
+│   │   ├── decorative/
+│   │   └── badges/
 │   └── audio/
 │       ├── ui/
 │       ├── feedback/

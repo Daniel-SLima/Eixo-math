@@ -1,0 +1,18 @@
+asset_id,candidate_path,generator,generated_on,prompt_reference,human_reviewed,reason
+SFX-001,assets/generated/audio/ui/ui_tap_soft_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-002,assets/generated/audio/ui/ui_panel_open_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-003,assets/generated/audio/ui/ui_panel_close_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-004,assets/generated/audio/ui/ui_board_switch_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-010,assets/generated/audio/feedback/feedback_step_valid_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-011,assets/generated/audio/feedback/feedback_step_invalid_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-012,assets/generated/audio/feedback/feedback_attention_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-013,assets/generated/audio/feedback/feedback_unproven_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-014,assets/generated/audio/feedback/feedback_self_correction_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-020,assets/generated/audio/progression/progress_tool_unlock_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-021,assets/generated/audio/progression/progress_lesson_complete_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-022,assets/generated/audio/progression/progress_skill_mastered_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-023,assets/generated/audio/progression/progress_milestone_reached_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-024,assets/generated/audio/progression/progress_challenge_complete_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-030,assets/generated/audio/system/system_sync_complete_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-031,assets/generated/audio/system/system_saved_offline_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds
+SFX-032,assets/generated/audio/system/system_connection_restored_v02.wav,scripts/assets/generate_sfx_v02.py,2026-10-04,docs/assets/SFX_ASSET_PROMPTS.md,false,owner requested more distinct sounds

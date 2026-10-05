@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Eixo Math</string>
+    <string name="title_activity_main">Eixo Math</string>
+    <string name="package_name">com.daniellima.eixomath</string>
+    <string name="custom_url_scheme">com.daniellima.eixomath</string>
+</resources>
