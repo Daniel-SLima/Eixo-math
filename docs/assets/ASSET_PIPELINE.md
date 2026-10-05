@@ -177,7 +177,7 @@ Todo estado sonoro também precisa possuir representação visual.
 
 # 7. ESTRUTURA DE PASTAS LOCAL
 
-Quando a implementação começar, criar:
+Na etapa de geração de assets, criar:
 
 ```
 assets/
@@ -188,7 +188,8 @@ assets/
 │   │   ├── worlds/
 │   │   ├── challenges/
 │   │   ├── empty/
-│   │   └── decorative/
+│   │   ├── decorative/
+│   │   └── badges/
 │   └── audio/
 │       ├── ui/
 │       ├── feedback/
