@@ -1,0 +1,11 @@
+{
+  "name": "eixo-math-workspace",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "pnpm --filter eixo dev",
+    "build": "pnpm --filter eixo build",
+    "test": "pnpm --filter eixo test",
+    "typecheck": "pnpm --filter eixo typecheck"
+  }
+}
