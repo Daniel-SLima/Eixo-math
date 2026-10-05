@@ -1,7 +1,7 @@
 # Eixo Math — Arquitetura Técnica e Stack
 
-**Status:** decisão arquitetural inicial aprovada para implementação futura  
-**Fase atual:** pré-implementação  
+**Status:** decisão arquitetural inicial aprovada
+**Fase atual:** implementação P0 autorizada em 2026-10-04; gate técnico pendente
 **Regra:** este documento detalha a arquitetura técnica; o `MASTER_GDD_SPEC.md` continua sendo a fonte canônica de requisitos de produto.
 
 ---

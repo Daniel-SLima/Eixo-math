@@ -1,8 +1,8 @@
 # Eixo Math — Instruções de Handoff para Codex/Agentes
 
-**STATUS:** NÃO AUTORIZADO PARA IMPLEMENTAÇÃO AINDA
+**STATUS:** IMPLEMENTAÇÃO AUTORIZADA PELO PROPRIETÁRIO EM 2026-10-04; GATES DO ROADMAP PERMANECEM OBRIGATÓRIOS
 
-Este arquivo define como o agente deverá trabalhar quando a especificação for oficialmente liberada.
+Este arquivo define como o agente deverá trabalhar com a especificação liberada.
 
 O agente só poderá iniciar código quando o `MASTER_GDD_SPEC.md` contiver explicitamente:
 
@@ -10,7 +10,7 @@ O agente só poderá iniciar código quando o `MASTER_GDD_SPEC.md` contiver expl
 SPEC_STATUS=READY_FOR_IMPLEMENTATION
 ```
 
-Enquanto isso, qualquer leitura deste arquivo é apenas preparatória.
+O `MASTER_GDD_SPEC.md` agora registra `SPEC_STATUS=READY_FOR_IMPLEMENTATION` e `IMPLEMENTATION_AUTHORIZED=true`.
 
 ---
 

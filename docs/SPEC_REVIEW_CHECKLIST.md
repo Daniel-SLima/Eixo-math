@@ -229,13 +229,13 @@ Por isso P0 e testes de usuário são gates.
 
 A especificação está suficientemente detalhada para **revisão final do proprietário do projeto**.
 
-Ainda não iniciar código até aprovação explícita.
+O proprietário autorizou explicitamente o desenvolvimento em 2026-10-04. Os gates técnicos do roadmap continuam pendentes.
 
 Estado:
 
 ```
-SPEC_STATUS=REVIEW_READY
-IMPLEMENTATION_AUTHORIZED=false
+SPEC_STATUS=READY_FOR_IMPLEMENTATION
+IMPLEMENTATION_AUTHORIZED=true
 ```
 
 Após aprovação:

@@ -11485,13 +11485,13 @@ Documentos de apoio atuais:
 - `docs/implementation/CODEX_HANDOFF.md`;
 - `docs/implementation/INITIAL_CODEX_WORKSPACE_PROMPT.md`.
 
-O handoff para implementação existe, mas está bloqueado.
+O proprietário autorizou a implementação em 2026-10-04. A execução deve seguir o roadmap e respeitar os gates de cada fase; a autorização não significa que P0 ou o MVP foram aprovados tecnicamente.
 
 Estado atual:
 
 ```
-SPEC_STATUS=REVIEW_READY
-IMPLEMENTATION_AUTHORIZED=false
+SPEC_STATUS=READY_FOR_IMPLEMENTATION
+IMPLEMENTATION_AUTHORIZED=true
 ```
 
 Documentos adicionais de fechamento:
@@ -11507,7 +11507,7 @@ Documentos adicionais de fechamento:
 
 A auditoria de consistência foi concluída sem bloqueadores estruturais. Foram corrigidos pontos desatualizados sobre decisões técnicas, faixa etária e perfil do modelo do Codex.
 
-A implementação continua proibida até aprovação explícita e mudança para:
+A implementação foi autorizada explicitamente pelo proprietário e o estado foi alterado para:
 
 ```
 SPEC_STATUS=READY_FOR_IMPLEMENTATION

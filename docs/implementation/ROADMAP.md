@@ -1,7 +1,7 @@
 # Eixo Math — Roadmap de Implementação
 
 **Status:** planejamento de execução  
-**Importante:** este roadmap NÃO autoriza implementação. O início depende de SPEC_STATUS=READY_FOR_IMPLEMENTATION no MASTER_GDD_SPEC.md.
+**Importante:** o proprietário autorizou a implementação em 2026-10-04; `MASTER_GDD_SPEC.md` registra `SPEC_STATUS=READY_FOR_IMPLEMENTATION`. Cada gate deste roadmap continua obrigatório.
 
 ---
 
