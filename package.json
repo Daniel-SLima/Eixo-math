@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "pnpm --filter eixo dev",
     "build": "pnpm --filter eixo build",
+    "lint": "pnpm --filter eixo lint",
     "test": "pnpm --filter eixo test",
-    "typecheck": "pnpm --filter eixo typecheck"
+    "typecheck": "pnpm --filter eixo typecheck",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build"
   }
 }
