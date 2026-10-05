@@ -58,7 +58,7 @@ describe('Math Core polynomial step validation', () => {
   })
 
   it('does not compare equation solution sets as expressions', () => {
-    const result = validateStep({ beforeLatex: 'x^2=4', afterLatex: 'x=2', context: { kind: 'EQUATION', numberSet: 'REAL' } })
+    const result = validateStep({ beforeLatex: 'x^2=4', afterLatex: 'x=2', context: { kind: 'EQUATION', numberSet: 'REAL', variable: 'x' } })
     expect(result.status).toBe('NAO_COMPROVADO')
   })
 
@@ -88,6 +88,59 @@ describe('Math Core polynomial step validation', () => {
         const before = `\\frac{${left}}{${denominator}}x+\\frac{${right}}{${denominator}}x`
         const after = `\\frac{${left + right}}{${denominator}}x`
         expect(validateStep({ beforeLatex: before, afterLatex: after, context }).status).toBe('VALIDO')
+      },
+    ), { numRuns: 40 })
+  })
+})
+
+describe('Math Core linear equation solution sets', () => {
+  const equationContext = { kind: 'EQUATION', numberSet: 'REAL', variable: 'x' } as const
+
+  it('accepts equivalent equations with the same unique solution', () => {
+    const result = validateStep({ beforeLatex: '2x+4=10', afterLatex: 'x=3', context: equationContext })
+    expect(result.status).toBe('VALIDO')
+    expect(result.transformationCodes).toContain('LINEAR_SOLUTION_SET_EQUIVALENCE')
+  })
+
+  it('rejects equations with different unique solutions', () => {
+    const result = validateStep({ beforeLatex: 'x+1=2', afterLatex: 'x=2', context: equationContext })
+    expect(result.status).toBe('INVALIDO')
+  })
+
+  it('compares rational solutions exactly', () => {
+    const result = validateStep({ beforeLatex: '2x=1', afterLatex: 'x=\\frac{1}{2}', context: equationContext })
+    expect(result.status).toBe('VALIDO')
+  })
+
+  it('recognizes when both equations hold for all real values', () => {
+    const result = validateStep({ beforeLatex: 'x=x', afterLatex: '2=2', context: equationContext })
+    expect(result.status).toBe('VALIDO')
+  })
+
+  it('recognizes when both equations have no real solution', () => {
+    const result = validateStep({ beforeLatex: 'x=x+1', afterLatex: '0=1', context: equationContext })
+    expect(result.status).toBe('VALIDO')
+  })
+
+  it('distinguishes an identity from a contradiction', () => {
+    const result = validateStep({ beforeLatex: 'x=x', afterLatex: 'x=x+1', context: equationContext })
+    expect(result.status).toBe('INVALIDO')
+  })
+
+  it('does not solve an equation with another free variable', () => {
+    const result = validateStep({ beforeLatex: 'x+y=2', afterLatex: 'x=2-y', context: equationContext })
+    expect(result.status).toBe('NAO_COMPROVADO')
+  })
+
+  it('preserves linear solutions under exact arithmetic', () => {
+    fc.assert(fc.property(
+      fc.integer({ min: 1, max: 9 }),
+      fc.integer({ min: -9, max: 9 }),
+      fc.integer({ min: -9, max: 9 }),
+      (coefficient, constant, target) => {
+        const before = `${coefficient}x+(${constant})=${target}`
+        const after = `x=\\frac{${target - constant}}{${coefficient}}`
+        expect(validateStep({ beforeLatex: before, afterLatex: after, context: equationContext }).status).toBe('VALIDO')
       },
     ), { numRuns: 40 })
   })

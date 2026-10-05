@@ -2,10 +2,10 @@ import { ComputeEngine } from '@cortex-js/compute-engine'
 
 export type StepStatus = 'VALIDO' | 'INVALIDO' | 'NAO_COMPROVADO'
 
-export interface StepContext {
-  kind: 'EXPRESSION' | 'EQUATION' | 'INEQUALITY'
-  numberSet: 'REAL'
-}
+export type StepContext =
+  | { kind: 'EXPRESSION'; numberSet: 'REAL' }
+  | { kind: 'EQUATION'; numberSet: 'REAL'; variable: string }
+  | { kind: 'INEQUALITY'; numberSet: 'REAL'; variable: string }
 
 export interface StepInput {
   beforeLatex: string
@@ -59,10 +59,10 @@ function multiplyRational(a: Rational, b: Rational): Rational {
 const ONE = rational(1n)!
 const NEGATIVE_ONE = rational(-1n)!
 
-function result(status: StepStatus, errorCodes: string[] = [], beforeMathJson?: unknown, afterMathJson?: unknown): StepResult {
+function result(status: StepStatus, errorCodes: string[] = [], beforeMathJson?: unknown, afterMathJson?: unknown, transformationCode = 'POLYNOMIAL_EQUIVALENCE'): StepResult {
   return {
     status,
-    transformationCodes: status === 'VALIDO' ? ['POLYNOMIAL_EQUIVALENCE'] : [],
+    transformationCodes: status === 'VALIDO' ? [transformationCode] : [],
     conceptsUsed: [],
     errorCodes,
     conditions: [],
@@ -146,9 +146,11 @@ function polynomial(node: unknown): Polynomial | null {
   return null
 }
 
-function supportedSyntax(latex: string): boolean {
+function supportedSyntax(latex: string, kind: StepContext['kind']): boolean {
   const normalized = latex.replace(/\\(?:left|right|cdot|times|frac)/g, '')
-  return normalized.length <= MAX_INPUT_LENGTH && /^[\dA-Za-z\s+\-*(){}^/]+$/.test(normalized)
+  const expressionSyntax = /^[\dA-Za-z\s+\-*(){}^/]+$/
+  const equationSyntax = /^[\dA-Za-z\s+\-*(){}^/=]+$/
+  return normalized.length <= MAX_INPUT_LENGTH && (kind === 'EQUATION' ? equationSyntax : expressionSyntax).test(normalized)
 }
 
 function nonzeroIntegerLiteral(node: unknown): boolean {
@@ -163,15 +165,49 @@ function hasUnsafeDomain(node: unknown): boolean {
   return node.some(hasUnsafeDomain)
 }
 
+type SolutionSet =
+  | { kind: 'ALL' }
+  | { kind: 'NONE' }
+  | { kind: 'VALUE'; value: Rational }
+
+function linearSolutionSet(node: unknown, variable: string): SolutionSet | null {
+  if (!Array.isArray(node) || node[0] !== 'Equal' || node.length !== 3) return null
+  const left = polynomial(node[1])
+  const right = polynomial(node[2])
+  if (!left || !right) return null
+  const negativeRight = multiply(new Map([['', NEGATIVE_ONE]]), right)
+  const difference = negativeRight ? add(left, negativeRight) : null
+  if (!difference || [...difference.keys()].some(key => key !== '' && key !== variable)) return null
+  const coefficient = difference.get(variable)
+  const constant = difference.get('')
+  if (!coefficient || coefficient.numerator === 0n) {
+    return constant ? { kind: 'NONE' } : { kind: 'ALL' }
+  }
+  const value = rational(
+    -(constant?.numerator ?? 0n) * coefficient.denominator,
+    (constant?.denominator ?? 1n) * coefficient.numerator,
+  )
+  return value ? { kind: 'VALUE', value } : null
+}
+
+function sameSolutionSet(left: SolutionSet, right: SolutionSet): boolean {
+  if (left.kind !== right.kind) return false
+  if (left.kind !== 'VALUE' || right.kind !== 'VALUE') return true
+  return left.value.numerator === right.value.numerator && left.value.denominator === right.value.denominator
+}
+
 /** Exact polynomial equivalence over the reals; all other families remain unproven. */
 export function validateStep(input: StepInput): StepResult {
-  if (input.context.kind !== 'EXPRESSION' || input.context.numberSet !== 'REAL') {
+  if (input.context.numberSet !== 'REAL' || input.context.kind === 'INEQUALITY') {
+    return result('NAO_COMPROVADO', ['UNSUPPORTED_CONTEXT'])
+  }
+  if (input.context.kind === 'EQUATION' && !/^[A-Za-z]$/.test(input.context.variable)) {
     return result('NAO_COMPROVADO', ['UNSUPPORTED_CONTEXT'])
   }
   if (!input.beforeLatex.trim() || !input.afterLatex.trim()) {
     return result('NAO_COMPROVADO', ['EMPTY_EXPRESSION'])
   }
-  if (!supportedSyntax(input.beforeLatex) || !supportedSyntax(input.afterLatex)) {
+  if (!supportedSyntax(input.beforeLatex, input.context.kind) || !supportedSyntax(input.afterLatex, input.context.kind)) {
     return result('NAO_COMPROVADO', ['UNSUPPORTED_EXPRESSION'])
   }
   try {
@@ -184,6 +220,14 @@ export function validateStep(input: StepInput): StepResult {
     const after = engine.parse(input.afterLatex)
     if (!before.isValid || !after.isValid) {
       return result('NAO_COMPROVADO', ['UNPARSEABLE_EXPRESSION'], before.json, after.json)
+    }
+    if (input.context.kind === 'EQUATION') {
+      const left = linearSolutionSet(before.json, input.context.variable)
+      const right = linearSolutionSet(after.json, input.context.variable)
+      if (!left || !right) return result('NAO_COMPROVADO', ['UNSUPPORTED_EQUATION'], before.json, after.json)
+      return sameSolutionSet(left, right)
+        ? result('VALIDO', [], before.json, after.json, 'LINEAR_SOLUTION_SET_EQUIVALENCE')
+        : result('INVALIDO', ['LINEAR_SOLUTION_SET_MISMATCH'], before.json, after.json)
     }
     const left = polynomial(before.json)
     const right = polynomial(after.json)

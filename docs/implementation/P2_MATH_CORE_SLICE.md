@@ -4,7 +4,9 @@
 
 ## Objetivo
 
-Criar `packages/math-core` independente de React, com contrato próprio para validar transições matemáticas. O primeiro corte cobre equivalência exata de expressões polinomiais com coeficientes inteiros sobre os reais. O segundo corte acrescenta coeficientes racionais cujo denominador é um inteiro constante não nulo. Equações, inequações, frações com denominador variável, funções e demais restrições de domínio continuam como `NAO_COMPROVADO` até terem regras e testes específicos.
+Criar `packages/math-core` independente de React, com contrato próprio para validar transições matemáticas. O primeiro corte cobre equivalência exata de expressões polinomiais com coeficientes inteiros sobre os reais. O segundo corte acrescenta coeficientes racionais cujo denominador é um inteiro constante não nulo. Equações não lineares, inequações, frações com denominador variável, funções e demais restrições de domínio continuam como `NAO_COMPROVADO` até terem regras e testes específicos.
+
+O terceiro corte compara o conjunto-solução de equações lineares em uma variável declarada no contexto. Distingue uma solução racional, nenhuma solução e todos os reais. Equações quadráticas e sistemas com variáveis adicionais ainda retornam `NAO_COMPROVADO`.
 
 ## Decisão técnica
 
@@ -20,7 +22,7 @@ Não usar `isIdenticallyEqual()` como prova neste corte: a [documentação do Co
 - `transformationCodes`, `conceptsUsed`, `errorCodes`, `conditions`: listas estruturadas;
 - `beforeMathJson`, `afterMathJson` quando a análise sintática funcionar.
 
-Outros contextos devem devolver `NAO_COMPROVADO`, nunca reaproveitar a comparação de expressões para equações. O pacote limita comprimento, grau e quantidade de termos para evitar travar a edição.
+O contexto `EQUATION` exige a variável a resolver e usa uma comparação própria de conjuntos solução. Inequações continuam `NAO_COMPROVADO`. O pacote limita comprimento, grau e quantidade de termos para evitar travar a edição.
 
 ## Ordem de implementação
 
@@ -28,6 +30,7 @@ Outros contextos devem devolver `NAO_COMPROVADO`, nunca reaproveitar a comparaç
 2. Implementar leitura segura da árvore MathJSON e normalização polinomial exata; acrescentar aritmética racional para denominadores inteiros não nulos.
 3. Ligar o adaptador da prova P0 ao pacote sem mudar o texto ou o estado do rascunho.
 4. Rodar testes unitários, propriedade distributiva, Playwright, build e CI.
+5. Resolver apenas equações lineares univariadas sobre os reais; comparar os conjuntos solução exatos e devolver `NAO_COMPROVADO` para os demais casos.
 
 ## Limites e próximos cortes
 
