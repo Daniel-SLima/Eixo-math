@@ -23,12 +23,41 @@ export interface StepResult {
   afterMathJson?: unknown
 }
 
-type Polynomial = Map<string, bigint>
+interface Rational {
+  numerator: bigint
+  denominator: bigint
+}
+
+type Polynomial = Map<string, Rational>
 
 const engine = new ComputeEngine()
 const MAX_INPUT_LENGTH = 256
 const MAX_DEGREE = 4
 const MAX_TERMS = 128
+
+function rational(numerator: bigint, denominator = 1n): Rational | null {
+  if (denominator === 0n) return null
+  if (numerator === 0n) return { numerator: 0n, denominator: 1n }
+  if (denominator < 0n) {
+    numerator = -numerator
+    denominator = -denominator
+  }
+  let a = numerator < 0n ? -numerator : numerator
+  let b = denominator
+  while (b !== 0n) [a, b] = [b, a % b]
+  return { numerator: numerator / a, denominator: denominator / a }
+}
+
+function addRational(a: Rational, b: Rational): Rational {
+  return rational(a.numerator * b.denominator + b.numerator * a.denominator, a.denominator * b.denominator)!
+}
+
+function multiplyRational(a: Rational, b: Rational): Rational {
+  return rational(a.numerator * b.numerator, a.denominator * b.denominator)!
+}
+
+const ONE = rational(1n)!
+const NEGATIVE_ONE = rational(-1n)!
 
 function result(status: StepStatus, errorCodes: string[] = [], beforeMathJson?: unknown, afterMathJson?: unknown): StepResult {
   return {
@@ -45,8 +74,8 @@ function result(status: StepStatus, errorCodes: string[] = [], beforeMathJson?: 
 function add(a: Polynomial, b: Polynomial): Polynomial | null {
   const sum = new Map(a)
   for (const [key, value] of b) {
-    const next = (sum.get(key) ?? 0n) + value
-    if (next === 0n) sum.delete(key)
+    const next = addRational(sum.get(key) ?? { numerator: 0n, denominator: 1n }, value)
+    if (next.numerator === 0n) sum.delete(key)
     else sum.set(key, next)
   }
   return sum.size <= MAX_TERMS ? sum : null
@@ -58,8 +87,8 @@ function multiply(a: Polynomial, b: Polynomial): Polynomial | null {
     for (const [rightKey, rightValue] of b) {
       const key = [...leftKey, ...rightKey].sort().join('')
       if (key.length > MAX_DEGREE) return null
-      const next = (product.get(key) ?? 0n) + leftValue * rightValue
-      if (next === 0n) product.delete(key)
+      const next = addRational(product.get(key) ?? { numerator: 0n, denominator: 1n }, multiplyRational(leftValue, rightValue))
+      if (next.numerator === 0n) product.delete(key)
       else product.set(key, next)
       if (product.size > MAX_TERMS) return null
     }
@@ -69,16 +98,20 @@ function multiply(a: Polynomial, b: Polynomial): Polynomial | null {
 
 function polynomial(node: unknown): Polynomial | null {
   if (typeof node === 'number' && Number.isSafeInteger(node)) {
-    return node === 0 ? new Map() : new Map([['', BigInt(node)]])
+    return node === 0 ? new Map() : new Map([['', rational(BigInt(node))!]])
   }
   if (typeof node === 'string' && /^[A-Za-z]$/.test(node)) {
-    return new Map([[node, 1n]])
+    return new Map([[node, ONE]])
   }
   if (!Array.isArray(node) || typeof node[0] !== 'string') return null
 
   const [operator, ...operands] = node
+  if (operator === 'Rational' && operands.length === 2 && operands.every(value => typeof value === 'number' && Number.isSafeInteger(value))) {
+    const value = rational(BigInt(operands[0]), BigInt(operands[1]))
+    return value ? value.numerator === 0n ? new Map() : new Map([['', value]]) : null
+  }
   if (operator === 'Add' || operator === 'Multiply') {
-    let accumulated: Polynomial = operator === 'Add' ? new Map() : new Map([['', 1n]])
+    let accumulated: Polynomial = operator === 'Add' ? new Map() : new Map([['', ONE]])
     for (const operand of operands) {
       const next = polynomial(operand)
       if (!next) return null
@@ -90,19 +123,19 @@ function polynomial(node: unknown): Polynomial | null {
   }
   if (operator === 'Negate' && operands.length === 1) {
     const value = polynomial(operands[0])
-    return value ? multiply(new Map([['', -1n]]), value) : null
+    return value ? multiply(new Map([['', NEGATIVE_ONE]]), value) : null
   }
   if (operator === 'Subtract' && operands.length === 2) {
     const left = polynomial(operands[0])
     const right = polynomial(operands[1])
     if (!left || !right) return null
-    const negative = multiply(new Map([['', -1n]]), right)
+    const negative = multiply(new Map([['', NEGATIVE_ONE]]), right)
     return negative ? add(left, negative) : null
   }
   if (operator === 'Power' && operands.length === 2 && typeof operands[1] === 'number' && Number.isInteger(operands[1]) && operands[1] >= 0 && operands[1] <= MAX_DEGREE) {
     const base = polynomial(operands[0])
     if (!base) return null
-    let power: Polynomial = new Map([['', 1n]])
+    let power: Polynomial = new Map([['', ONE]])
     for (let index = 0; index < operands[1]; index++) {
       const next = multiply(power, base)
       if (!next) return null
@@ -114,14 +147,20 @@ function polynomial(node: unknown): Polynomial | null {
 }
 
 function supportedSyntax(latex: string): boolean {
-  const normalized = latex.replace(/\\(?:left|right|cdot|times)/g, '')
-  return normalized.length <= MAX_INPUT_LENGTH && /^[\dA-Za-z\s+\-*(){}^]+$/.test(normalized)
+  const normalized = latex.replace(/\\(?:left|right|cdot|times|frac)/g, '')
+  return normalized.length <= MAX_INPUT_LENGTH && /^[\dA-Za-z\s+\-*(){}^/]+$/.test(normalized)
 }
 
-function hasZeroExponent(node: unknown): boolean {
+function nonzeroIntegerLiteral(node: unknown): boolean {
+  if (typeof node === 'number') return Number.isSafeInteger(node) && node !== 0
+  return Array.isArray(node) && node[0] === 'Negate' && node.length === 2 && nonzeroIntegerLiteral(node[1])
+}
+
+function hasUnsafeDomain(node: unknown): boolean {
   if (!Array.isArray(node)) return false
-  if (node[0] === 'Power' && node[2] === 0) return true
-  return node.some(hasZeroExponent)
+  if (node[0] === 'Power' && (typeof node[2] !== 'number' || node[2] <= 0 || !Number.isInteger(node[2]))) return true
+  if (node[0] === 'Divide' && !nonzeroIntegerLiteral(node[2])) return true
+  return node.some(hasUnsafeDomain)
 }
 
 /** Exact polynomial equivalence over the reals; all other families remain unproven. */
@@ -138,7 +177,7 @@ export function validateStep(input: StepInput): StepResult {
   try {
     const beforeRaw = engine.parse(input.beforeLatex, { form: 'raw' })
     const afterRaw = engine.parse(input.afterLatex, { form: 'raw' })
-    if (hasZeroExponent(beforeRaw.json) || hasZeroExponent(afterRaw.json)) {
+    if (hasUnsafeDomain(beforeRaw.json) || hasUnsafeDomain(afterRaw.json)) {
       return result('NAO_COMPROVADO', ['DOMAIN_CONDITION_UNSUPPORTED'])
     }
     const before = engine.parse(input.beforeLatex)
@@ -151,7 +190,10 @@ export function validateStep(input: StepInput): StepResult {
     if (!left || !right) {
       return result('NAO_COMPROVADO', ['UNSUPPORTED_EXPRESSION'], before.json, after.json)
     }
-    const equal = left.size === right.size && [...left].every(([key, value]) => right.get(key) === value)
+    const equal = left.size === right.size && [...left].every(([key, value]) => {
+      const other = right.get(key)
+      return other?.numerator === value.numerator && other.denominator === value.denominator
+    })
     return equal
       ? result('VALIDO', [], before.json, after.json)
       : result('INVALIDO', ['POLYNOMIAL_MISMATCH'], before.json, after.json)

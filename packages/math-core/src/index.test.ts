@@ -22,6 +22,36 @@ describe('Math Core polynomial step validation', () => {
     expect(result.status).toBe('NAO_COMPROVADO')
   })
 
+  it('proves addition of constant-denominator fractions exactly', () => {
+    const result = validateStep({ beforeLatex: '\\frac{1}{2}x+\\frac{1}{2}x', afterLatex: 'x', context })
+    expect(result.status).toBe('VALIDO')
+  })
+
+  it('proves equivalent rational coefficients', () => {
+    const result = validateStep({ beforeLatex: '\\frac{2}{3}x', afterLatex: '\\frac{4}{6}x', context })
+    expect(result.status).toBe('VALIDO')
+  })
+
+  it('rejects unequal rational coefficients exactly', () => {
+    const result = validateStep({ beforeLatex: '\\frac{x}{2}', afterLatex: 'x', context })
+    expect(result.status).toBe('INVALIDO')
+  })
+
+  it('normalizes a nonzero negative denominator', () => {
+    const result = validateStep({ beforeLatex: '\\frac{x}{-2}', afterLatex: '-\\frac{1}{2}x', context })
+    expect(result.status).toBe('VALIDO')
+  })
+
+  it('does not prove division by zero', () => {
+    const result = validateStep({ beforeLatex: '\\frac{1}{0}', afterLatex: '1', context })
+    expect(result.status).toBe('NAO_COMPROVADO')
+  })
+
+  it('does not prove a fraction with a variable denominator', () => {
+    const result = validateStep({ beforeLatex: '\\frac{x}{x}', afterLatex: '1', context })
+    expect(result.status).toBe('NAO_COMPROVADO')
+  })
+
   it('does not erase the zero-base condition from a zero exponent', () => {
     const result = validateStep({ beforeLatex: 'x^0', afterLatex: '1', context })
     expect(result.status).toBe('NAO_COMPROVADO')
@@ -47,5 +77,18 @@ describe('Math Core polynomial step validation', () => {
         expect(validateStep({ beforeLatex: before, afterLatex: after, context }).status).toBe('VALIDO')
       },
     ), { numRuns: 50 })
+  })
+
+  it('preserves addition of rational coefficients with a constant denominator', () => {
+    fc.assert(fc.property(
+      fc.integer({ min: -9, max: 9 }),
+      fc.integer({ min: -9, max: 9 }),
+      fc.integer({ min: 1, max: 9 }),
+      (left, right, denominator) => {
+        const before = `\\frac{${left}}{${denominator}}x+\\frac{${right}}{${denominator}}x`
+        const after = `\\frac{${left + right}}{${denominator}}x`
+        expect(validateStep({ beforeLatex: before, afterLatex: after, context }).status).toBe('VALIDO')
+      },
+    ), { numRuns: 40 })
   })
 })
