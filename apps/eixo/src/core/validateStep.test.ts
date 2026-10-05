@@ -19,6 +19,10 @@ describe('P0 deterministic comparison', () => {
     expect(validateStep('x/x', '1').status).toBe('NAO_COMPROVADO')
   })
 
+  it('accepts an exact quadratic expansion through Math Core', () => {
+    expect(validateStep('(x+1)^2', 'x^2+2x+1').status).toBe('VALIDO')
+  })
+
   it('preserves distributivity for small positive integer coefficients', () => {
     fc.assert(fc.property(
       fc.integer({ min: 1, max: 9 }),

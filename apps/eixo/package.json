@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@eixo/math-core": "workspace:*",
     "@capacitor/core": "^8.5.2",
     "@cortex-js/compute-engine": "^0.147.0",
     "mafs": "^0.21.0",

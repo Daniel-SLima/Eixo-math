@@ -12,7 +12,7 @@ Android Studio, SDK API 36 e o emulador foram instalados em 2026-10-04 após o p
 - Dois campos MathLive 2D e teclado de templates: fração, potência, raiz, log com base, limite, derivada e integral definida.
 - Navegação para o próximo placeholder e exclusão no campo ativo.
 - Conversão da expressão LaTeX do MathLive para MathJSON com Compute Engine.
-- Comparação simbólica determinística limitada, nesta prova, a expressões aritméticas/polinomiais simples. Expressões com divisão, potência ou função retornam `NAO_COMPROVADO` até existir análise de domínio e regras do Math Core.
+- Comparação exata limitada a polinômios com coeficientes racionais sobre os reais, agora feita pelo `packages/math-core`. Frações com denominador inteiro constante não nulo e potências polinomiais de expoente inteiro positivo até grau 4 são aceitas. Denominadores variáveis, funções e demais casos com condições de domínio retornam `NAO_COMPROVADO`.
 - Rascunho local das duas linhas, gravado a cada edição e restaurado após reiniciar a página; falhas de armazenamento são exibidas.
 - Gráfico Mafs de referência. Dependências e fontes MathLive são locais ao bundle, sem CDN.
 - Carregamento separado do motor simbólico, da inspeção MathJSON e do gráfico para reduzir o JavaScript inicial do editor.
